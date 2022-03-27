@@ -1,0 +1,63 @@
+{
+
+    "menu": [
+
+        {
+
+            "name": "Dashboards",
+            "url": "dashboard",
+            "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
+            "icon": "home",
+            "slug": ""
+
+        },
+
+        {
+            "name": "Current Orders",
+            "url": "add_order",
+            "icon": "shopping-cart",
+            "slug": ""
+        },
+
+        {
+            "url": "app/chat",
+            "name": "Orders",
+            "icon": "check-square",
+            "slug": "app-chat"
+        },
+        {
+            "url": "app/calendar",
+            "name": "Add Orders",
+            "icon": "file-text",
+            "slug": "app-calendar"
+        },
+        {
+            "navheader": "",
+            "slug": ""
+        },
+        {
+            "url": "app/chat",
+            "name": "FAQ",
+            "icon": "help-circle",
+            "slug": "app-chat"
+        },
+        {
+            "url": "app/chat",
+            "name": "Expration",
+            "icon": "credit-card",
+            "slug": "app-chat"
+        },
+        {
+            "url": "app/chat",
+            "name": "Settings",
+            "icon": "settings",
+            "slug": "app-chat"
+        },
+        {
+            "url": "app/chat",
+            "name": "Logout",
+            "icon": "power",
+            "slug": "app-chat"
+        }
+    ]
+}
