@@ -125,6 +125,7 @@ return [
     "Category Name"=>"Name der Kategorie",
     "Add New category"=>"Neue Kategorie hinzufügen",
     "Update category"=>"Kategorie aktualisieren",
+    
 
 
 

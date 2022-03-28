@@ -23,7 +23,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
-
                     <div class="col-md-12 mt-5">
                         <a href="{{ 'add_category' }}" type="button" class="float-right btn btn-success"><i
                                 class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New category') }}</a>
@@ -57,7 +56,7 @@
                                             <label class="form-check-label" for="checkbox" class=" label-table"></label>
                                         </th>
                                         <th>{{ __('locale.Product Name') }}</th>
-                                        >
+
                                         <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
                                     </tr>
                                 </thead>

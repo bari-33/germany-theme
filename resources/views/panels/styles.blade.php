@@ -22,6 +22,7 @@
 {{-- Laravel Style --}}
 <link rel="stylesheet" href="{{ asset(mix('css/overrides.css')) }}" />
 
+
 {{-- Custom RTL Styles --}}
 
 @if($configData['direction'] === 'rtl' && isset($configData['direction']))

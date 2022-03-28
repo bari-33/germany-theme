@@ -8,6 +8,7 @@ use App\Http\Controllers\productcontroller;
 use App\Http\Controllers\Designcontroller;
 use App\Http\Controllers\websitescontroller;
 use App\Http\Controllers\categorycontroller;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\CardsController;
@@ -94,8 +95,13 @@ Route::get('destroy/{id}/{flag}', [categorycontroller::class, 'destroy'])->name(
 Route::get('editcategory/{id}/{flag}', [categorycontroller::class, 'edit'])->name('edit');
 Route::post('categoryupdate/{id}/{flag}', [categorycontroller::class, 'update'])->name('update');
 Route::resource('category', categorycontroller::class);
+/* Route Orders*/
+Route::get('add_order', [OrderController::class, 'add_order'])->name('add_order');
+Route::get('create/{id}', [OrderController::class, 'create'])->name('create');
+Route::post('store1', [OrderController::class, 'store1'])->name('store1');
+Route::post('store', [OrderController::class, 'store'])->name('store');
 
-
+Route::resource('orders', OrderController::class);
 
 /* Route Apps */
 Route::group(['prefix' => 'app'], function () {
