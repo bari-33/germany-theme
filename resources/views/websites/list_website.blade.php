@@ -18,7 +18,7 @@
 
 @section('content')
     <!-- Basic table -->
-    <h1>{{ __('locale.List Designs') }}</h1>
+    <h1>{{ __('locale.List Websites') }}</h1>
     <section id="basic-datatable">
         <div class="row">
             <div class="col-md-12">
@@ -30,7 +30,7 @@
                                 class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Website') }}</a>
                         <div class="mt-5">
                             <center>
-                                <form action="{{ url('search') }}" method="POST">
+                                <form action="{{ url('searchwebsite') }}" method="POST">
                                     @csrf
                                     <button style="background-color: #3b3f77;border-color: white;" type="submit"
                                         name="action" value="all" class="btn btn-primary">{{ __('locale.All') }} |
@@ -59,7 +59,7 @@
                                         <a class="dropdown-item category_list" data-id="{{ $category->id }}"
                                             href="#">{{ $category->name }} ({{ $category->count }})</a>
                                     @endforeach
-                                    <form action="{{ url('searchCategory') }}" id="category_form" name="form"
+                                    <form action="{{ url('searchwebCategory') }}" id="category_form" name="form"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="category" id="selected_category">
@@ -129,7 +129,7 @@
                                                 <td>
                                                     <a href="{{url('editwebsite/'.$website->id)}}"><i class="fa fa-pencil-square-o text-primary mr-1"
                                                             aria-hidden="true" style="font-size: 1.5em;"></i></a>
-                                                    <a href="{{url('destroy/'.$website->id)}}" class="delete-confirm "><i class="fa fa-trash-o text-danger"
+                                                    <a href="{{url('destroywebsit/'.$website->id)}}" class="delete-confirm "><i class="fa fa-trash-o text-danger"
                                                             aria-hidden="true" style="font-size: 1.5em;"></i></a>
                                                 </td>
                                             @endif

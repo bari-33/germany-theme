@@ -126,11 +126,20 @@ return [
     "Category Name"=>"Nom de la catégorie",
     "Add New category"=>"Ajouter une nouvelle catégorie",
     "Update category"=>"Catégorie de mise à jour",
-
-
-
-
-
+    "Add New Order"=>"Ajouter une nouvelle commande",
+    "In Progress"=>"En cours",
+    "On hold"=>"En attente",
+    "Done"=>"Fait",
+    "Canceled"=>"Annulé",
+    "Last 30 Days"=>"30 derniers jours",
+    "Last 90 Days"=>"90 derniers jours",
+    "Send"=>"Envoyer",
+    "Select All"=>"Sélectionner tout",
+    "ID"=>"ID",
+    "Employee"=>"Employé",
+    "completion"=>"achèvement",
+    "Data"=>"Données",
+    "Express"=>"Exprimer",
        //  <  *//End  project //*>
     "Apps & Pages" => "Applications et pages",
     "User Interface" => "Interface utilisateur",

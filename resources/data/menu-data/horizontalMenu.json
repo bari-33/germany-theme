@@ -14,7 +14,7 @@
 
         {
             "name": "Current Orders",
-            "url": "add_order",
+            "url": "current/Auth::user()->orders",
             "icon": "shopping-cart",
             "slug": ""
         },

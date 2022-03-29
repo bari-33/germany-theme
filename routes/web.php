@@ -9,6 +9,7 @@ use App\Http\Controllers\Designcontroller;
 use App\Http\Controllers\websitescontroller;
 use App\Http\Controllers\categorycontroller;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\CardsController;
@@ -65,26 +66,26 @@ Route::post('update/{id}', [userscontroller::class, 'update'])->name('update');
 /* Route Product */
 Route::get('add_product', [productcontroller::class, 'add_product'])->name('add_product');
 Route::get('list_product', [productcontroller::class, 'list_product'])->name('list_product');
-Route::get('destroy/{id}', [productcontroller::class, 'destroy'])->name('destroy');
+Route::get('destroyproduct/{id}', [productcontroller::class, 'destroy'])->name('destroy');
 Route::get('editproduct/{id}', [productcontroller::class, 'edit'])->name('edit');
 Route::post('updateproduct/{id}', [productcontroller::class, 'update'])->name('update');
-Route::post('search', [productcontroller::class, 'search'])->name('search');
+Route::post('searchproduct', [productcontroller::class, 'search'])->name('search');
 Route::resource('products', productcontroller::class);
 /* Route Design*/
 Route::get('add_desing', [Designcontroller::class, 'add_desing'])->name('add_desing');
 Route::get('list_design', [Designcontroller::class, 'list_design'])->name('list_design');
-Route::post('search', [Designcontroller::class, 'search'])->name('search');
-Route::post('searchCategory', [Designcontroller::class, 'searchCategory'])->name('searchCategory');
+Route::post('searchdesign', [Designcontroller::class, 'search'])->name('search');
+Route::post('searchdesignCategory', [Designcontroller::class, 'searchCategory'])->name('searchCategory');
 Route::get('editdesign/{id}', [Designcontroller::class, 'edit'])->name('edit');
 Route::post('updatedesign/{id}', [Designcontroller::class, 'update'])->name('update');
-Route::get('destroy/{id}', [Designcontroller::class, 'destroy'])->name('destroy');
+Route::get('destroydesign/{id}', [Designcontroller::class, 'destroy'])->name('destroy');
 Route::resource('Design', Designcontroller::class);
 /* Route website*/
 Route::get('add_website', [websitescontroller::class, 'add_website'])->name('add_website');
 Route::get('list_website', [websitescontroller::class, 'list_website'])->name('list_website');
-Route::post('search', [websitescontroller::class, 'search'])->name('search');
-Route::post('searchCategory', [websitescontroller::class, 'searchCategory'])->name('searchCategory');
-Route::get('destroy/{id}', [websitescontroller::class, 'destroy'])->name('destroy');
+Route::post('searchwebsite', [websitescontroller::class, 'search'])->name('search');
+Route::post('searchwebCategory', [websitescontroller::class, 'searchCategory'])->name('searchCategory');
+Route::get('destroywebsit/{id}', [websitescontroller::class, 'destroy'])->name('destroy');
 Route::get('editwebsite/{id}', [websitescontroller::class, 'edit'])->name('edit');
 Route::post('updatewebsite/{id}', [websitescontroller::class, 'update'])->name('update');
 Route::resource('website', websitescontroller::class);
@@ -100,8 +101,14 @@ Route::get('add_order', [OrderController::class, 'add_order'])->name('add_order'
 Route::get('create/{id}', [OrderController::class, 'create'])->name('create');
 Route::post('store1', [OrderController::class, 'store1'])->name('store1');
 Route::post('store', [OrderController::class, 'store'])->name('store');
-
+Route::get('current/{order}', [OrderController::class, 'current'])->name('current');
 Route::resource('orders', OrderController::class);
+/* Route Adminorder*/
+Route::get('list_order', [AdminOrderController::class, 'list_order'])->name('list_order');
+Route::post('searchorder', [AdminOrderController::class, 'search'])->name('search');
+Route::post('ordersdetail', [AdminOrderController::class, 'ordersdetail'])->name('ordersdetail');
+
+
 
 /* Route Apps */
 Route::group(['prefix' => 'app'], function () {

@@ -1,5 +1,6 @@
 <?php
 
+
 return [
      //  <  *// project //*>
      ""=>"",
@@ -125,15 +126,20 @@ return [
     "Category Name"=>"Name der Kategorie",
     "Add New category"=>"Neue Kategorie hinzufügen",
     "Update category"=>"Kategorie aktualisieren",
-    
-
-
-
-
-
-
-
-
+    "Add New Order"=>"Neue Bestellung hinzufügen",
+    "In Progress"=>"Im Gange",
+    "On hold"=>"In der Warteschleife",
+    "Done"=>"Fertig",
+    "Canceled"=>"Abgebrochen",
+    "Last 30 Days"=>"Letzte 30 Tage",
+    "Last 90 Days"=>"Letzte 90 Tage",
+    "Send"=>"Senden",
+    "Select All"=>"Alle auswählen",
+    "ID"=>"ID",
+    "Employee"=>"Arbeitnehmer",
+    "completion"=>"Fertigstellung",
+    "Data"=>"Daten",
+    "Express"=>"Ausdrücken",
        //  <  *//End  project //*>
     "Apps & Pages" => "Apps & Seiten",
     "User Interface" => "Benutzeroberfläche",
