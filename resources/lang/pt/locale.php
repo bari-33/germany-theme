@@ -139,6 +139,7 @@ return [
     "completion"=>"conclusão",
     "Data"=>"Dados",
     "Express"=>"Expresso",
+    "Order button"=>"Order button",
         //  <  *//End  project //*>
 
     "Apps & Pages" => "Aplicativos e páginas",

@@ -75,3 +75,26 @@ $('.delete-confirm').on('click', function(e) {
         }
     });
 });
+/**
+ * Order js
+ */
+$('.multiSelector').click(function(e) {
+    $('#order').val($('.checkbox:checked').map(function() {
+        return this.value;
+    }).get().join(','));
+    if ($('#order').val() == '') {
+        alert('No row selected!');
+        return false;
+    }
+
+});
+$("#allSelector").click(function() {
+    $('input:checkbox').not(this).prop('checked', this.checked);
+});
+$("input#myInput").keyup(function() {
+    var value = $(this).val();
+    $("#myDropdown a").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+
+});

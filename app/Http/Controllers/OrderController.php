@@ -143,9 +143,8 @@ class OrderController extends Controller
     }
     public function current($order)
     {
-        $data = json_decode($order);
-        foreach ($data as $key => $value) {
-            $data = $value->id;
+
+            $data = $order;
             $order=Order::find($data);
             $messages=Messenger::where('to',Auth::user()->id)->orWhere('from',Auth::user()->id)->orderBy('created_at','asc')->get();
             $product=Product::find($order->product_id);
@@ -154,7 +153,7 @@ class OrderController extends Controller
             $secret='b3d328f07199b1d0df8d783333badf79';
             $sig = hash_hmac('sha256', Auth::user()->email, $secret);
             $tax=str_replace(".",",",number_format(((float)str_replace(",",".",$order->total_price)*0.19),2));
-        }
+
             return view('orders.current_order',compact('order','product','design','website','sig','tax','messages'));
     }
 }

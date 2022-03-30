@@ -100,14 +100,32 @@ Route::resource('category', categorycontroller::class);
 Route::get('add_order', [OrderController::class, 'add_order'])->name('add_order');
 Route::get('create/{id}', [OrderController::class, 'create'])->name('create');
 Route::post('store1', [OrderController::class, 'store1'])->name('store1');
-Route::post('store', [OrderController::class, 'store'])->name('store');
+// Route::post('store', [OrderController::class, 'store'])->name('store');
 Route::get('current/{order}', [OrderController::class, 'current'])->name('current');
 Route::resource('orders', OrderController::class);
 /* Route Adminorder*/
 Route::get('list_order', [AdminOrderController::class, 'list_order'])->name('list_order');
 Route::post('searchorder', [AdminOrderController::class, 'search'])->name('search');
-Route::post('ordersdetail', [AdminOrderController::class, 'ordersdetail'])->name('ordersdetail');
+Route::get('ordersdetail', [AdminOrderController::class, 'ordersdetail'])->name('ordersdetail');
+Route::get('dropupdate/{id}/{order}', [AdminOrderController::class, 'dropupdate'])->name('dropupdate');
+Route::get('unassingemploy/{id}/{order}', [AdminOrderController::class, 'unassingemploy'])->name('unassingemploy');
+Route::get('todo/{order}', [AdminOrderController::class, 'todo'])->name('todo');
+Route::get('running/{order}', [AdminOrderController::class, 'running'])->name('running');
+Route::get('check/{order}', [AdminOrderController::class, 'check'])->name('check');
+Route::get('finished/{order}', [AdminOrderController::class, 'finished'])->name('finished');
+Route::get('activated/{order}', [AdminOrderController::class, 'activated'])->name('activated');
+Route::get('cancelled/{order}', [AdminOrderController::class, 'cancelled'])->name('cancelled');
+Route::get('deleteorder/{id}', [AdminOrderController::class, 'deleteorder'])->name('deleteorder');
+Route::get('editorder/{id}', [AdminOrderController::class, 'editorder'])->name('editorder');
+Route::get('invoicepdf/{id}', [AdminOrderController::class, 'invoicepdf'])->name('invoicepdf');
+Route::get('trialdocuments/{order}', [AdminOrderController::class, 'trialDocuments'])->name('trialDocuments');
 
+
+
+
+
+
+// Route::resource('Adminorder', AdminOrderController::class);
 
 
 /* Route Apps */

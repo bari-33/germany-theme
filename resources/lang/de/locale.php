@@ -140,6 +140,7 @@ return [
     "completion"=>"Fertigstellung",
     "Data"=>"Daten",
     "Express"=>"Ausdrücken",
+    "Order button"=>"Order button",
        //  <  *//End  project //*>
     "Apps & Pages" => "Apps & Seiten",
     "User Interface" => "Benutzeroberfläche",

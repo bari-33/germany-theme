@@ -91,7 +91,9 @@
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>{{ $user->userdetail->telephone }}</td>
+                                            <td>@if(!empty($user->userdetail->telephone))
+                                                {{$user->userdetail->telephone}}
+                                            @endif</td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>
                                                 <a href="{{ url('edituser/'.$user->id) }}"

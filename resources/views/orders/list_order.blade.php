@@ -4,7 +4,6 @@
 
 @section('vendor-style')
     {{-- vendor css files --}}
-
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/dataTables.bootstrap4.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap4.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap4.min.css')) }}">
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/flatpickr/flatpickr.min.css')) }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel=”stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-
     <style>
         .pagination>li>a,
         .pagination>li>span {
@@ -73,9 +71,9 @@
         /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 
     </style>
-
 @endsection
 
+@section('content')
 @section('content')
     <!-- Basic table -->
     <h1>{{ __('locale.List Orders') }}</h1>
@@ -218,35 +216,47 @@
             </div>
         </div>
         </div>
-    </section>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div style="overflow-x:auto;">
-                            <table class="datatables table mb-0" style="color: #000;">
-                                <thead>
+        <!-- Basic table -->
+        <section id="basic-datatable">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card" style="overflow-x:auto;">
+                        <table class="datatables table mb-0" style="color: #000;">
+                            <div class="container mt-3">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ __('locale.Order button') }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="#">Action</a>
+                                  <a class="dropdown-item" href="#">Another action</a>
+                                  <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                              </div>
+                            </div>
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="" id="allSelector">{{ __('locale.Select All') }}
+                                    </th>
+                                    <th>{{ __('locale.ID') }}</th>
+                                    <th>{{ __('locale.Employee') }}</th>
+                                    <th>{{ __('locale.Products') }}</th>
+                                    <th>{{ __('locale.completion') }}</th>
+                                    <th>{{ __('locale.Price') }}</th>
+                                    <th>{{ __('locale.Data') }}</th>
+                                    <th>{{ __('locale.Express') }}</th>
+                                    <th>{{ __('locale.Status') }}</th>
+                                    <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($orders as $order)
                                     <tr>
-                                        <th><input type="checkbox" name="" id="allSelector">{{ __('locale.Select All') }}
-                                        </th>
-                                        <th>{{ __('locale.ID') }}</th>
-                                        <th>{{ __('locale.Employee') }}</th>
-                                        <th>{{ __('locale.Products') }}</th>
-                                        <th>{{ __('locale.completion') }}</th>
-                                        <th>{{ __('locale.Price') }}</th>
-                                        <th>{{ __('locale.Data') }}</th>
-                                        <th>{{ __('locale.Express') }}</th>
-                                        <th>{{ __('locale.Status') }}</th>
-                                        <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($orders as $order)
-                                        <tr>
-                                            <td> <input name="selector[]" class="checkbox" type="checkbox"
-                                                    value="{{ $order->id }}" /></td>
-                                            <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a></td>
-                                            <td>
-                                                <?php
+                                        <td><input name="selector[]" class="checkbox" type="checkbox"
+                                                value="{{ $order->id }}" /></td>
+                                        <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a></td>
+                                        <td class="dropimg">
+                                            <?php
                                             $order_ids=array();
 
                                             foreach ($dropdown as $key => $drop){
@@ -275,18 +285,16 @@
 
                                                  ?>
 
-                                                <div class="hov">
-                                                    <button onclick="dropimage({{ $order->id }})"
-                                                        class="dropdown-toggle"
-                                                        style="background-color: transparent;border: none;margin-left: 50%;margin-right: 50%;"
-                                                        type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                        <img src="{!! asset('public/img/profiles/' . $drop1->profile_picture) !!}" id="{{ $order->id }}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-
-                                                    </button>
-                                                    <?php
+                                            <div class="hov">
+                                                <div class="dropdown">
+                                                <button id="orignalimg" class="dropdown-toggle"
+                                                style="background-color: transparent;border: none;margin-left: 50%;margin-right: 50%;"
+                                                type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                <img src="{!! asset('images/profiles/'. $drop1->profile_picture) !!}" id="" alt="user-image"
+                                                    class="rounded-circle image" width="30px" height="30px;" style="display: flex;">
+                                            </button>
+                                                <?php
 
                                                 unset($dropdown->$key);
                                                  }
@@ -297,28 +305,24 @@
                                          }else {
 
                                         ?>
-                                                    <div class="hov">
-                                                        <button onclick="dropimage({{ $order->id }})"
-                                                            class="dropdown-toggle"
+                                                <div class="hov">
+                                                    <div class="dropdown">
+                                                        <button id="orignalimg" class="dropdown-toggle"
                                                             style="background-color: transparent;border: none;margin-left: 50%;margin-right: 50%;"
                                                             type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false">
-                                                            <img src="{!! asset('images/profiles/user.png') !!}" id="{{ $order->id }}"
-                                                                alt="user-image" class="rounded-circle image" width="30px"
-                                                                height="30px;">
+                                                            <img src="{!! asset('images/profiles/user.png') !!}" id="dropdown1" alt="user-image"
+                                                                class="rounded-circle image" width="30px" height="30px;">
                                                         </button>
 
                                                         <?php
-                                         }
+                                                            }
 
-                                            ?>
-
+                                                             ?>
                                                         <div class="dropdown">
-
-
-
                                                             <div class="dropdown-menu" id="myDropdown"
-                                                                aria-labelledby="dropdownMenuButton">
+                                                                aria-labelledby="dropdownMenuButton"
+                                                                style=" width: 350px !important;">
                                                                 @foreach ($employees as $key4 => $employe)
                                                                     <?php
                                                                             $order_id_exploded=explode(",",$employe->order_id);
@@ -328,25 +332,33 @@
                                                                         if($value==$order->id){
 
                                                                             ?>
-                                                                    <a type="button"
-                                                                        onclick="down({{ $employe->id }},{{ $order->id }})"
-                                                                        id="demo">
-                                                                        <img src="{{ url('images/profiles/' . $employe->profile_picture) }}"
-                                                                            style="width:20%;" alt="user-image"
-                                                                            class="rounded-circle user">
+                                                                    <div class="container">
+                                                                        <a type="button"
+                                                                            onclick="down({{ $employe->id }},{{ $order->id }},this)"
+                                                                            id="demo">
+                                                                            <div class="avatar"><img
+                                                                                    src="{{ url('images/profiles/' . $employe->profile_picture) }}"
+                                                                                    alt="avatar" width="32" height="32">
+                                                                            </div>
+                                                                            @php
+                                                                                echo $employe->name . '&nbsp&nbsp&nbsp&nbsp' . $employe->userdetail->deutch_language, $employe->userdetail->english_language, $employe->userdetail->spanish_language, $employe->userdetail->french_language, $employe->userdetail->web_language, $employe->userdetail->Graphic_language, $employe->userdetail->Media_language;
+
+                                                                            @endphp
 
 
-                                                                        @php
-                                                                            echo $employe->name . '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' . $employe->userdetail->deutch_language, $employe->userdetail->english_language, $employe->userdetail->spanish_language, $employe->userdetail->french_language, $employe->userdetail->web_language, $employe->userdetail->Graphic_language, $employe->userdetail->Media_language;
 
-                                                                        @endphp
 
-                                                                        <span type="button" class="float-right "
-                                                                            onclick="unassing({{ $employe->id }},{{ $order->id }})"><i
-                                                                                class="fa fa-times"
-                                                                                style="color:red;font-size:18px"></i></span>
-                                                                    </a>
-                                                                    <br>
+
+                                                                        </a>
+                                                                        <span type="button" class="float-right"
+                                                                        onclick="unassing({{ $employe->id }},{{ $order->id }})">
+                                                                        <div class="avatar bg-light-danger">
+                                                                            <div class="avatar-content"><i
+                                                                                    class="fa fa-times"
+                                                                                    data-feather="x"></i></div>
+                                                                        </div></span>
+                                                                        <hr>
+                                                                    </div>
                                                                     <?php
 
                                                                             }
@@ -380,42 +392,38 @@
                                                                        }else {
 
                                                                        ?>
-                                                                    <a type="button"
-                                                                        onclick="down({{ $employe->id }},{{ $order->id }})"
-                                                                        id="demo">
-                                                                        <img src="{{ url('images/profiles/' . $employe->profile_picture) }}"
-                                                                            style="width:20%;" alt="user-image"
-                                                                            class="rounded-circle user">
+                                                                    <div class="container">
+                                                                        <a type="button"
+                                                                            onclick="down({{ $employe->id }},{{ $order->id }},this)"
+                                                                            id="demo">
+                                                                            <div class="avatar"><img
+                                                                                    src="{{ url('images/profiles/' . $employe->profile_picture) }}"
+                                                                                    alt="avatar" width="32" height="32">
+                                                                            </div>
+                                                                            @php
+                                                                                echo $employe->name . '&nbsp&nbsp&nbsp&nbsp' . $employe->userdetail->deutch_language, $employe->userdetail->english_language, $employe->userdetail->spanish_language, $employe->userdetail->french_language, $employe->userdetail->web_language, $employe->userdetail->Graphic_language, $employe->userdetail->Media_language;
 
-
-                                                                        @php
-                                                                            echo $employe->name . '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' . $employe->userdetail->deutch_language, $employe->userdetail->english_language, $employe->userdetail->spanish_language, $employe->userdetail->french_language, $employe->userdetail->web_language, $employe->userdetail->Graphic_language, $employe->userdetail->Media_language;
-
-                                                                        @endphp
-
-                                                                        <span type="button" class="float-right "
-                                                                            onclick="unassing({{ $employe->id }},{{ $order->id }})"><i
-                                                                                class="fa fa-times"
-                                                                                style="color:red;font-size:18px"></i></span>
-
-
-
-                                                                    </a>
-                                                                    <br>
+                                                                            @endphp
+                                                                        </a>
+                                                                        <span type="button" class="float-right"
+                                                                        onclick="unassing({{ $employe->id }},{{ $order->id }})">
+                                                                        <div class="avatar bg-light-danger">
+                                                                            <div class="avatar-content"><i
+                                                                                    class="avatar-icon"
+                                                                                    data-feather="x"></i></div>
+                                                                        </div></span>
+                                                                        <hr>
+                                                                    </div>
                                                                     <?php
                                                                        }
                                                                     ?>
                                                                 @endforeach
-                                                                <?php
-                                                                ?>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
-                                            </td>
-                                            <td>
-                                                <p>{{ $order->pdetail->product_title }}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ $order->pdetail->product_title }}</p>
                                             <p>
                                                 @if ($order->product_language == 'English')
                                                     <span class="badge badge-primary">
@@ -432,300 +440,476 @@
                                                 {{ $order->product_language }}</span>
 
                                             </p>
-                                            </td>
-                                            <td class="completion_date">
-                                                @if ($order->order_status == 1 )
-                                                    <div class="alert alert-danger" role="alert"
-                                                        style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                        {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                    </div>
-                                                @elseif($order->order_status == 2)
-                                                    <div class="alert alert-info" role="alert"
-                                                        style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                        {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                    </div>
-                                                @elseif($order->order_status == 3)
-                                                    <div class="alert alert-warning" role="alert"
-                                                        style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                        {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                    </div>
-                                                @elseif($order->order_status == 4)
-                                                    <div class="alert alert-success" role="alert"
-                                                        style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                        {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                    </div>
-                                                @elseif($order->order_status == -1)
-                                                    <div class="alert alert-primary" role="alert"
-                                                        style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                        {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                    </div>
-                                                @endif
-
-                                            </td>
-                                            <td class="paid">
-                                                @if($order->payment_status==1)
-                                                <span class="badge badge-success"> {{$order->total_price}} €</span>
-                                                @endif
-                                                @if($order->payment_status==0)
-                                                <span class="badge badge-dark"> {{$order->total_price}} €</span>
-                                                @endif
-                                                @if($order->payment_status ==-1)
-                                                <span class="badge badge-danger"> {{$order->total_price}} €</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($order->order_status == 0)
-                                                <p><span class="badge badge-danger"
-                                                        style="border-radius: 20px;padding: 10%"><i
-                                                            class="fa fa-times-circle"></i></span></p>
-                                            @else
-                                                <p><span class="badge badge-success"
-                                                        style="border-radius: 20px;padding: 10%"><i
-                                                            class="fa fa-check-circle"></i>
-                                                    </span></p>
+                                        </td>
+                                        <td class="completion_date">
+                                            @if ($order->order_status == 1 )
+                                                <div class="alert alert-danger" role="alert"
+                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                                                </div>
+                                            @elseif($order->order_status == 2)
+                                                <div class="alert alert-info" role="alert"
+                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                                                </div>
+                                            @elseif($order->order_status == 3)
+                                                <div class="alert alert-warning" role="alert"
+                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                                                </div>
+                                            @elseif($order->order_status == 4)
+                                                <div class="alert alert-success" role="alert"
+                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                                                </div>
+                                            @elseif($order->order_status == -1)
+                                                <div class="alert alert-primary" role="alert"
+                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                                                </div>
                                             @endif
-                                            </td>
-                                            <td>
-                                                <p>
-                                                    @if ($order->express == '0,00')
-                                                        <span class="badge badge-secondary">
-                                                        @else<span class="badge badge-success">
-                                                    @endif
-                                                    24h</span>
 
-                                                </p>
-                                            </td>
-                                            <td>
-                                                @if ($order->order_status == 0)
-
-
-                                                <div class="dropdown">
-                                                    <div>
-                                                        <a class="dropbtn"><img src="{!! asset('images/status/simpel.png') !!}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dropdown-content">
-                                                        <a type="button" class="btn btn-secondary text-center text-light"
-                                                        onclick="todo({{$order->id}}, this)"
-                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
-                                                        <a type="button" class="btn btn-info text-center text-light"
-                                                            onclick="running({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
-                                                            <a type="button" class="btn btn-warning text-center text-light"
-                                                            onclick="check({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
-                                                            <a type="button" class="btn btn-success text-center text-light"
-                                                            onclick="finished({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
-                                                            <a type="button" class="btn btn-primary text-center text-light"
-                                                            onclick="activated({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
-                                                            <a type="button" class="btn btn-danger text-center text-light"
-                                                            onclick="calcelled({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
-                                                    </div>
-                                                </div>
+                                        </td>
+                                        <td class="paid">
+                                            @if($order->payment_status==1)
+                                            <span class="badge badge-success"> {{$order->total_price}} €</span>
+                                            @endif
+                                            @if($order->payment_status==0)
+                                            <span class="badge badge-dark"> {{$order->total_price}} €</span>
+                                            @endif
+                                            @if($order->payment_status ==-1)
+                                            <span class="badge badge-danger"> {{$order->total_price}} €</span>
+                                            @endif
+                                        </td>
+                                        <td class="date">
+                                            @if ($order->order_status == 0)
+                                                <p><div class="avatar bg-light-danger">
+                                                    <div class="avatar-content"><i
+                                                            class="fa fa-times"
+                                                            ></i></div>
+                                                </div></p>
+                                            @else
+                                                <p><div class="avatar bg-light-success">
+                                                    <div class="avatar-content"><i class="fa fa-check"></i></div>
+                                                  </div></p>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <p>
+                                                @if ($order->express == '0,00')
+                                                    <span class="badge badge-secondary">
+                                                    @else<span class="badge badge-success">
                                                 @endif
-                                                @if ($order->order_status == 2)
+                                                24h</span>
+
+                                            </p>
+                                        </td>
+                                        <td>
+                                            @if ($order->order_status == 0)
 
 
-                                                <div class="dropdown">
-                                                    <div>
-                                                        <a class="dropbtn"><img src="{!! asset('images/status/running.png') !!}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dropdown-content">
-                                                        <a type="button" class="btn btn-secondary text-center text-light"
-                                                        onclick="todo({{$order->id}}, this)"
-                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
-                                                        <a type="button" class="btn btn-info text-center text-light"
-                                                            onclick="running({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
-                                                            <a type="button" class="btn btn-warning text-center text-light"
-                                                            onclick="check({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
-                                                            <a type="button" class="btn btn-success text-center text-light"
-                                                            onclick="finished({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
-                                                            <a type="button" class="btn btn-primary text-center text-light"
-                                                            onclick="activated({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
-                                                            <a type="button" class="btn btn-danger text-center text-light"
-                                                            onclick="calcelled({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
-                                                    </div>
+                                            <div class="dropdown">
+                                                <div>
+                                                    <a class="dropbtn"><img src="{!! asset('images/status/simpel.png') !!}"
+                                                        alt="user-image" class="rounded-circle image" width="30px"
+                                                        height="30px;" style="display: flex;">
+                                                    </a>
                                                 </div>
-                                                @endif
-                                                @if ($order->order_status == 3)
-
-
-                                                <div class="dropdown">
-                                                    <div>
-                                                        <a class="dropbtn"><img src="{!! asset('images/status/check.png') !!}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dropdown-content">
-                                                        <a type="button" class="btn btn-secondary text-center text-light"
-                                                        onclick="todo({{$order->id}}, this)"
-                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
-                                                        <a type="button" class="btn btn-info text-center text-light"
-                                                            onclick="running({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
-                                                            <a type="button" class="btn btn-warning text-center text-light"
-                                                            onclick="check({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
-                                                            <a type="button" class="btn btn-success text-center text-light"
-                                                            onclick="finished({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
-                                                            <a type="button" class="btn btn-primary text-center text-light"
-                                                            onclick="activated({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
-                                                            <a type="button" class="btn btn-danger text-center text-light"
-                                                            onclick="calcelled({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
-                                                    </div>
+                                                <div class="dropdown-content">
+                                                    <a type="button" class="btn btn-secondary text-center text-light"
+                                                    onclick="todo({{$order->id}}, this)"
+                                                    data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
+                                                    <a type="button" class="btn btn-info text-center text-light"
+                                                        onclick="running({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
+                                                        <a type="button" class="btn btn-warning text-center text-light"
+                                                        onclick="check({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
+                                                        <a type="button" class="btn btn-success text-center text-light"
+                                                        onclick="finished({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
+                                                        <a type="button" class="btn btn-primary text-center text-light"
+                                                        onclick="activated({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
+                                                        <a type="button" class="btn btn-danger text-center text-light"
+                                                        onclick="calcelled({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
                                                 </div>
-                                                @endif
-                                                @if ($order->order_status == 4)
+                                            </div>
+                                            @endif
+                                            @if ($order->order_status == 2)
 
 
-                                                <div class="dropdown">
-                                                    <div>
-                                                        <a class="dropbtn"><img src="{!! asset('images/status/todo.png') !!}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dropdown-content">
-                                                        <a type="button" class="btn btn-secondary text-center text-light"
-                                                        onclick="todo({{$order->id}}, this)"
-                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
-                                                        <a type="button" class="btn btn-info text-center text-light"
-                                                            onclick="running({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
-                                                            <a type="button" class="btn btn-warning text-center text-light"
-                                                            onclick="check({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
-                                                            <a type="button" class="btn btn-success text-center text-light"
-                                                            onclick="finished({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
-                                                            <a type="button" class="btn btn-primary text-center text-light"
-                                                            onclick="activated({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
-                                                            <a type="button" class="btn btn-danger text-center text-light"
-                                                            onclick="calcelled({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
-                                                    </div>
+                                            <div class="dropdown">
+                                                <div>
+                                                    <a class="dropbtn"><img src="{!! asset('images/status/running.png') !!}"
+                                                        alt="user-image" class="rounded-circle image" width="30px"
+                                                        height="30px;" style="display: flex;">
+                                                    </a>
                                                 </div>
-                                                @endif
-                                                @if ($order->order_status == -1)
-
-
-                                                <div class="dropdown">
-                                                    <div>
-                                                        <a class="dropbtn"><img src="{!! asset('images/status/active.png') !!}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dropdown-content">
-                                                        <a type="button" class="btn btn-secondary text-center text-light"
-                                                        onclick="todo({{$order->id}}, this)"
-                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
-                                                        <a type="button" class="btn btn-info text-center text-light"
-                                                            onclick="running({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
-                                                            <a type="button" class="btn btn-warning text-center text-light"
-                                                            onclick="check({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
-                                                            <a type="button" class="btn btn-success text-center text-light"
-                                                            onclick="finished({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
-                                                            <a type="button" class="btn btn-primary text-center text-light"
-                                                            onclick="activated({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
-                                                            <a type="button" class="btn btn-danger text-center text-light"
-                                                            onclick="calcelled({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
-                                                    </div>
+                                                <div class="dropdown-content">
+                                                    <a type="button" class="btn btn-secondary text-center text-light"
+                                                    onclick="todo({{$order->id}}, this)"
+                                                    data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
+                                                    <a type="button" class="btn btn-info text-center text-light"
+                                                        onclick="running({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
+                                                        <a type="button" class="btn btn-warning text-center text-light"
+                                                        onclick="check({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
+                                                        <a type="button" class="btn btn-success text-center text-light"
+                                                        onclick="finished({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
+                                                        <a type="button" class="btn btn-primary text-center text-light"
+                                                        onclick="activated({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
+                                                        <a type="button" class="btn btn-danger text-center text-light"
+                                                        onclick="calcelled({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
                                                 </div>
-                                                @endif
-                                                @if ($order->order_status == 1)
+                                            </div>
+                                            @endif
+                                            @if ($order->order_status == 3)
 
 
-                                                <div class="dropdown">
-                                                    <div>
-                                                        <a class="dropbtn"><img src="{!! asset('images/status/cancled.png') !!}"
-                                                            alt="user-image" class="rounded-circle image" width="30px"
-                                                            height="30px;" style="display: flex;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dropdown-content">
-                                                        <a type="button" class="btn btn-secondary text-center text-light"
-                                                        onclick="todo({{$order->id}}, this)"
-                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
-                                                        <a type="button" class="btn btn-info text-center text-light"
-                                                            onclick="running({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
-                                                            <a type="button" class="btn btn-warning text-center text-light"
-                                                            onclick="check({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
-                                                            <a type="button" class="btn btn-success text-center text-light"
-                                                            onclick="finished({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
-                                                            <a type="button" class="btn btn-primary text-center text-light"
-                                                            onclick="activated({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
-                                                            <a type="button" class="btn btn-danger text-center text-light"
-                                                            onclick="calcelled({{$order->id}}, this)"
-                                                            data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
-                                                    </div>
+                                            <div class="dropdown">
+                                                <div>
+                                                    <a class="dropbtn"><img src="{!! asset('images/status/check.png') !!}"
+                                                        alt="user-image" class="rounded-circle image" width="30px"
+                                                        height="30px;" style="display: flex;">
+                                                    </a>
                                                 </div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href=""><i class="fa fa-file-pdf-o"
-                                                    aria-hidden="true" style="font-size: 1.5em;"></i></a>
-                                                    <a href=""><i class="fa fa-download"
-                                                        aria-hidden="true" style="font-size: 1.5em;"></i></a>
-                                            <a href="" class="delete-confirm "><i class="fa fa-trash-o text-danger"
-                                                    aria-hidden="true" style="font-size: 1.5em;"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                                <div class="dropdown-content">
+                                                    <a type="button" class="btn btn-secondary text-center text-light"
+                                                    onclick="todo({{$order->id}}, this)"
+                                                    data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
+                                                    <a type="button" class="btn btn-info text-center text-light"
+                                                        onclick="running({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
+                                                        <a type="button" class="btn btn-warning text-center text-light"
+                                                        onclick="check({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
+                                                        <a type="button" class="btn btn-success text-center text-light"
+                                                        onclick="finished({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
+                                                        <a type="button" class="btn btn-primary text-center text-light"
+                                                        onclick="activated({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
+                                                        <a type="button" class="btn btn-danger text-center text-light"
+                                                        onclick="calcelled({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @if ($order->order_status == 4)
+
+
+                                            <div class="dropdown">
+                                                <div>
+                                                    <a class="dropbtn"><img src="{!! asset('images/status/todo.png') !!}"
+                                                        alt="user-image" class="rounded-circle image" width="30px"
+                                                        height="30px;" style="display: flex;">
+                                                    </a>
+                                                </div>
+                                                <div class="dropdown-content">
+                                                    <a type="button" class="btn btn-secondary text-center text-light"
+                                                    onclick="todo({{$order->id}}, this)"
+                                                    data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
+                                                    <a type="button" class="btn btn-info text-center text-light"
+                                                        onclick="running({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
+                                                        <a type="button" class="btn btn-warning text-center text-light"
+                                                        onclick="check({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
+                                                        <a type="button" class="btn btn-success text-center text-light"
+                                                        onclick="finished({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
+                                                        <a type="button" class="btn btn-primary text-center text-light"
+                                                        onclick="activated({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
+                                                        <a type="button" class="btn btn-danger text-center text-light"
+                                                        onclick="calcelled({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @if ($order->order_status == -1)
+
+
+                                            <div class="dropdown">
+                                                <div>
+                                                    <a class="dropbtn"><img src="{!! asset('images/status/active.png') !!}"
+                                                        alt="user-image" class="rounded-circle image" width="30px"
+                                                        height="30px;" style="display: flex;">
+                                                    </a>
+                                                </div>
+                                                <div class="dropdown-content">
+                                                    <a type="button" class="btn btn-secondary text-center text-light"
+                                                    onclick="todo({{$order->id}}, this)"
+                                                    data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
+                                                    <a type="button" class="btn btn-info text-center text-light"
+                                                        onclick="running({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
+                                                        <a type="button" class="btn btn-warning text-center text-light"
+                                                        onclick="check({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
+                                                        <a type="button" class="btn btn-success text-center text-light"
+                                                        onclick="finished({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
+                                                        <a type="button" class="btn btn-primary text-center text-light"
+                                                        onclick="activated({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
+                                                        <a type="button" class="btn btn-danger text-center text-light"
+                                                        onclick="calcelled({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @if ($order->order_status == 1)
+
+
+                                            <div class="dropdown">
+                                                <div>
+                                                    <a class="dropbtn"><img src="{!! asset('images/status/cancled.png') !!}"
+                                                        alt="user-image" class="rounded-circle image" width="30px"
+                                                        height="30px;" style="display: flex;">
+                                                    </a>
+                                                </div>
+                                                <div class="dropdown-content">
+                                                    <a type="button" class="btn btn-secondary text-center text-light"
+                                                    onclick="todo({{$order->id}}, this)"
+                                                    data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">TO DO</a>
+                                                    <a type="button" class="btn btn-info text-center text-light"
+                                                        onclick="running({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Running</a>
+                                                        <a type="button" class="btn btn-warning text-center text-light"
+                                                        onclick="check({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Check</a>
+                                                        <a type="button" class="btn btn-success text-center text-light"
+                                                        onclick="finished({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Finished</a>
+                                                        <a type="button" class="btn btn-primary text-center text-light"
+                                                        onclick="activated({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Activated</a>
+                                                        <a type="button" class="btn btn-danger text-center text-light"
+                                                        onclick="calcelled({{$order->id}}, this)"
+                                                        data-id="{{ $order->id }}" style="border-radius: 15px 15px 15px 15px;">Calcelled</a>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('invoicepdf/'.$order->id) }}"
+                                                class=""><i
+                                                    class="fa fa-file-text text-primary mr-1" aria-hidden="true"
+                                                    style="font-size: 1.5em;"></i></a>
+                                            <a href="{{ url('editorder/'.$order->id) }}"
+                                                class=""><i
+                                                    class="fa fa-pencil-square-o text-primary mr-1" aria-hidden="true"
+                                                    style="font-size: 1.5em;"></i></a>
+
+                                             <a href="{{ url('deleteorder/' . $order->id) }}" class="delete-confirm "><i
+                                                        class="fa fa-trash-o text-danger" aria-hidden="true"
+                                                        style="font-size: 1.5em;"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-@endsection
+            <!-- Modal to add new record -->
+        </section>
+        <!--/ Basic table -->
+        <!--/ Row grouping -->
+    @endsection
 
 
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.checkboxes.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script>
+    @section('vendor-script')
+        {{-- vendor files --}}
+        <script src="{{ asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.checkboxes.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
+        <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
+    @endsection
+    @section('page-script')
+        {{-- Page js files --}}
+        <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-@endsection
+
+    @endsection
+    <script>
+        function down(id, order,elem) {
+            $.ajax({
+                type: 'GET',
+                url: 'dropupdate/' + id + '/' + order,
+                success: function(data) {
+                    location.reload();
+                    // var data=JSON.parse(data);
+                    // if (data) {
+                    //     var empimg = data.profile_picture;
+                    //     let orignalimg = $(elem).parent('div').parent('div').parent('div').parent('td').html();
+                    //     console.log(orignalimg);
+
+                    // }
+
+                }
+            });
+        }
+        function unassing(id, order) {
+            $.ajax({
+                type: 'GET',
+                url: 'unassingemploy/' + id + '/' + order,
+                success: function(data) {
+                    console.log(data);
+                    location.reload();
+
+                }
+            });
+        }
+        function todo(order,elem) {
+
+            $.ajax({
+                type: 'GET',
+                url: 'todo/'+ order,
+                success: function(data) {
+                      var data=JSON.parse(data);
+                      if(data)
+                      {
+                         var time = data.completion_date;
+                         var price = data.total_price;
+                         var date = moment(time).format('dddd, DD, MMMM  YYYY');
+                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/simpel.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
+                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div>  </div>');
+                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-danger"><div class="avatar-content"><i class="fa fa-times"></i></div> </div></p>');
+                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
+                         console.log(final_price);
+
+
+                      }
+                }
+            });
+
+                }
+
+
+         function check(order,elem) {
+
+            $.ajax({
+                type: 'GET',
+                url: 'check/'+ order,
+                success: function(data) {
+                      var data=JSON.parse(data);
+                        //   console.log(data);
+                      if(data)
+                      {
+                         var time = data.completion_date;
+                         var price = data.total_price;
+                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
+                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/check.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
+                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-warning" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
+                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
+                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
+                      }
+                }
+            });
+
+                }
+                function finished(order,elem) {
+             $.ajax({
+                type: 'GET',
+                url: 'finished/'+ order,
+                success: function(data) {
+                      var data=JSON.parse(data);
+                        //   console.log(data);
+                      if(data)
+                      {
+                         var time = data.completion_date;
+                         var price = data.total_price;
+                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
+                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/todo.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
+                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-success" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
+                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
+                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
+                      }
+                }
+            });
+
+                }
+                function activated(order,elem) {
+            $.ajax({
+                type: 'GET',
+                url: 'activated/'+ order,
+                success: function(data) {
+                      var data=JSON.parse(data);
+                        //   console.log(data);
+                      if(data)
+                      {
+                         var time = data.completion_date;
+                         var price = data.total_price;
+                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
+                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/active.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
+                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-primary" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
+                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
+                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
+                      }
+                }
+            });
+
+                }
+                function calcelled(order,elem) {
+            $.ajax({
+                type: 'GET',
+                url: 'cancelled/'+ order,
+                success: function(data) {
+                      var data=JSON.parse(data);
+                        //   console.log(data);
+                      if(data)
+                      {
+                         var time = data.completion_date;
+                         var price = data.total_price;
+                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
+                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/cancled.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
+                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-danger" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
+                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
+                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-danger">€' +price+ '</span>');
+                      }
+                }
+            });
+
+                }
+                function running(order,elem) {
+            $.ajax({
+                type: 'GET',
+                url: 'running/'+ order,
+                success: function(data) {
+                      var data=JSON.parse(data);
+                        //   console.log(data);
+                      if(data)
+                      {
+                         var time = data.completion_date;
+                         var price = data.total_price;
+                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
+                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/running.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
+                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-info" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
+                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
+                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
+                      }
+                }
+            });
+
+                }
+    </script>

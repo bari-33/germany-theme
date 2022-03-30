@@ -140,6 +140,7 @@ return [
      "completion"=>"completion",
      "Data"=>"Data",
      "Express"=>"Express",
+     "Order button"=>"Order button",
     //  <  *//End  project //*>
     "Aktueller Auftrag" => "Aktueller Auftrag",
     "Meine Auftrag" => "Meine Auftrag",

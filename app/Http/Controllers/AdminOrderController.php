@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use PDF;
 
 class AdminOrderController extends Controller
 {
@@ -55,20 +56,20 @@ class AdminOrderController extends Controller
             switch ($request->input('action')) {
 
                 case 'all':
-                    $orders = Order::orderBy('created_at', 'Desc')->get();
+                    $orders = Order::orderBy('created_at', 'ASC')->get();
                     break;
                 case 'progress':
 
-                    $orders = Order::where('order_status', '2')->orderBy('created_at', 'Desc')->get();
+                    $orders = Order::where('order_status', '2')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'waiting':
-                    $orders = Order::where('order_status', '1')->orderBy('created_at', 'Desc')->get();
+                    $orders = Order::where('order_status', '1')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'completed':
-                    $orders = Order::where('order_status', '4')->orderBy('created_at', 'Desc')->get();
+                    $orders = Order::where('order_status', '4')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'cancelled':
-                    $orders = Order::where('order_status', '-1')->orderBy('created_at', 'Desc')->get();
+                    $orders = Order::where('order_status', '-1')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'deleted':
                     $orders = Order::onlyTrashed()->get();
@@ -78,14 +79,218 @@ class AdminOrderController extends Controller
         } else {
             $trash = true;
             // dd($request);
-            $orders = Order::whereBetween('created_at', [$request->date_from . " 00:00:00", $request->date_to . " 23:59:59"])->orderBy('created_at', 'Desc')->get();
+            $orders = Order::whereBetween('created_at', [$request->date_from . " 00:00:00", $request->date_to . " 23:59:59"])->orderBy('created_at', 'ASC')->get();
         }
 
 
-        // return view('adminorders.index', compact('orders', 'trash', 'dropdown', 'employees'));
+        return view('orders.list_order', compact('orders', 'trash', 'dropdown', 'employees'));
     }
-    public function ordersdetail()
+    public function dropupdate($id,$order)
     {
-        # code...
+        $status = "1";
+
+        $order_id_in_db = User::where("id", $id)->get('order_id')->first();
+        if (isset($order_id_in_db->order_id)) {
+            $ind_order_id = explode(",", $order_id_in_db->order_id);
+            if (!in_array($order, $ind_order_id)) {
+              $users =  User::where("id", $id)->update([
+                    "status" => $status,
+                    "order_id" => empty($order_id_in_db->order_id) ? '' . $order : $order_id_in_db->order_id . ',' . $order
+                ]);
+
+            }
+        }
+        $order_status = "2";
+        $data = order::where("id", $order)->get('user_id')->first();
+        if (isset($data->user_id)) {
+            $employ = explode(",", $data->user_id);
+            if (!in_array($id, $employ)) {
+                order::where("id", $order)->update([
+                    "order_status"=>$order_status,
+                    "user_id" => empty($data->user_id) ? '' . $id : $data->user_id . ',' . $id
+                ]);
+
+            }
+        }
+        $userss = User::where("id", $id)->first();
+        $data = json_encode($userss);
+        return response($data);
+    }
+    public function unassingemploy($id,$order_id)
+    {
+        $data = User::where('id', $id)->select('order_id')->first();
+        $order   =  $data->order_id;
+        $order_id_db = explode(',', $order);
+        if (($key = array_search($order_id, $order_id_db)) !== false) {
+            unset($order_id_db[$key]);
+        }
+        $orderss = implode(',', $order_id_db);
+        user::where('id', $id)->update(["order_id" => $orderss]);
+
+        $data1 = order::where('id', $order_id)->select('user_id')->first();
+        $order1   =  $data1->user_id;
+        $order_db = explode(',', $order1);
+        if (($key = array_search($id, $order_db)) !== false) {
+            unset($order_db[$key]);
+        }
+        $orderss1 = implode(',', $order_db);
+        $order_status = "0";
+        order::where('id', $order_id)->update(["user_id" => $orderss1,
+         "order_status"=>$order_status,
+         ]);
+
+         $userss = User::where("id", $id)->first();
+         $data = json_encode($userss);
+         return response($data);
+
+    }
+    public function running($order)
+    {
+        $order = Order::find($order);
+        $order->order_status = '2';
+        $order->payment_status = '0';
+        $order->save();
+        $data = json_encode($order);
+        return response($data);
+    }
+
+    public function check($order)
+    {
+        $order = Order::find($order);
+        $order->order_status = '3';
+        $order->payment_status = '0';
+        $order->save();
+          $data = json_encode($order);
+        return response($data);
+    }
+    public function finished($order)
+    {
+        $order = Order::find($order);
+        $order->order_status = '4';
+        $order->payment_status = '0';
+        $order->save();
+          $data = json_encode($order);
+        return response($data);
+    }
+    public function activated($order)
+    {
+        $order = Order::find($order);
+        $order->order_status = '-1';
+        $order->payment_status = '0';
+        $order->save();
+          $data = json_encode($order);
+        return response($data);
+    }
+    public function cancelled($order)
+    {
+        $order = Order::find($order);
+        $order->order_status = '1';
+        $order->payment_status = '-1';
+        $order->save();
+          $data = json_encode($order);
+        return response($data);
+    }
+
+    public function todo($order)
+    {
+        $order = Order::find($order);
+        $order->order_status = '0';
+        $order->payment_status = '0';
+        $order->save();
+          $data = json_encode($order);
+        return response($data);
+    }
+    public function deleteorder($id)
+    {
+         Order::where('id', $id)->delete();
+        return redirect('list_order');
+    }
+    public function editorder($id)
+    {
+        $employees = User::whereHas('roles', function ($q) {
+            $q->where('id', '2');
+        })->whereDoesntHave('employee_orders', function ($q) use ($id) {
+            $q->where('order_id', $id);
+        })->get();
+        $order = Order::find($id);
+        $product = Product::find($order->product_id);
+        $design = Design::find($order->design_id);
+        $website = Website::find($order->website_id);
+        $vat['complete_application'] = str_replace('.', ',', number_format(((float)str_replace(',', '.', $product->regular_price) * 0.19), 2));
+        $vat['application_homepage'] = str_replace('.', ',', number_format(((float)str_replace(',', '.', $website->regular_price) * 0.19), 2));
+        $vat['design'] = str_replace('.', ',', number_format(((float)str_replace(',', '.', $design->regular_price) * 0.19), 2));
+        $vat['express_processing'] = str_replace('.', ',', number_format(((float)str_replace(',', '.', $order->express) * 0.19), 2));
+        $vat['total'] = str_replace('.', ',', number_format(((float)str_replace(',', '.', $order->total_price) * 0.19), 2));
+        $vat['product_price'] = $product->regular_price;
+        $vat['website_price'] = $product->regular_price;
+        $vat['design_price'] = $product->regular_price;
+        return view('orders.edit_order', compact('order', 'employees', 'vat'));
+    }
+    public function trialDocuments(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        $document = $request->file('file');
+        $documentName = $document->getClientOriginalName();
+        $document->move(public_path('files/trialdocuments'), $documentName);
+
+        $documents = new TrialDocument();
+        $documents->name = $documentName;
+        $documents->order_id = $id;
+        $documents->save();
+
+        return response()->json(['success' => $documentName]);
+    }
+    public function invoicepdf($id)
+    {
+        $order=Order::find($id);
+        $user=User::find($order->customer_id);
+        $product=Product::find($order->product_id);
+        $design=Design::find($order->design_id);
+        $website=Website::find($order->website_id);
+        $total_price_without_tax=(float)str_replace(',','.',$order->total_price);
+        $tax=$total_price_without_tax*0.19;
+        $total_price=$total_price_without_tax+$tax;
+
+        $total_price=str_replace('.',',',number_format($total_price, 2));
+        $tax=str_replace('.',',',number_format($tax, 2));
+        $total_price_without_tax=str_replace('.',',',number_format($total_price_without_tax, 2));
+
+        $items=[
+            'product_name'=>$product->product_title,
+            'product_price'=>$product->regular_price,
+            'product_language'=>$product->language,
+            'design_name'=>$design->design_title,
+            'design_category'=>$design->product_category,
+            'design_price'=>$design->regular_price,
+            'website_name'=>$website->website_title,
+            'website_category'=>$website->product_category,
+            'website_price'=>$website->regular_price,
+            'tax'=>$tax,
+            'price'=>$total_price_without_tax,
+            'total_price'=>$total_price,
+            'express'=>$order->express,
+            'order_created_at'=>$order->created_at,
+            'order_completion_date'=>$order->completion_date,
+            'order_id'=>$order->id,
+            'order_status'=>$order->order_status,
+            'user_name'=>$order->user->name,
+            'email'=>$order->user->email,
+            'mobile'=>$order->user->clientdetail->mobile,
+            'street_no'=>$order->user->clientdetail->street_no,
+            'house_no'=>$order->user->clientdetail->house_no,
+            'zip_code'=>$order->user->clientdetail->zip_code,
+            'city'=>$order->user->clientdetail->city,
+
+        ];
+
+        $mpdf = new  \Mpdf\Mpdf();
+
+        $html = view('orders.dowenlode', compact('items'));
+        $mpdf->WriteHTML($html, 2);
+        $filename = $order->id . '.pdf';
+        $destination =  $filename;
+        $mpdf->Output($destination, 'D');
+
     }
 }
