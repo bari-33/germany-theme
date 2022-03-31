@@ -140,6 +140,15 @@ return [
     "Data"=>"Dados",
     "Express"=>"Expresso",
     "Order button"=>"Order button",
+    "Update Order"=>"Atualizar pedido",
+    "Outstanding payment"=>"Pagamento pendente",
+    "Refunded"=>"Devolveu",
+    "order number"=>"número do pedido",
+    "Creation Date"=>"Data de criação",
+    "Date of invoice"=>"Data da fatura",
+    "production date"=>"data de produção",
+    "Billing address"=>"Endereço de Cobrança",
+
         //  <  *//End  project //*>
 
     "Apps & Pages" => "Aplicativos e páginas",

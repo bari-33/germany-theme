@@ -87,13 +87,13 @@ class AdminOrderController extends Controller
     }
     public function dropupdate($id,$order)
     {
+        echo '<pre>'; print_r($id); echo '</pre>'; die;
         $status = "1";
-
         $order_id_in_db = User::where("id", $id)->get('order_id')->first();
         if (isset($order_id_in_db->order_id)) {
             $ind_order_id = explode(",", $order_id_in_db->order_id);
             if (!in_array($order, $ind_order_id)) {
-              $users =  User::where("id", $id)->update([
+                 User::where("id", $id)->update([
                     "status" => $status,
                     "order_id" => empty($order_id_in_db->order_id) ? '' . $order : $order_id_in_db->order_id . ',' . $order
                 ]);
@@ -213,6 +213,7 @@ class AdminOrderController extends Controller
             $q->where('order_id', $id);
         })->get();
         $order = Order::find($id);
+        $user = User::find($order->customer_id);
         $product = Product::find($order->product_id);
         $design = Design::find($order->design_id);
         $website = Website::find($order->website_id);
@@ -276,21 +277,218 @@ class AdminOrderController extends Controller
             'order_status'=>$order->order_status,
             'user_name'=>$order->user->name,
             'email'=>$order->user->email,
-            'mobile'=>$order->user->clientdetail->mobile,
-            'street_no'=>$order->user->clientdetail->street_no,
-            'house_no'=>$order->user->clientdetail->house_no,
-            'zip_code'=>$order->user->clientdetail->zip_code,
-            'city'=>$order->user->clientdetail->city,
+            'mobile' => $order->user->userdetail->mobile,
+            'street_no'=>$order->user->userdetail->street_no,
+            'house_no'=>$order->user->userdetail->house_no,
+            'zip_code'=>$order->user->userdetail->zip_code,
+            'city'=>$order->user->userdetail->city,
 
         ];
 
-        $mpdf = new  \Mpdf\Mpdf();
-
+        $mpdf = new \Mpdf\Mpdf();
+        // $stylesheet = file_get_contents('css/style.css');
         $html = view('orders.dowenlode', compact('items'));
-        $mpdf->WriteHTML($html, 2);
+        // $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
+        $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $filename = $order->id . '.pdf';
         $destination =  $filename;
         $mpdf->Output($destination, 'D');
 
+    }
+    public function deleteall(request $request)
+    {
+        $selector = $request->selector;
+        if ($selector != 0) {
+            foreach ($selector as  $value) {
+                Order::where('id', $value)->delete();
+            }
+        }
+
+        return redirect('list_order');
+    }
+    public function paid(request $request)
+    {
+        $payment_status = "1";
+        $selector = $request->selector;
+        $selector = $request->selector;
+        foreach ($selector as  $value) {
+            Order::where('id', $value)->update(["payment_status" => $payment_status]);
+        }
+        return redirect('list_order');
+    }
+    public function restore(request $request)
+    {
+        $selector = $request->selector;
+        foreach ($selector as  $value) {
+            order::where('id', $value)->withTrashed()->restore();
+        }
+        return redirect('list_order');
+
+    }
+    public function allinvoice(request $request)
+    {
+        $selector = $request->selector;
+        $invoice = [];
+        $path = public_path('myfiles/');
+        if (is_dir($path)) {
+            File::deleteDirectory($path);
+        }
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        foreach ($selector as  $value) {
+            $order = Order::find($value);
+            $user = User::find($order->customer_id);
+            $product = Product::find($order->product_id);
+            $design = Design::find($order->design_id);
+            $website = Website::find($order->website_id);
+            $total_price_without_tax = (float)str_replace(',', '.', $order->total_price);
+            $tax = $total_price_without_tax * 0.19;
+            $total_price = $total_price_without_tax + $tax;
+
+            $total_price = str_replace('.', ',', number_format($total_price, 2));
+            $tax = str_replace('.', ',', number_format($tax, 2));
+            $total_price_without_tax = str_replace('.', ',', number_format($total_price_without_tax, 2));
+
+            $items = [
+                'product_name' => $product->product_title,
+                'product_price' => $product->regular_price,
+                'product_language' => $product->language,
+                'design_name' => $design->design_title,
+                'design_category' => $design->product_category,
+                'design_price' => $design->regular_price,
+                'website_name' => $website->website_title,
+                'website_category' => $website->product_category,
+                'website_price' => $website->regular_price,
+                'tax' => $tax,
+                'price' => $total_price_without_tax,
+                'total_price' => $total_price,
+                'express' => $order->express,
+                'order_created_at' => $order->created_at,
+                'order_completion_date' => $order->completion_date,
+                'order_id' => $order->id,
+                'order_status' => $order->order_status,
+                'user_name' => $order->user->name,
+                'email' => $order->user->email,
+                'mobile' => $order->user->userdetail->mobile,
+                'street_no' => $order->user->userdetail->street_no,
+                'house_no' => $order->user->userdetail->house_no,
+                'zip_code' => $order->user->userdetail->zip_code,
+                'city' => $order->user->userdetail->city,
+
+            ];
+
+            array_push($invoice, $items);
+
+            foreach ($invoice as  $items) {
+                $mpdf = new  \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+                $html = view('orders.dowenlode', compact('items'))->render();
+                $mpdf->WriteHTML($html,2);
+                $filename = $order->id . '.pdf';
+                $destination = $path . $filename;
+                $mpdf->Output($destination, 'F');
+            }
+
+
+        }
+        $zip = new ZipArchive;
+        $zipfile = public_path('invoice.zip');
+        if (is_dir($zipfile)) {
+            unlink(public_path('invoice.zip'));
+        }
+        $fileName = 'invoice.zip';
+        if ($zip->open(public_path($fileName), ZipArchive::CREATE) === TRUE) {
+            $files = File::files(public_path('myfiles'));
+            foreach ($files as $key => $value) {
+                $file = basename($value);
+                $zip->addFile($value, $file);
+            }
+
+            $zip->close();
+        }
+
+
+        return response()->download(public_path($fileName));
+    }
+
+    public function updateorder(Request $request, $id)
+    {
+        $order = Order::find($id);
+        //changing order status
+        $order->order_status = $request->get('order_status');
+
+        $order->save();
+
+        // fetching data for products designs and websites
+        $product = Product::find($order->product_id);
+        $design = Design::find($order->design_id);
+        $website = Website::find($order->website_id);
+
+        $product_price = (float)str_replace(',', '.', $product->regular_price);
+        $design_price = (float)str_replace(',', '.', $design->regular_price);
+        $website_price = (float)str_replace(',', '.', $website->regular_price);
+        $express_price = (float)$order->express;
+        $total_price = $product_price + $design_price + $website_price + $express_price;
+        $tax = $total_price * 0.19;
+
+        $account_data = [
+            'user' => $order->user->name,
+            'order_id' => $order->id,
+            'product_name' => $product->product_title,
+            'product_price' => $product->regular_price,
+            'product_language' => $product->language,
+            'design_name' => $design->design_title,
+            'design_category' => $design->product_category,
+            'design_price' => $design->regular_price,
+            'website_name' => $website->website_title,
+            'website_category' => $website->product_category,
+            'website_price' => $website->regular_price,
+            'total_price' => $order->total_price,
+            'express' => $express_price,
+            'date' => Carbon::parse($order->created_at->toDateString())->format('M d Y'),
+            'tax' => $tax,
+            'finishing_date' => Carbon::parse($order->completion_date)->format('M d Y'),
+        ];
+
+
+        if ($request->get('order_status') == "2") {
+            // Mail::to($order->user->email)->send(new OrderProcessing($account_data));
+        }
+
+        if ($request->get('order_status') == "3") {
+            // Mail::to($order->user->email)->send(new OrderWaitingPayment($account_data));
+        }
+
+        if ($request->get('order_status') == "4") {
+            // Mail::to($order->user->email)->send(new OrderCompleted($account_data));
+        }
+
+        if ($request->get('order_status') == "-1") {
+            // Mail::to($order->user->email)->send(new OrderCancelled($account_data));
+        }
+        if ($request->get('order_status') == "-2") {
+            // Mail::to($order->user->email)->send(new OrderRefunded($account_data));
+        }
+
+        return redirect('list_order');
+    }
+
+    public function addEmployee(Request $request, $id)
+    {
+        echo '<pre>'; print_r($id); echo '</pre>'; die;
+        $order = Order::find($id);
+        $employee = User::find($request->get('employee_id'));
+        $total_price = (float)str_replace(',', '.', $order->total_price);
+
+        if ($employee->userdetail->billing == "1") {
+            //percentage
+            $amount = $total_price * (($employee->userdetail->amount) / 100);
+        } else if ($employee->userdetail->billing == "2") { //fixed
+            $amount = $employee->userdetail->amount;
+        }
+
+        $order->employees()->syncWithoutDetaching([($request->get('employee_id')) => ['amount' => $amount]]);
+
+        return response()->json(['success' => 'Employee is successfully added']);
     }
 }

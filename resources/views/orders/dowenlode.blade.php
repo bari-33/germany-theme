@@ -10,7 +10,10 @@
 
     <!-- App css -->
 
+<style>
 
+
+</style>
 </head>
 
 <body>
@@ -23,10 +26,10 @@
                     <div class="col-md-5 mr-5">
                         <div class="row ml-2 pb-3" style="border-bottom: 0.5px solid lightgrey;width: 50%">
                             <div class="col-md-7">
-                                <img src="{!! asset('images/logo/logo.png') !!}" alt="" style="width: 50%">
+                                {{-- <img src="{!! asset('public/img/logo/logo.png') !!}" alt="" style="width: 50%"> --}}
                             </div>
                             <div class="col-md-3">
-                                <p class="mt-1" style="font-size: 0.7em">Sonninstraße 6
+                                <p class="" style="font-size: 0.7em">Sonninstraße 6
                                     20097 Hamburg</p>
                             </div>
                         </div>

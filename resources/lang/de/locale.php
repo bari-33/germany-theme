@@ -141,6 +141,15 @@ return [
     "Data"=>"Daten",
     "Express"=>"Ausdrücken",
     "Order button"=>"Order button",
+    "Update Order"=>"Bestellung aktualisieren",
+    "Outstanding payment"=>"Ausstehende Zahlung",
+    "Refunded"=>"Erstattet",
+    "order number"=>"Bestellnummer",
+    "Creation Date"=>"Erstellungsdatum",
+    "Date of invoice"=>"Rechnungsdatum",
+    "production date"=>"Produktionsdatum",
+    "Billing address"=>"Rechnungsadresse",
+
        //  <  *//End  project //*>
     "Apps & Pages" => "Apps & Seiten",
     "User Interface" => "Benutzeroberfläche",

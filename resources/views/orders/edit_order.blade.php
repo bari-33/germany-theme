@@ -24,7 +24,7 @@
 @section('content')
 
     <!-- Validation -->
-    <h1>{{ __('locale.Add Designs') }}</h1>
+    <h1>{{ __('locale.Update Order') }}</h1>
     @if (session('alert'))
         <div class="demo-spacing-0">
             <div class="alert alert-success" role="alert">
@@ -33,11 +33,7 @@
         </div>
     @endif
     <section class="bs-validation">
-         <div class="row mt-2">
-        <div class="col-md-6">
-            <h3><strong>Bestellung bearbeiten</strong></h3>
-        </div>
-    </div>
+
 
 
     <!-- MODAL COMES HERE -->
@@ -158,7 +154,7 @@
                         @foreach($employees as $employee)
                         <tr>
                         <td>{{$employee->name}} <sub>{{$employee->userdetail->deutch_language}},{{$employee->userdetail->english_language}},{{$employee->userdetail->spanish_language}},{{$employee->userdetail->french_language}}</sub></td>
-                            <td><button class="btn btn-light btn-sm addEmployee" data-id="{{$employee->id}}">+</button></td>
+                            <td><button  onclick="down({{ $employee->id }},{{ $order->id }},this)" class="btn btn-light btn-sm">+</button></td>
                         </tr>
                             @endforeach
                         </tbody>
@@ -211,15 +207,15 @@
         <div class="col-12">
             <div class="card" style="border-left:1px solid black;">
                 <div class="card-body">
-                    <form name="form" action="{{url("updateorder")}}" method="POST" enctype="multipart/form-data">
-                        @method('PATCH')
+                    <form name="form" action="{{url("updateorder/".$order->id)}}" method="POST" enctype="multipart/form-data">
+                        {{-- @method('PATCH') --}}
                         @csrf
 
                         <div class="row pb-3" style="border-bottom: 1px solid lightgrey">
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <h5>Bestellungsnummer: </h5>
+                                        <h5>{{ __('locale.order number') }}: </h5>
                                     </div>
                                     <div class="col-md-4">
                                         <h5>{{$order->id}}</h5>
@@ -232,10 +228,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5>Erstellungsdatum</h5>
+                                        <h5>{{ __('locale.Creation Date') }}</h5>
                                     </div>
                                     <div class="col-md-6">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('locale.Status') }}</h5>
                                     </div>
 
                                     <div class="col-md-3">
@@ -248,22 +244,22 @@
 
                                     <div class="offset-md-1 col-md-5">
                                         <select name="order_status" id="order_status" class="form-control">
-                                            <option value="1" @if($order->order_status==1) selected @endif>In Warte Stellung</option>
-                                            <option value="4" @if($order->order_status==4) selected @endif>Fertiggestellt</option>
-                                            <option value="2" @if($order->order_status==2) selected @endif>In Bearbeitung</option>
-                                            <option value="3" @if($order->order_status==3) selected @endif>Zahlung ausstehend</option>
-                                            <option value="-1" @if($order->order_status==-1) selected @endif>Storniert</option>
-                                            <option value="-2" @if($order->order_status==-2) selected @endif>Rückerstattet</option>
+                                            <option value="3" @if($order->order_status==3) selected @endif>{{ __('locale.On hold') }}</option>
+                                            <option value="4" @if($order->order_status==4) selected @endif>{{ __('locale.Done') }}</option>
+                                            <option value="2" @if($order->order_status==2) selected @endif>{{ __('locale.In Progress') }}</option>
+                                            <option value="-1" @if($order->order_status==-1) selected @endif>{{ __('locale.Outstanding payment') }}</option>
+                                            <option value="1" @if($order->order_status==1) selected @endif>{{ __('locale.Canceled') }}</option>
+                                            <option value="-2" @if($order->order_status==-2) selected @endif>{{ __('locale.Refunded') }}</option>
                                         </select>
                                     </div>
 
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5>Rechnungsdatum</h5>
+                                        <h5>{{ __('locale.Date of invoice') }}</h5>
                                     </div>
                                     <div class="col-md-6">
-                                        <h5>Rechnung</h5>
+                                        <h5>{{ __('locale.Bills') }}</h5>
                                     </div>
 
                                     <div class="col-md-3">
@@ -275,15 +271,15 @@
                                     </div>
 
                                     <div class="offset-md-1 col-md-5">
-                                        <button class="btn btn-primary" id="invoiceDownload">
-                                            DOWNLOADEN <i class="fe-download"></i>
-                                        </button>
+                                        <a  type= "button" class="btn btn-primary" id="invoiceDownload">
+                                            {{ __('locale.Bills') }} <i class="fe-download"></i>
+                                        </a>
                                     </div>
 
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5>Fertigunsdatum</h5>
+                                        <h5>{{ __('locale.production date') }}</h5>
                                     </div>
                                     <div class="col-md-6">
                                         <h5>Express Service</h5>
@@ -308,25 +304,25 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4>Rechnungsadresse</h4>
+                                        <h4>{{ __('locale.Billing address') }}</h4>
                                     </div>
                                 </div>
                                 <div class="row mt-3 ml-2">
                                     <div class="col-md-12">
-                                        {{-- <address>
+                                        <address>
                                             {{$order->user->name}} <br>
-                                            {{$order->user->clientdetail->street_no}} {{$order->user->clientdetail->house_no}}, <br>
-                                            {{$order->user->clientdetail->zip_code}} {{$order->user->clientdetail->city}}
+                                            {{-- {{$order->user->userdetails->street_no}} {{$order->user->clientdetail->house_no}}, <br>
+                                            {{$order->user->clientdetail->zip_code}} {{$order->user->clientdetail->city}} --}}
                                         </address>
                                         <p><b>E-Mail-Adresse:</b><br>{{$order->user->email}}</p>
-                                        <p><b>Telefon:</b><br>{{$order->user->clientdetail->mobile}}</p> --}}
+                                        {{-- <p><b>Telefon:</b><br>{{$order->user->clientdetail->mobile}}</p> --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary waves-effect waves-light" style="border-radius: 25px !important; ">Speichern</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">{{ __('locale.Update') }}</button>
                             </div>
                         </div>
                     </form>
@@ -647,213 +643,36 @@
     <script src="{{ asset(mix('js/scripts/forms/form-validation.js')) }}"></script>
     <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
+    $( document ).ready(function() {
+ $('#invoiceDownload').on('click',function (e) {
+            e.preventDefault();
+            window.open('{{url('invoicepdf/'.$order->id)}}', '_blank');
 
-    Dropzone.options.trial =
-        {
-            maxFilesize: 12,
-            renameFile: function(file) {
-                var dt = new Date();
-                var time = dt.getTime();
-                return time+file.name;
-            },
-            acceptedFiles: ".pdf,.doc,.TIFF,.JPEG,.txt,.docx,.doc,.dot,.wpd,.wps,.rtf,.csv,.xls,.xlsx",
-            addRemoveLinks: true,
-            timeout: 5000,
-            removedfile: function(file)
-            {
-                var name = file.upload.filename;
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    type: 'POST',
-                    url: '{{ url("adminorders/trialdocuments") }}',
-                    data: {filename: name},
-                    success: function (data){
-                        console.log("File has been successfully removed!!");
-
-                    },
-                    error: function(e) {
-                        console.log(e);
-                    }});
-                var fileRef;
-                return (fileRef = file.previewElement) != null ?
-                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
-            },
-
-            success: function(file, response)
-            {
-                console.log(response);
-                $('#documentsSubmit').attr('disabled',false);
-
-
-            },
-            error: function(file, response)
-            {
-                return false;
-            }
-        };
-
-    Dropzone.options.finished =
-        {
-            maxFilesize: 12,
-            renameFile: function(file) {
-                var dt = new Date();
-                var time = dt.getTime();
-                return time+file.name;
-            },
-            acceptedFiles: ".pdf,.doc,.TIFF,.JPEG,.txt,.docx,.doc,.dot,.wpd,.wps,.rtf,.csv,.xls,.xlsx",
-            addRemoveLinks: true,
-            timeout: 5000,
-            removedfile: function(file)
-            {
-                var name = file.upload.filename;
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    type: 'POST',
-                    url: '{{ url("adminorders/finisheddocuments") }}',
-                    data: {filename: name},
-                    success: function (data){
-                        console.log("File has been successfully removed!!");
-
-                    },
-                    error: function(e) {
-                        console.log(e);
-                    }});
-                var fileRef;
-                return (fileRef = file.previewElement) != null ?
-                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
-            },
-
-            success: function(file, response)
-            {
-                console.log(response);
-
-
-
-            },
-            error: function(file, response)
-            {
-                console.log(response);
-                return false;
-            }
-        };
-
-
-
-    $('.addEmployee').on('click',function (e) {
-        $(this).text('Added').attr('disabled',true);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
-                jQuery.ajax({
-                    url: "{{ url('/adminorders/addEmployee/'.$order->id) }}",
-                    method: 'post',
-                    data: {
-                        employee_id: $(this).attr('data-id')
-                    },
-                    success: function (result) {
-
-                        console.log(result);
-
-                    }
-                });
-
-
-    });
-
-
-    $('.removeEmployee').on('click',function (e) {
-
-        $(this).text('removed').attr('disabled',true);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        });
-        jQuery.ajax({
-            url: "{{ url('/adminorders/removeEmployee/'.$order->id) }}",
-            method: 'post',
-            data: {
-                employee_id: $(this).attr('data-id')
-            },
-            success: function (result) {
-                $(this).text('saved');
-
-                console.log(result);
-
-            }
         });
 
 
-    });
-
-
-    // trial documents modal save button
-
-    $('#invoiceDownload').on('click',function (e) {
-        e.preventDefault();
-        window.open('{{url('invoices/pdf/'.$order->id)}}', '_blank');
 
     });
 
-    $('#trialDocumentsSave').on('click',function () {
-        location.reload(true);
-    });
-    $('#finishedDocumentsSave').on('click',function () {
-        location.reload(true);
-    });
-    $('#addEmployeeSave').on('click',function () {
-        location.reload(true);
-    });
+    function down(id, order,elem) {
+            $.ajax({
+                type: 'GET',
+                url: 'dropupdate/' + id + '/' + order,
+                success: function(data) {
+                    location.reload();
+                    // var data=JSON.parse(data);
+                    // if (data) {
+                    //     var empimg = data.profile_picture;
+                    //     let orignalimg = $(elem).parent('div').parent('div').parent('div').parent('td').html();
+                    //     console.log(orignalimg);
 
-    $('#removeEmployeeSave').on('click',function () {
-        location.reload(true);
-    });
+                    // }
 
-
-
-    $('#deleteTrialDocument').on('click',function () {
-        id=$(this).attr('data-id');
-        console.log(id);
-        console.log();
-        $.ajax({
-            type : 'get',
-            url  : window.location.origin+'/die/adminorders/deletetrialdocuments/'+id,
-            success: function(res){
-                $('#deleteTrialDocument').text('Deleted');
-                $('#deleteTrialDocument').attr('disabled',true);
-            },
-            error: function(res){
-                console.log('Failed');
-                console.log(res);
-            }
-        });
-    });
-
-
-    $('#deleteFinishedDocument').on('click',function () {
-        id=$(this).attr('data-id');
-        console.log(id);
-        console.log();
-        $.ajax({
-            type : 'get',
-            url  : window.location.origin+'/die/adminorders/deletefinisheddocuments/'+id,
-            success: function(res){
-                $('#deleteFinishedDocument').text('Deleted');
-                $('#deleteFinishedDocument').attr('disabled',true);
-            },
-            error: function(res){
-                console.log('Failed');
-                console.log(res);
-            }
-        });
-    });
-
+                }
+            });
+        }
 
     </script>

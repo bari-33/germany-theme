@@ -128,13 +128,13 @@ class OrderController extends Controller
 
         $user->roles()->attach(3);
 
-        ClientDetail::create([
-           'order_id'=>$order->id,
+        UserDetail::create([
+           'username'=>$request->get('nickname'),
            'user_id'=>$user->id,
            'first_name'=>$request->get('name'),
             'last_name'=>$request->get('nickname'),
            'gender'=>$request->get('gender'),
-           'mobile'=>$request->get('phonenumber'),
+           'telephone'=>$request->get('telephone'),
        ]);
         // Mail::to($user->email)->send(new OrderMail($account_data));
         // Mail::to(Role::where('slug','admin')->first()->users()->first()->email)->send(new OrderAdmin($account_data));

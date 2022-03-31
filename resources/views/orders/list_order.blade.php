@@ -220,20 +220,33 @@
         <section id="basic-datatable">
             <div class="row">
                 <div class="col-12">
+
                     <div class="card" style="overflow-x:auto;">
-                        <table class="datatables table mb-0" style="color: #000;">
-                            <div class="container mt-3">
+                        <input type="hidden" id="order" name="check">
+                        <form action="{{ url('deleteall') }}" method="POST">
+                            @csrf
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ __('locale.Order button') }}
+                                <div class="container mt-3">
+                                <button class="dropdown-toggle btn btn-dark" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Orders button
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
+
+                                    <button class="col-md-12 multiSelector"
+                                        style="border: none;background-color: rgb(255, 255, 255);" type="submit">Delete</button><br>
+                                    <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                        type="submit" formaction="{{ url('paid') }}">Mark as paid</button><br>
+                                    <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                        type="submit" formaction="{{ url('allinvoice') }}">Download all</button>
+                                    <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                        type="submit" formaction="{{ url('restore') }}">Restoring</button>
+
+
                                 </div>
-                              </div>
+                                </div>
                             </div>
+                        <table class="datatables table mb-0" style="color: #000;">
+                            <div class="container mt-3">
                             <thead>
                                 <tr>
                                     <th><input type="checkbox" name="" id="allSelector">{{ __('locale.Select All') }}
@@ -718,6 +731,7 @@
 
                             </tbody>
                         </table>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -753,6 +767,7 @@
     @endsection
     <script>
         function down(id, order,elem) {
+            $(elem).text('Added').attr('disabled',true);
             $.ajax({
                 type: 'GET',
                 url: 'dropupdate/' + id + '/' + order,
@@ -912,4 +927,24 @@
             });
 
                 }
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $( document ).ready(function() {
+            $('.multiSelector').click(function(e) {
+    $('#order').val($('.checkbox:checked').map(function() {
+        return this.value;
+    }).get().join(','));
+    if ($('#order').val() == '') {
+        alert('No row selected!');
+        return false;
+    }
+
+});
+$("#allSelector").click(function() {
+    $('input:checkbox').not(this).prop('checked', this.checked);
+});
+});
     </script>

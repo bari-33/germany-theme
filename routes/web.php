@@ -118,6 +118,12 @@ Route::get('cancelled/{order}', [AdminOrderController::class, 'cancelled'])->nam
 Route::get('deleteorder/{id}', [AdminOrderController::class, 'deleteorder'])->name('deleteorder');
 Route::get('editorder/{id}', [AdminOrderController::class, 'editorder'])->name('editorder');
 Route::get('invoicepdf/{id}', [AdminOrderController::class, 'invoicepdf'])->name('invoicepdf');
+Route::post('deleteall', [AdminOrderController::class, 'deleteall'])->name('deleteall');
+Route::post('paid', [AdminOrderController::class, 'paid'])->name('paid');
+Route::post('restore', [AdminOrderController::class, 'restore'])->name('restore');
+Route::post('allinvoice', [AdminOrderController::class, 'allinvoice'])->name('allinvoice');
+Route::post('updateorder/{id}', [AdminOrderController::class, 'updateorder'])->name('updateorder');
+Route::post('addEmployee/{order}', [AdminOrderController::class, 'addEmployee'])->name('addEmployee');
 Route::get('trialdocuments/{order}', [AdminOrderController::class, 'trialDocuments'])->name('trialDocuments');
 
 
