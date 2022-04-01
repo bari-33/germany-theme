@@ -50,9 +50,17 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                    <form method="post" action="{{url('trialdocuments/'.$order->id)}}" enctype="multipart/form-data"
-                          class="dropzone" id="trial">
+                    <form method="post" action="{{url('trialdocuments/'.$order->id)}}" enctype="multipart/form-data"class="dropzone" id="trial">
                         @csrf
+
+                        <div class="card">
+                            <div class="card-content">
+                               <input type="file" name="trialdocuments" class="dropify"  data-max-file-size="1M" />
+
+                            </div>
+
+                        </div>
+                        <button class="float-right btn btn-primary" type="submit" >save</button>
                     </form>
                         </div>
                     </div>
@@ -67,7 +75,7 @@
                                 @foreach($order->trialdocuments as $document)
                                 <tr>
                                     <td>{{$document->name}}</td>
-                                    <td><button class="btn btn-light" id="deleteTrialDocument" data-id="{{$document->id}}">Delete</button></td>
+                                    <td><button class="btn btn-light deleteTrialDocument" id="" data-id="{{$document->id}}">Delete</button></td>
                                 </tr>
                                     @endforeach
                                 </tbody>
@@ -97,9 +105,18 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <form method="post" action="{{url('adminorders/finisheddocuments/'.$order->id)}}" enctype="multipart/form-data"
+                            <form method="post" action="{{url('finisheddocuments/'.$order->id)}}" enctype="multipart/form-data"
                                   class="dropzone" id="finished">
                                 @csrf
+
+                                <div class="card">
+                                    <div class="card-content">
+                                       <input type="file" name="finisheddocuments" class="dropify"  data-max-file-size="1M" />
+
+                                    </div>
+
+                                </div>
+                                <button class="float-right btn btn-primary" type="submit" >save</button>
                             </form>
                         </div>
                     </div>
@@ -115,7 +132,7 @@
                                 @foreach($order->finisheddocuments as $document)
                                     <tr>
                                         <td>{{$document->name}}</td>
-                                        <td><button class="btn btn-light" id="deleteFinishedDocument" data-id="{{$document->id}}">Delete</button></td>
+                                        <td><button class="btn btn-light deleteFinishedDocument"  data-id="{{$document->id}}">Delete</button></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -152,10 +169,22 @@
                         </thead>
                         <tbody>
                         @foreach($employees as $employee)
+                        <?php
+
+                        $users = explode(",",$employee->order_id);
+                        foreach ($users as $key => $value) {
+                           if ($value!=$order->id) {
+                           ?>
                         <tr>
+
+
                         <td>{{$employee->name}} <sub>{{$employee->userdetail->deutch_language}},{{$employee->userdetail->english_language}},{{$employee->userdetail->spanish_language}},{{$employee->userdetail->french_language}}</sub></td>
-                            <td><button  onclick="down({{ $employee->id }},{{ $order->id }},this)" class="btn btn-light btn-sm">+</button></td>
+                            <td><button class="btn btn-light btn-sm addEmployee" data-id="{{$employee->id}}" data-name="{{$order->id}}">+</button></td>
                         </tr>
+                        <?php
+                           }
+                        }
+                        ?>
                             @endforeach
                         </tbody>
                     </table>
@@ -185,11 +214,21 @@
                         <th>Add</th>
                         </thead>
                         <tbody>
-                        @foreach($order->employees as $employee)
+                        @foreach($employees as $employee)
+                        <?php
+
+                        $users = explode(",",$employee->order_id);
+                        foreach ($users as $key => $value) {
+                           if ($value==$order->id) {
+                           ?>
                             <tr>
                                 <td>{{$employee->name}} <sub>{{$employee->userdetail->deutch_language}},{{$employee->userdetail->english_language}},{{$employee->userdetail->spanish_language}},{{$employee->userdetail->french_language}}</sub></td>
-                                <td><button class="btn btn-light btn-sm removeEmployee" data-id="{{$employee->id}}">-</button></td>
+                                <td><button class="btn btn-light btn-sm removeEmployee" data-id="{{$employee->id}}" data-name="{{$order->id}}">-</button></td>
                             </tr>
+                            <?php
+                           }
+                        }
+                            ?>
                         @endforeach
                         </tbody>
                     </table>
@@ -379,9 +418,18 @@
                     </div>
                         <div class="col-md-2">
                             <div>
-                                @foreach($order->employees as $employee)
-                                <img src="{{ url('images/profiles/'.$employee->userdetail->profile_picture) }}" style="width:30%;" alt="user-image" class="rounded-circle">
+                                @foreach($employees as $employee)
+                                <?php
 
+                                    $users = explode(",",$employee->order_id);
+                                    foreach ($users as $key => $value) {
+                                    if ($value==$order->id) {
+                                    ?>
+                                <img src="{{ url('images/profiles/'.$employee->profile_picture) }}" style="width:30%;" alt="user-image" class="rounded-circle">
+                                     <?php
+                                    }
+                                }
+                                     ?>
                                     @endforeach
                             </div>
 
@@ -601,23 +649,24 @@
         <div class="col-12">
             <div class="card" style="border-left:1px solid black; ">
                 <div class="card-body">
+
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Notizen / Infos</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form action="{{ url('adminorders/saveNotes/'.$order->id) }}" method="POST">
+                            <form action="{{ url('saveNotes/'.$order->id) }}" method="POST">
                                 @csrf
-                            <div class="form-group mb-2">
-                                <div class="input-group">
-                                    <textarea name="notes" id="notes"  cols="50" rows="10" required>{{ $order->orderdetail->notes }}</textarea>
+
+                            <div class="row">
+
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="biographical_information">
+                                        <h5>{{ __('locale.Notes && Info') }}</h5>
+                                    </label>
+                                    <textarea class="ckeditor form-control" name="notes"  id="note" required>{{ $order->orderdetail->notes }}</textarea>
                                 </div>
                             </div>
                                 <div class="row mt-1">
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" style="border-radius: 25px !important; ">Speichern</button>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light float-right">{{ __('locale.Update') }}</button>
                                     </div>
                                 </div>
                             </form>
@@ -634,6 +683,7 @@
 
 @section('vendor-script')
     <!-- vendor files -->
+    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
@@ -641,7 +691,6 @@
 @section('page-script')
     <!-- Page js files -->
     <script src="{{ asset(mix('js/scripts/forms/form-validation.js')) }}"></script>
-    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -653,26 +702,79 @@
 
         });
 
-
-
-    });
-
-    function down(id, order,elem) {
+        $('.addEmployee').on('click',function(e) {
+            e.preventDefault();
+         var id =   $(this).attr('data-id');
+         var order =   $(this).attr('data-name');
+            $(this).text('Added').attr('disabled',true);
             $.ajax({
                 type: 'GET',
-                url: 'dropupdate/' + id + '/' + order,
+                url: '/dropupdate/' + id + '/' + order,
                 success: function(data) {
-                    location.reload();
-                    // var data=JSON.parse(data);
-                    // if (data) {
-                    //     var empimg = data.profile_picture;
-                    //     let orignalimg = $(elem).parent('div').parent('div').parent('div').parent('td').html();
-                    //     console.log(orignalimg);
-
-                    // }
+                    // console.log(data);
+                    // location.reload();
 
                 }
             });
-        }
+
+        });
+        $('#addEmployeeSave').on('click',function (e) {
+            e.preventDefault();
+             location.reload();
+
+        });
+
+
+        $('.removeEmployee').on('click',function (e) {
+            e.preventDefault();
+            var id =   $(this).attr('data-id');
+         var order =   $(this).attr('data-name');
+            $(this).text('Remove').attr('disabled',true);
+            $.ajax({
+                type: 'GET',
+                url: '/unassingemploy/' + id + '/' + order,
+                success: function(data) {
+                    // console.log(data);
+                    // location.reload();
+
+                }
+            });
+        });
+
+
+        $('#removeEmployeeSave').on('click',function (e) {
+            e.preventDefault();
+             location.reload();
+
+        });
+
+        $('.deleteTrialDocument').on('click',function (e) {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type: 'GET',
+                url: '/deleteTrialDocument/' + id ,
+                success: function(data) {
+                    location.reload();
+
+                }
+            });
+
+        });
+
+        $('.deleteFinishedDocument').on('click',function (e) {
+            var id = $(this).attr('data-id');
+            alert(id)
+            $.ajax({
+                type: 'GET',
+                url: '/deleteFinishedDocument/' + id ,
+                success: function(data) {
+                    location.reload();
+
+                }
+            });
+
+        });
+    });
+
 
     </script>

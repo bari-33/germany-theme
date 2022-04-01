@@ -87,7 +87,6 @@ class AdminOrderController extends Controller
     }
     public function dropupdate($id,$order)
     {
-        echo '<pre>'; print_r($id); echo '</pre>'; die;
         $status = "1";
         $order_id_in_db = User::where("id", $id)->get('order_id')->first();
         if (isset($order_id_in_db->order_id)) {
@@ -112,9 +111,7 @@ class AdminOrderController extends Controller
 
             }
         }
-        $userss = User::where("id", $id)->first();
-        $data = json_encode($userss);
-        return response($data);
+
     }
     public function unassingemploy($id,$order_id)
     {
@@ -231,7 +228,7 @@ class AdminOrderController extends Controller
     {
         $order = Order::find($id);
 
-        $document = $request->file('file');
+        $document = $request->file('trialdocuments');
         $documentName = $document->getClientOriginalName();
         $document->move(public_path('files/trialdocuments'), $documentName);
 
@@ -239,8 +236,8 @@ class AdminOrderController extends Controller
         $documents->name = $documentName;
         $documents->order_id = $id;
         $documents->save();
-
-        return response()->json(['success' => $documentName]);
+           return redirect()->back();
+        // return response()->json(['success' => $documentName]);
     }
     public function invoicepdf($id)
     {
@@ -473,22 +470,56 @@ class AdminOrderController extends Controller
         return redirect('list_order');
     }
 
-    public function addEmployee(Request $request, $id)
-    {
-        echo '<pre>'; print_r($id); echo '</pre>'; die;
-        $order = Order::find($id);
-        $employee = User::find($request->get('employee_id'));
-        $total_price = (float)str_replace(',', '.', $order->total_price);
 
-        if ($employee->userdetail->billing == "1") {
-            //percentage
-            $amount = $total_price * (($employee->userdetail->amount) / 100);
-        } else if ($employee->userdetail->billing == "2") { //fixed
-            $amount = $employee->userdetail->amount;
+    public function deleteTrialDocument($id)
+    {
+
+        $document = TrialDocument::find($id);
+        $path = public_path() . '/files/trialdocuments/' . $document->name;
+        if (file_exists($path)) {
+            unlink($path);
         }
 
-        $order->employees()->syncWithoutDetaching([($request->get('employee_id')) => ['amount' => $amount]]);
+        $document->delete();
 
-        return response()->json(['success' => 'Employee is successfully added']);
+        // return response($id);
+    }
+    public function finisheddocuments(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        $document = $request->file('finisheddocuments');
+        $documentName = $document->getClientOriginalName();
+        $document->move(public_path('files/finisheddocuments'), $documentName);
+
+        $documents = new FinishedDocument();
+        $documents->name = $documentName;
+        $documents->order_id = $id;
+        $documents->save();
+        return redirect()->back();
+    }
+
+    public function deleteFinishedDocument($id)
+    {
+        $document = FinishedDocument::find($id);
+        $path = public_path() . '/files/finisheddocuments/' . $document->name;
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $document->delete();
+
+        // return response($id);
+    }
+
+    public function saveNotes(Request $request,$id)
+    {
+        $order = Order::find($id);
+
+        $order->orderdetail()->update([
+            "notes" => $request->get('notes'),
+        ]);
+        return redirect('list_order');
+
     }
 }

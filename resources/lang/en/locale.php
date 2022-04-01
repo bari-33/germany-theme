@@ -149,6 +149,10 @@ return [
      "Date of invoice"=>"Date of invoice",
      "production date"=>"production date",
      "Billing address"=>"Billing address",
+     "Notes && Info"=>"Notes && Info",
+     "List Bills"=>"List Bills",
+     "Order Status"=>"Order Status",
+     "Date"=>"Date",
     //  <  *//End  project //*>
     "Aktueller Auftrag" => "Aktueller Auftrag",
     "Meine Auftrag" => "Meine Auftrag",

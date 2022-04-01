@@ -10,6 +10,7 @@ use App\Http\Controllers\websitescontroller;
 use App\Http\Controllers\categorycontroller;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\invoiceController;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\CardsController;
@@ -124,7 +125,17 @@ Route::post('restore', [AdminOrderController::class, 'restore'])->name('restore'
 Route::post('allinvoice', [AdminOrderController::class, 'allinvoice'])->name('allinvoice');
 Route::post('updateorder/{id}', [AdminOrderController::class, 'updateorder'])->name('updateorder');
 Route::post('addEmployee/{order}', [AdminOrderController::class, 'addEmployee'])->name('addEmployee');
-Route::get('trialdocuments/{order}', [AdminOrderController::class, 'trialDocuments'])->name('trialDocuments');
+Route::post('trialdocuments/{order}', [AdminOrderController::class, 'trialDocuments'])->name('trialDocuments');
+Route::get('deleteTrialDocument/{id}', [AdminOrderController::class, 'deleteTrialDocument'])->name('deleteTrialDocument');
+Route::post('finisheddocuments/{id}', [AdminOrderController::class, 'finisheddocuments'])->name('finisheddocuments');
+Route::get('deleteFinishedDocument/{id}', [AdminOrderController::class, 'deleteFinishedDocument'])->name('deleteFinishedDocument');
+Route::post('saveNotes/{id}', [AdminOrderController::class, 'saveNotes'])->name('saveNotes');
+     /* Route BIlls*/
+
+Route::get('list_invoice', [invoiceController::class, 'list_invoice'])->name('list_invoice');
+
+
+
 
 
 

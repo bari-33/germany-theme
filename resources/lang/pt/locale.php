@@ -148,6 +148,10 @@ return [
     "Date of invoice"=>"Data da fatura",
     "production date"=>"data de produção",
     "Billing address"=>"Endereço de Cobrança",
+    "Notes && Info"=>"Notas && Informações",
+    "List Bills"=>"Listar contas",
+    "Order Status"=>"Status do pedido",
+    "Date"=>"Encontro: Data",
 
         //  <  *//End  project //*>
 

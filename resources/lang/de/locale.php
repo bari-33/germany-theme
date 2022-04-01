@@ -149,7 +149,10 @@ return [
     "Date of invoice"=>"Rechnungsdatum",
     "production date"=>"Produktionsdatum",
     "Billing address"=>"Rechnungsadresse",
-
+    "Notes && Info"=>"Hinweise && Info",
+    "List Bills"=>"Rechnungen auflisten",
+    "Order Status"=>"Bestellstatus",
+    "Date"=>"Date",
        //  <  *//End  project //*>
     "Apps & Pages" => "Apps & Seiten",
     "User Interface" => "Benutzeroberfläche",
