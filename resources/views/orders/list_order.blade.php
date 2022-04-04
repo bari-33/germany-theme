@@ -767,19 +767,11 @@
     @endsection
     <script>
         function down(id, order,elem) {
-            $(elem).text('Added').attr('disabled',true);
             $.ajax({
                 type: 'GET',
                 url: 'dropupdate/' + id + '/' + order,
                 success: function(data) {
                     location.reload();
-                    // var data=JSON.parse(data);
-                    // if (data) {
-                    //     var empimg = data.profile_picture;
-                    //     let orignalimg = $(elem).parent('div').parent('div').parent('div').parent('td').html();
-                    //     console.log(orignalimg);
-
-                    // }
 
                 }
             });

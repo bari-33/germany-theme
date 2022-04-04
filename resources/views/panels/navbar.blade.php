@@ -44,8 +44,8 @@
           <ul class="nav navbar-nav bookmark-icons">
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('listuser')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Users') }}"><i class="ficon" data-feather="user"></i></a></li>
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_product')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Products') }}"><i class="ficon" data-feather="box"></i></a></li>
-            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('app/calendar')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Orders') }}"><i class="ficon" data-feather="shopping-cart"></i></a></li>
-            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('app/chat')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Bills') }}"><i class="ficon" data-feather="file-text"></i></a></li>
+            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_order')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Orders') }}"><i class="ficon" data-feather="shopping-cart"></i></a></li>
+            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_invoice')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Bills') }}"><i class="ficon" data-feather="file-text"></i></a></li>
           </ul>
           <ul class="nav navbar-nav">
             <li class="nav-item d-none d-lg-block">
@@ -200,19 +200,15 @@
             <a class="dropdown-item" href="{{url('show/'.Auth::user()->id)}}">
               <i class="mr-50" data-feather="user"></i> {{ __('locale.My Account') }}
             </a>
-            <a class="dropdown-item" href="{{url('edit/'.Auth::user()->id)}}">
+            <a class="dropdown-item" href="{{url('edituser/'.Auth::user()->id)}}">
               <i class="mr-50" data-feather="user"></i> {{ __('locale.Edit Account') }}
             </a>
             <div class="dropdown-divider"></div>
 
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-             document.getElementById('logout-form').submit();">
+            <a class="dropdown-item" href="{{ url('logout') }}" >
              <i class="mr-50" data-feather="power"></i>
              {{ __('locale.Logout') }}
              </a>
-             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-             @csrf
-             </form>
           </div>
         </li>
       </ul>

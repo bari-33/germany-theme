@@ -152,7 +152,12 @@ return [
     "List Bills"=>"Listar contas",
     "Order Status"=>"Status do pedido",
     "Date"=>"Encontro: Data",
-
+    "Invoice Preview"=>"Visualização de fatura",
+    "Settings"=>"Configurações",
+    "Expration"=>"Expansão",
+    "From the previous month"=>"Do mês anterior",
+    "REVENUE"=>"RECEITA",
+    "DAILY AVERAGE"=>"MÉDIA DIÁRIA",
         //  <  *//End  project //*>
 
     "Apps & Pages" => "Aplicativos e páginas",

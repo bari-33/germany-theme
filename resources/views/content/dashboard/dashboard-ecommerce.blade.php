@@ -13,483 +13,384 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 @endsection
+<style type="text/css">
 
+    .card_bg{
+        background-color: #f8ceec;
+        background-image: linear-gradient(315deg, #9e9bd0 0%, #595592 74%);
+        color: white;
+    }
+
+    .card_bg_color{
+        color: white !important;
+    }
+
+</style>
 @section('content')
 <!-- Dashboard Ecommerce Starts -->
 <section id="dashboard-ecommerce">
   <div class="row match-height">
     <!-- Medal Card -->
-    <div class="col-xl-4 col-md-6 col-12">
+    <div class="col-xl-3 col-md-6 col-12">
       <div class="card card-congratulation-medal">
-        <div class="card-body">
-          <h5>Congratulations 🎉 John!</h5>
-          <p class="card-text font-small-3">You have won gold medal</p>
-          <h3 class="mb-75 mt-2 pt-50">
-            <a href="javascript:void(0);">$48.9k</a>
-          </h3>
-          <button type="button" class="btn btn-primary">View Sales</button>
-          <img src="{{asset('images/illustration/badge.svg')}}" class="congratulation-medal" alt="Medal Pic" />
+        <div class="card-body card_bg">
+          <i class="fa fa-info-circle text-light float-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="More Info"></i>
+          <h5> {{ __('locale.Orders') }}</h5>
+          <h2 class="text-primary my-3 card_bg_color"><span data-plugin="counterup" class="card_bg_color"> {{$orders_count}} </span> <i class="fa fa-shopping-cart text-light"  style="float: right"></i></h2>
+          <p class="mt-5 card_bg_color">
+            @if($order_p > 0)
+            <span style="background-color: #50a5e8;padding: 3px;">{{$order_p}}%</span>
+            @elseif($order_p < 0)
+            <span style="background-color: #e25757;padding: 3px;">{{$order_p}}%</span>
+            @elseif($order_p==0)
+            <span style="background-color: #eaa20e;padding: 3px;">{{$order_p}}%</span>
+            @endif  {{ __('locale.From the previous month') }}</p>
         </div>
       </div>
     </div>
-    <!--/ Medal Card -->
-
-    <!-- Statistics Card -->
-    <div class="col-xl-8 col-md-6 col-12">
-      <div class="card card-statistics">
-        <div class="card-header">
-          <h4 class="card-title">Statistics</h4>
-          <div class="d-flex align-items-center">
-            <p class="card-text font-small-2 mr-25 mb-0">Updated 1 month ago</p>
-          </div>
-        </div>
-        <div class="card-body statistics-body">
-          <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-              <div class="media">
-                <div class="avatar bg-light-primary mr-2">
-                  <div class="avatar-content">
-                    <i data-feather="trending-up" class="avatar-icon"></i>
-                  </div>
-                </div>
-                <div class="media-body my-auto">
-                  <h4 class="font-weight-bolder mb-0">230k</h4>
-                  <p class="card-text font-small-3 mb-0">Sales</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-              <div class="media">
-                <div class="avatar bg-light-info mr-2">
-                  <div class="avatar-content">
-                    <i data-feather="user" class="avatar-icon"></i>
-                  </div>
-                </div>
-                <div class="media-body my-auto">
-                  <h4 class="font-weight-bolder mb-0">8.549k</h4>
-                  <p class="card-text font-small-3 mb-0">Customers</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
-              <div class="media">
-                <div class="avatar bg-light-danger mr-2">
-                  <div class="avatar-content">
-                    <i data-feather="box" class="avatar-icon"></i>
-                  </div>
-                </div>
-                <div class="media-body my-auto">
-                  <h4 class="font-weight-bolder mb-0">1.423k</h4>
-                  <p class="card-text font-small-3 mb-0">Products</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="media">
-                <div class="avatar bg-light-success mr-2">
-                  <div class="avatar-content">
-                    <i data-feather="dollar-sign" class="avatar-icon"></i>
-                  </div>
-                </div>
-                <div class="media-body my-auto">
-                  <h4 class="font-weight-bolder mb-0">$9745</h4>
-                  <p class="card-text font-small-3 mb-0">Revenue</p>
-                </div>
-              </div>
-            </div>
+    <div class="col-xl-3 col-md-6 col-12">
+        <div class="card card-congratulation-medal">
+          <div class="card-body card_bg">
+            <i class="fa fa-info-circle text-light float-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="More Info"></i>
+            <h5> {{ __('locale.REVENUE') }}</h5>
+            <h2 class="text-primary my-3 card_bg_color"><span data-plugin="counterup" class="card_bg_color"> {{$revenue}} </span> <i class="fa fa-money text-light"  style="float: right"></i></h2>
+            <p class="mt-5 card_bg_color">
+                @if($order_r > 0)
+                <span style="background-color: #50a5e8;padding: 3px;">{{$order_r}}%</span>
+                @elseif($order_r < 0)
+                <span style="background-color: #e25757;padding: 3px;">{{$order_r}}%</span>
+                @elseif($order_r==0)
+                <span style="background-color: #eaa20e;padding: 3px;">{{$order_r}}%</span>
+              @endif  {{ __('locale.From the previous month') }}</p>
           </div>
         </div>
       </div>
-    </div>
-    <!--/ Statistics Card -->
-  </div>
-
-  <div class="row match-height">
-    <div class="col-lg-4 col-12">
-      <div class="row match-height">
-        <!-- Bar Chart - Orders -->
-        <div class="col-lg-6 col-md-3 col-6">
-          <div class="card">
-            <div class="card-body pb-50">
-              <h6>Orders</h6>
-              <h2 class="font-weight-bolder mb-1">2,76k</h2>
-              <div id="statistics-order-chart"></div>
-            </div>
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="card card-congratulation-medal">
+          <div class="card-body card_bg">
+            <i class="fa fa-info-circle text-light float-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="More Info"></i>
+            <h5> {{ __('locale.DAILY AVERAGE') }}</h5>
+            <h2 class="text-primary my-3 card_bg_color"><span data-plugin="counterup" class="card_bg_color"> {{$cdaily_avg}} </span> <i class="fa fa-bar-chart text-light"  style="float: right"></i></h2>
+            <p class="mt-5 card_bg_color">
+                @if($avg_p > 0)
+                <span style="background-color: #50a5e8;padding: 3px;">{{$avg_p}}%</span>
+                @elseif($avg_p < 0)
+                <span style="background-color: #e25757;padding: 3px;">{{$avg_p}}%</span>
+                @elseif($avg_p==0)
+                <span style="background-color: #eaa20e;padding: 3px;">{{$avg_p}}%</span>
+              @endif  {{ __('locale.From the previous month') }}</p>
           </div>
         </div>
-        <!--/ Bar Chart - Orders -->
-
-        <!-- Line Chart - Profit -->
-        <div class="col-lg-6 col-md-3 col-6">
-          <div class="card card-tiny-line-stats">
-            <div class="card-body pb-50">
-              <h6>Profit</h6>
-              <h2 class="font-weight-bolder mb-1">6,24k</h2>
-              <div id="statistics-profit-chart"></div>
-            </div>
-          </div>
-        </div>
-        <!--/ Line Chart - Profit -->
-
-        <!-- Earnings Card -->
-        <div class="col-lg-12 col-md-6 col-12">
-          <div class="card earnings-card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-6">
-                  <h4 class="card-title mb-1">Earnings</h4>
-                  <div class="font-small-2">This Month</div>
-                  <h5 class="mb-1">$4055.56</h5>
-                  <p class="card-text text-muted font-small-2">
-                    <span class="font-weight-bolder">68.2%</span><span> more earnings than last month.</span>
-                  </p>
-                </div>
-                <div class="col-6">
-                  <div id="earnings-chart"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--/ Earnings Card -->
       </div>
-    </div>
-
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="card card-congratulation-medal">
+          <div class="card-body card_bg">
+            <i class="fa fa-info-circle text-light float-right" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="More Info"></i>
+            <h5> {{ __('locale.Products') }}</h5>
+            <h2 class="text-primary my-3 card_bg_color"><span data-plugin="counterup" class="card_bg_color"> {{$products}} </span> <i class="fa fa-suitcase text-light"  style="float: right"></i></h2>
+            <p class="mt-5 card_bg_color">
+                @if($prod_p > 0)
+                <span style="background-color: #50a5e8;padding: 3px;">{{$prod_p}}%</span>
+                @elseif($prod_p < 0)
+                <span style="background-color: #e25757;padding: 3px;">{{$prod_p}}%</span>
+                @elseif($prod_p==0)
+                <span style="background-color: #eaa20e;padding: 3px;">{{$prod_p}}%</span>
+              @endif  {{ __('locale.From the previous month') }}</p>
+          </div>
+        </div>
+      </div>
     <!-- Revenue Report Card -->
-    <div class="col-lg-8 col-12">
-      <div class="card card-revenue-budget">
-        <div class="row mx-0">
-          <div class="col-md-8 col-12 revenue-report-wrapper">
-            <div class="d-sm-flex justify-content-between align-items-center mb-3">
-              <h4 class="card-title mb-50 mb-sm-0">Revenue Report</h4>
-              <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center mr-2">
-                  <span class="bullet bullet-primary font-small-3 mr-50 cursor-pointer"></span>
-                  <span>Earning</span>
-                </div>
-                <div class="d-flex align-items-center ml-75">
-                  <span class="bullet bullet-warning font-small-3 mr-50 cursor-pointer"></span>
-                  <span>Expense</span>
-                </div>
-              </div>
-            </div>
-            <div id="revenue-report-chart"></div>
-          </div>
-          <div class="col-md-4 col-12 budget-wrapper">
-            <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm dropdown-toggle budget-dropdown"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                2020
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                <a class="dropdown-item" href="javascript:void(0);">2018</a>
-              </div>
-            </div>
-            <h2 class="mb-25">$25,852</h2>
-            <div class="d-flex justify-content-center">
-              <span class="font-weight-bolder mr-25">Budget:</span>
-              <span>56,800</span>
-            </div>
-            <div id="budget-chart"></div>
-            <button type="button" class="btn btn-primary">Increase Budget</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--/ Revenue Report Card -->
-  </div>
-
-  <div class="row match-height">
+      <div class="row match-height">
     <!-- Company Table Card -->
-    <div class="col-lg-8 col-12">
+    <div class="col-lg-12 col-12">
       <div class="card card-company-table">
         <div class="card-body p-0">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th>Company</th>
-                  <th>Category</th>
-                  <th>Views</th>
-                  <th>Revenue</th>
-                  <th>Sales</th>
+                    <th>{{ __('locale.ID') }}</th>
+                    <th>{{ __('locale.Employee') }}</th>
+                    <th>{{ __('locale.Products') }}</th>
+                    <th>{{ __('locale.completion') }}</th>
+                    <th>{{ __('locale.Price') }}</th>
+                    <th>{{ __('locale.Data') }}</th>
+                    <th>{{ __('locale.Express') }}</th>
+                    <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
                 </tr>
               </thead>
               <tbody>
+                @foreach ($orders as $order)
                 <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/toolbox.svg')}}" alt="Toolbar svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Dixons</div>
-                        <div class="font-small-2 text-muted">meguc@ruj.io</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-primary mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="monitor" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Technology</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">23.4k</span>
-                      <span class="font-small-2 text-muted">in 24 hours</span>
-                    </div>
-                  </td>
-                  <td>$891.2</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">68%</span>
-                      <i data-feather="trending-down" class="text-danger font-medium-1"></i>
-                    </div>
-                  </td>
+                    <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a></td>
+                    <td class="dropimg">
+                        <?php
+                        $order_ids=array();
+
+                        foreach ($dropdown as $key => $drop){
+                            $order_id_exploded=explode(",",$drop->order_id);
+                            $status_id_exploded=explode(",",$drop->assing_status);
+                            foreach ($order_id_exploded as $key => $value) {
+
+                                $order_ids[]=$value;
+
+
+                            }
+
+
+                        }
+
+
+                     if (in_array($order->id,$order_ids)) {
+
+                        if (!empty($dropdown)){
+
+                         foreach ($dropdown as $key1 => $drop1){
+                            $order_id_exploded=explode(",",$drop1->order_id);
+                            $status_id_exploded=explode(",",$drop1->assing_status);
+                         foreach ($order_id_exploded as $key => $drop){
+                             if ($drop == $order->id) {
+
+                             ?>
+
+                        <div class="hov">
+                            <div class="dropdown">
+                            <button id="orignalimg" class="dropdown-toggle"
+                            style="background-color: transparent;border: none;margin-left: 50%;margin-right: 50%;"
+                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img src="{!! asset('images/profiles/'. $drop1->profile_picture) !!}" id="" alt="user-image"
+                                class="rounded-circle image" width="30px" height="30px;" style="display: flex;">
+                        </button>
+                            <?php
+
+                            unset($dropdown->$key);
+                             }
+
+                            }
+                         }
+                        }
+                     }else {
+
+                    ?>
+                            <div class="hov">
+                                <div class="dropdown">
+                                    <button id="orignalimg" class="dropdown-toggle"
+                                        style="background-color: transparent;border: none;margin-left: 50%;margin-right: 50%;"
+                                        type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <img src="{!! asset('images/profiles/user.png') !!}" id="dropdown1" alt="user-image"
+                                            class="rounded-circle image" width="30px" height="30px;">
+                                    </button>
+
+                                    <?php
+                                        }
+
+                                         ?>
+                                    <div class="dropdown">
+                                        <div class="dropdown-menu" id="myDropdown"
+                                            aria-labelledby="dropdownMenuButton"
+                                            style=" width: 350px !important;">
+                                            @foreach ($employees as $key4 => $employe)
+                                                <?php
+                                                        $order_id_exploded=explode(",",$employe->order_id);
+
+                                                        foreach ($order_id_exploded as $key5 => $value) {
+
+                                                    if($value==$order->id){
+
+                                                        ?>
+                                                <div class="container">
+                                                    <a type="button"
+                                                        onclick="down({{ $employe->id }},{{ $order->id }},this)"
+                                                        id="demo">
+                                                        <div class="avatar"><img
+                                                                src="{{ url('images/profiles/' . $employe->profile_picture) }}"
+                                                                alt="avatar" width="32" height="32">
+                                                        </div>
+                                                        @php
+                                                            echo $employe->name . '&nbsp&nbsp&nbsp&nbsp' . $employe->userdetail->deutch_language, $employe->userdetail->english_language, $employe->userdetail->spanish_language, $employe->userdetail->french_language, $employe->userdetail->web_language, $employe->userdetail->Graphic_language, $employe->userdetail->Media_language;
+
+                                                        @endphp
+
+
+
+
+
+                                                    </a>
+                                                    <span type="button" class="float-right"
+                                                    onclick="unassing({{ $employe->id }},{{ $order->id }})">
+                                                    <div class="avatar bg-light-danger">
+                                                        <div class="avatar-content"><i
+                                                                class="fa fa-times"
+                                                                data-feather="x"></i></div>
+                                                    </div></span>
+                                                    <hr>
+                                                </div>
+                                                <?php
+
+                                                        }
+                                                    }
+
+                                                        ?>
+                                            @endforeach
+                                            <?php
+
+                                            ?>
+                                            <input class="col-md-12" type="text"
+                                                placeholder="Search.." id="myInput"><br><br>
+
+                                            @foreach ($employees as $key4 => $employe)
+                                                <?php
+                                                    $data=[];
+                                                        $order_id_exploded=explode(",",$employe->order_id);
+
+                                                        foreach ($order_id_exploded as $key5 => $value) {
+                                                          array_push($data, $value);
+                                                        }
+
+
+                                                            if(in_array($order->id,$data)){
+
+
+                                                        ?>
+
+
+                                                <?php
+                                                   }else {
+
+                                                   ?>
+                                                <div class="container">
+                                                    <a type="button"
+                                                        onclick="down({{ $employe->id }},{{ $order->id }},this)"
+                                                        id="demo">
+                                                        <div class="avatar"><img
+                                                                src="{{ url('images/profiles/' . $employe->profile_picture) }}"
+                                                                alt="avatar" width="32" height="32">
+                                                        </div>
+                                                        @php
+                                                            echo $employe->name . '&nbsp&nbsp&nbsp&nbsp' . $employe->userdetail->deutch_language, $employe->userdetail->english_language, $employe->userdetail->spanish_language, $employe->userdetail->french_language, $employe->userdetail->web_language, $employe->userdetail->Graphic_language, $employe->userdetail->Media_language;
+
+                                                        @endphp
+                                                    </a>
+                                                    <span type="button" class="float-right"
+                                                    onclick="unassing({{ $employe->id }},{{ $order->id }})">
+                                                    <div class="avatar bg-light-danger">
+                                                        <div class="avatar-content"><i
+                                                                class="avatar-icon"
+                                                                data-feather="x"></i></div>
+                                                    </div></span>
+                                                    <hr>
+                                                </div>
+                                                <?php
+                                                   }
+                                                ?>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                    </td>
+
+                    <td>
+                        <p>{{ $order->pdetail->product_title }}</p>
+                        <p>
+                            @if ($order->product_language == 'English')
+                                <span class="badge badge-primary">
+                            @endif
+                            @if ($order->product_language == 'German')
+                                <span class="badge badge-info">
+                            @endif
+                            @if ($order->product_language == 'French')
+                                <span class="badge badge-danger">
+                            @endif
+                            @if ($order->product_language == 'Spanish')
+                                <span class="badge badge-secondary">
+                            @endif
+                            {{ $order->product_language }}</span>
+
+                        </p>
+                    </td>
+                    <td class="completion_date">
+                        @if ($order->order_status == 1 )
+                            <div class="alert alert-danger" role="alert"
+                                style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                            </div>
+                        @elseif($order->order_status == 2)
+                            <div class="alert alert-info" role="alert"
+                                style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                            </div>
+                        @elseif($order->order_status == 3)
+                            <div class="alert alert-warning" role="alert"
+                                style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                            </div>
+                        @elseif($order->order_status == 4)
+                            <div class="alert alert-success" role="alert"
+                                style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                            </div>
+                        @elseif($order->order_status == -1)
+                            <div class="alert alert-primary" role="alert"
+                                style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
+                            </div>
+                        @endif
+
+                    </td>
+                    <td class="paid">
+                        @if($order->payment_status==1)
+                        <span class="badge badge-success"> {{$order->total_price}} €</span>
+                        @endif
+                        @if($order->payment_status==0)
+                        <span class="badge badge-dark"> {{$order->total_price}} €</span>
+                        @endif
+                        @if($order->payment_status ==-1)
+                        <span class="badge badge-danger"> {{$order->total_price}} €</span>
+                        @endif
+                    </td>
+                    <td class="date">
+                        @if ($order->order_status == 0)
+                            <p><div class="avatar bg-light-danger">
+                                <div class="avatar-content"><i
+                                        class="fa fa-times"
+                                        ></i></div>
+                            </div></p>
+                        @else
+                            <p><div class="avatar bg-light-success">
+                                <div class="avatar-content"><i class="fa fa-check"></i></div>
+                              </div></p>
+                        @endif
+                    </td>
+                    <td>
+                        <p>
+                            @if ($order->express == '0,00')
+                                <span class="badge badge-secondary">
+                                @else<span class="badge badge-success">
+                            @endif
+                            24h</span>
+
+                        </p>
+                    </td>
+                    <td>
+                        <a href="{{ url('invoicepdf/'.$order->id) }}"
+                            class=""><i
+                                class="fa fa-file-text text-primary mr-1" aria-hidden="true"
+                                style="font-size: 1.5em;"></i></a>
+                        <a href="{{ url('editorder/'.$order->id) }}"
+                            class=""><i
+                                class="fa fa-pencil-square-o text-primary mr-1" aria-hidden="true"
+                                style="font-size: 1.5em;"></i></a>
+
+                         <a href="{{ url('deleteorder/' . $order->id) }}" class="delete-confirm "><i
+                                    class="fa fa-trash-o text-danger" aria-hidden="true"
+                                    style="font-size: 1.5em;"></i></a>
+                    </td>
                 </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/parachute.svg')}}" alt="Parachute svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Motels</div>
-                        <div class="font-small-2 text-muted">vecav@hodzi.co.uk</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-success mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="coffee" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Grocery</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">78k</span>
-                      <span class="font-small-2 text-muted">in 2 days</span>
-                    </div>
-                  </td>
-                  <td>$668.51</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">97%</span>
-                      <i data-feather="trending-up" class="text-success font-medium-1"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/brush.svg')}}" alt="Brush svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Zipcar</div>
-                        <div class="font-small-2 text-muted">davcilse@is.gov</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-warning mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="watch" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Fashion</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">162</span>
-                      <span class="font-small-2 text-muted">in 5 days</span>
-                    </div>
-                  </td>
-                  <td>$522.29</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">62%</span>
-                      <i data-feather="trending-up" class="text-success font-medium-1"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/star.svg')}}" alt="Star svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Owning</div>
-                        <div class="font-small-2 text-muted">us@cuhil.gov</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-primary mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="monitor" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Technology</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">214</span>
-                      <span class="font-small-2 text-muted">in 24 hours</span>
-                    </div>
-                  </td>
-                  <td>$291.01</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">88%</span>
-                      <i data-feather="trending-up" class="text-success font-medium-1"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/book.svg')}}" alt="Book svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Cafés</div>
-                        <div class="font-small-2 text-muted">pudais@jife.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-success mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="coffee" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Grocery</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">208</span>
-                      <span class="font-small-2 text-muted">in 1 week</span>
-                    </div>
-                  </td>
-                  <td>$783.93</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">16%</span>
-                      <i data-feather="trending-down" class="text-danger font-medium-1"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/rocket.svg')}}" alt="Rocket svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Kmart</div>
-                        <div class="font-small-2 text-muted">bipri@cawiw.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-warning mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="watch" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Fashion</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">990</span>
-                      <span class="font-small-2 text-muted">in 1 month</span>
-                    </div>
-                  </td>
-                  <td>$780.05</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">78%</span>
-                      <i data-feather="trending-up" class="text-success font-medium-1"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar rounded">
-                        <div class="avatar-content">
-                          <img src="{{asset('images/icons/speaker.svg')}}" alt="Speaker svg" />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-weight-bolder">Payers</div>
-                        <div class="font-small-2 text-muted">luk@izug.io</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div class="avatar bg-light-warning mr-1">
-                        <div class="avatar-content">
-                          <i data-feather="watch" class="font-medium-3"></i>
-                        </div>
-                      </div>
-                      <span>Fashion</span>
-                    </div>
-                  </td>
-                  <td class="text-nowrap">
-                    <div class="d-flex flex-column">
-                      <span class="font-weight-bolder mb-25">12.9k</span>
-                      <span class="font-small-2 text-muted">in 12 hours</span>
-                    </div>
-                  </td>
-                  <td>$531.49</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <span class="font-weight-bolder mr-1">42%</span>
-                      <i data-feather="trending-up" class="text-success font-medium-1"></i>
-                    </div>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -820,3 +721,26 @@
   {{-- Page js files --}}
   <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
 @endsection
+<script>
+
+function down(id, order,elem) {
+            $.ajax({
+                type: 'GET',
+                url: 'dropupdate/' + id + '/' + order,
+                success: function(data) {
+                    location.reload();
+
+                }
+            });
+        }
+        function unassing(id, order) {
+            $.ajax({
+                type: 'GET',
+                url: 'unassingemploy/' + id + '/' + order,
+                success: function(data) {
+                    location.reload();
+
+                }
+            });
+        }
+</script>

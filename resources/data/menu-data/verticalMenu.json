@@ -111,13 +111,13 @@
             "slug": "Rechnungen"
         },
         {
-            "url": "app/calendar",
+            "url": "Message",
             "name": "News",
             "icon": "mail",
             "slug": "Nachrichten"
         },
         {
-            "url": "app/email",
+            "url": "Message",
             "name": "Statistics",
             "icon": "pie-chart",
             "slug": "Statistiken"
@@ -133,25 +133,25 @@
             "slug": ""
         },
         {
-            "url": "app/chat",
+            "url": "FAQ",
             "name": "FAQ",
             "icon": "help-circle",
             "slug": "FAQ"
         },
         {
-            "url": "app/chat",
+            "url": "Expration",
             "name": "Expration",
             "icon": "credit-card",
             "slug": "Expration"
         },
         {
-            "url": "app/chat",
+            "url": "Setting",
             "name": "Settings",
             "icon": "settings",
             "slug": "settings"
         },
         {
-            "url": "app/chat",
+            "url": "logout",
             "name": "Logout",
             "icon": "power",
             "slug": "Ausloggen"

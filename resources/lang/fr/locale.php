@@ -153,6 +153,12 @@ return [
     "List Bills"=>"Liste des factures",
     "Order Status"=>"Statut de la commande",
     "Date"=>"Datum",
+    "Invoice Preview"=>"Aperçu de la facture",
+    "Settings"=>"Réglages",
+    "Expration"=>"Expration",
+    "From the previous month"=>"Depuis le mois précédent",
+    "REVENUE"=>"REVENU",
+    "DAILY AVERAGE"=>"MOYENNE QUOTIDIENNE",
        //  <  *//End  project //*>
     "Apps & Pages" => "Applications et pages",
     "User Interface" => "Interface utilisateur",

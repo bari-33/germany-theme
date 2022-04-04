@@ -153,6 +153,12 @@ return [
      "List Bills"=>"List Bills",
      "Order Status"=>"Order Status",
      "Date"=>"Date",
+     "Invoice Preview"=>"Invoice Preview",
+     "Settings"=>"Settings",
+     "Expration"=>"Expration",
+     "From the previous month"=>"From the previous month",
+     "REVENUE"=>"REVENUE",
+     "DAILY AVERAGE"=>"DAILY AVERAGE",
     //  <  *//End  project //*>
     "Aktueller Auftrag" => "Aktueller Auftrag",
     "Meine Auftrag" => "Meine Auftrag",

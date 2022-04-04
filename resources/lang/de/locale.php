@@ -153,6 +153,12 @@ return [
     "List Bills"=>"Rechnungen auflisten",
     "Order Status"=>"Bestellstatus",
     "Date"=>"Date",
+    "Invoice Preview"=>"Rechnungsvorschau",
+    "Settings"=>"Einstellungen",
+    "Expration"=>"Exploration",
+    "From the previous month"=>"Aus dem Vormonat",
+    "REVENUE"=>"EINNAHMEN",
+    "DAILY AVERAGE"=>"TÄGLICHER DURCHSCHNITT",
        //  <  *//End  project //*>
     "Apps & Pages" => "Apps & Seiten",
     "User Interface" => "Benutzeroberfläche",

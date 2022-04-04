@@ -89,7 +89,7 @@
                         <div class="mt-5">
                             <br><br>
                             <center>
-                                <form action="{{ url('searchorder') }}" method="POST">
+                                <form action="{{ url('searchinvoice') }}" method="POST">
                                     @csrf
                                     <button style="background-color: #3b3f77;border-color: white;" type="submit"
                                         name="action" value="all" class="btn btn-primary">{{ __('locale.All') }} |
@@ -124,7 +124,7 @@
                                 </form>
                                 <div class="dropdown-menu">
 
-                                    <form method="post" action="{{ url('searchorder') }}">
+                                    <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         @php $date = date('Y-m-d',strtotime('-30 days')); @endphp
                                         <input type="hidden" name="action" value="custom_date">
@@ -140,7 +140,7 @@
                                     </form>
 
 
-                                    <form method="post" action="{{ url('searchorder') }}">
+                                    <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         @php $date = date('Y-m-d',strtotime('-90 days')); @endphp
                                         <input type="hidden" name="action" value="custom_date">
@@ -157,7 +157,7 @@
 
 
 
-                                    <form method="post" action="{{ url('searchorder') }}">
+                                    <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         @php $year = date('Y')-2; @endphp
                                         <input type="hidden" name="action" value="custom_date">
@@ -174,7 +174,7 @@
                                             class="btn btn-block">{{ date('Y') - 2 }}</button>
                                     </form>
 
-                                    <form method="post" action="{{ url('searchorder') }}">
+                                    <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         @php $year = date('Y')-1; @endphp
                                         <input type="hidden" name="action" value="custom_date">
@@ -193,7 +193,7 @@
 
                                     <hr>
 
-                                    <form method="post" action="{{ url('searchorder') }}">
+                                    <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         <input type="hidden" name="action" value="custom_date">
                                         <input type="date" id="date_from" required name="date_from" class="form-control"
@@ -221,167 +221,143 @@
             <div class="px-3 pt-3 pb-3">
                 <div class="table-wrapper">
                     <table class="datatables table mb-0" style="color: #000;">
-                            <thead>
-                                <tr>
-                                    <th class="ml-5"><input class="form-check-input" id="checkAll"
-                                        type="checkbox">
+                        <thead>
+                            <tr>
+                                <th class="ml-5"><input class="form-check-input" id="checkAll" type="checkbox">
                                     <label class="form-check-label" for="checkbox" class=" label-table"></label>
                                 </th>
-                                    <th>{{ __('locale.ID') }}</th>
-                                    <th>{{ __('locale.Name') }}</th>
-                                    <th>{{ __('locale.Order Status') }}</th>
-                                    <th>{{ __('locale.Date') }}</th>
-                                    <th>{{ __('locale.Products') }}</th>
-                                    <th>{{ __('locale.Price') }}</th>
-                                    <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($orders as $order)
-                                    <tr>
-                                        <td> <input class="form-check-input" type="checkbox" id="checkbox1">
-                                            <label class="form-check-label" for="checkbox1"
-                                                class="label-table"></label>
-                                        </td>
-                                        <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a></td>
-                                        <td>
-                                            @foreach ($ClientDetail as $client)
-                                            @foreach ($users as $user)
-
-
+                                <th>{{ __('locale.ID') }}</th>
+                                <th>{{ __('locale.Name') }}</th>
+                                <th>{{ __('locale.Order Status') }}</th>
+                                <th>{{ __('locale.Date') }}</th>
+                                <th>{{ __('locale.Products') }}</th>
+                                <th>{{ __('locale.Price') }}</th>
+                                <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td> <input class="form-check-input" type="checkbox" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1" class="label-table"></label>
+                                    </td>
+                                    <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a></td>
+                                    <td>
+                                        @foreach ($ClientDetail as $client)
                                             <?php
-                                            // echo '<pre>'; print_r($client); echo '</pre>'; die;
-                                            // if ($client->user_id == $o->id) {
-                                                echo $client->first_name." ".$client->last_name;
-
-                                            // }
+                                            if ($client->order_id == $order->id) {
+                                                echo $client->first_name . ' ' . $client->last_name;
+                                            }
                                             ?>
-                                            @endforeach
-                                      @endforeach
-                                        </td>
-                                        <td>
-                                            <p>{{ $order->pdetail->product_title }}</p>
-                                            <p>
-                                                @if ($order->product_language == 'English')
-                                                    <span class="badge badge-primary">
-                                                @endif
-                                                @if ($order->product_language == 'German')
-                                                    <span class="badge badge-info">
-                                                @endif
-                                                @if ($order->product_language == 'French')
-                                                    <span class="badge badge-danger">
-                                                @endif
-                                                @if ($order->product_language == 'Spanish')
-                                                    <span class="badge badge-secondary">
-                                                @endif
-                                                {{ $order->product_language }}</span>
-
-                                            </p>
-                                        </td>
-                                        <td class="completion_date">
-                                            @if ($order->order_status == 1 )
-                                                <div class="alert alert-danger" role="alert"
-                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                </div>
-                                            @elseif($order->order_status == 2)
-                                                <div class="alert alert-info" role="alert"
-                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                </div>
-                                            @elseif($order->order_status == 3)
-                                                <div class="alert alert-warning" role="alert"
-                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                </div>
-                                            @elseif($order->order_status == 4)
-                                                <div class="alert alert-success" role="alert"
-                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                </div>
-                                            @elseif($order->order_status == -1)
-                                                <div class="alert alert-primary" role="alert"
-                                                    style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
-                                                    {{ \Carbon\Carbon::parse($order->completion_date)->format('l, d, F Y') }}
-                                                </div>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @if ($order->order_status == 0)
+                                            <img src="{!! asset('images/status/simpel.png') !!}" alt="user-image" class="rounded-circle image"
+                                                width="30px" height="30px;" style="display: flex;">
+                                        @elseif($order->order_status == 2)
+                                            <img src="{!! asset('images/status/running.png') !!}" alt="user-image" class="rounded-circle image"
+                                                width="30px" height="30px;" style="display: flex;">
+                                        @elseif($order->order_status == 3)
+                                            <img src="{!! asset('images/status/check.png') !!}" alt="user-image" class="rounded-circle image"
+                                                width="30px" height="30px;" style="display: flex;">
+                                        @elseif($order->order_status == 4)
+                                            <img src="{!! asset('images/status/todo.png') !!}" alt="user-image" class="rounded-circle image"
+                                                width="30px" height="30px;" style="display: flex;">
+                                        @elseif($order->order_status == -1)
+                                            <img src="{!! asset('images/status/active.png') !!}" alt="user-image" class="rounded-circle image"
+                                                width="30px" height="30px;" style="display: flex;">
+                                        @elseif($order->order_status == 1)
+                                            <img src="{!! asset('images/status/cancled.png') !!}" alt="user-image" class="rounded-circle image"
+                                                width="30px" height="30px;" style="display: flex;">
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="alert alert-danger" role="alert"
+                                            style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
+                                            {{ \Carbon\Carbon::parse($order->created_at)->format('l, d, F Y') }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p>{{ $order->pdetail->product_title }}</p>
+                                        <p>
+                                            @if ($order->product_language == 'English')
+                                                <span class="badge badge-primary">
                                             @endif
-
-                                        </td>
-                                        <td class="paid">
-                                            @if($order->payment_status==1)
-                                            <span class="badge badge-success"> {{$order->total_price}} €</span>
+                                            @if ($order->product_language == 'German')
+                                                <span class="badge badge-info">
                                             @endif
-                                            @if($order->payment_status==0)
-                                            <span class="badge badge-dark"> {{$order->total_price}} €</span>
+                                            @if ($order->product_language == 'French')
+                                                <span class="badge badge-danger">
                                             @endif
-                                            @if($order->payment_status ==-1)
-                                            <span class="badge badge-danger"> {{$order->total_price}} €</span>
+                                            @if ($order->product_language == 'Spanish')
+                                                <span class="badge badge-secondary">
                                             @endif
-                                        </td>
-                                        <td class="date">
-                                            @if ($order->order_status == 0)
-                                                <p><div class="avatar bg-light-danger">
-                                                    <div class="avatar-content"><i
-                                                            class="fa fa-times"
-                                                            ></i></div>
-                                                </div></p>
-                                            @else
-                                                <p><div class="avatar bg-light-success">
-                                                    <div class="avatar-content"><i class="fa fa-check"></i></div>
-                                                  </div></p>
-                                            @endif
-                                        </td>
+                                            {{ $order->product_language }}</span>
+
+                                        </p>
+                                    </td>
+                                    <td>
+                                        @if ($order->payment_status == 1)
+                                            <span class="badge badge-success"> {{ $order->total_price }} €</span>
+                                        @endif
+                                        @if ($order->payment_status == 0)
+                                            <span class="badge badge-dark"> {{ $order->total_price }} €</span>
+                                        @endif
+                                        @if ($order->payment_status == -1)
+                                            <span class="badge badge-danger"> {{ $order->total_price }} €</span>
+                                        @endif
+                                    </td>
 
 
-                                        <td>
-                                            <a href="{{ url('invoicepdf/'.$order->id) }}"
-                                                class=""><i
-                                                    class="fa fa-file-text text-primary mr-1" aria-hidden="true"
-                                                    style="font-size: 1.5em;"></i></a>
-                                            <a href="{{ url('editorder/'.$order->id) }}"
-                                                class=""><i
-                                                    class="fa fa-pencil-square-o text-primary mr-1" aria-hidden="true"
-                                                    style="font-size: 1.5em;"></i></a>
+                                    <td>
 
-                                             <a href="{{ url('deleteorder/' . $order->id) }}" class="delete-confirm "><i
-                                                        class="fa fa-trash-o text-danger" aria-hidden="true"
-                                                        style="font-size: 1.5em;"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        <a href="{{ url('invoices/'.$order->id) }}" class=""><i
+                                                class="fa fa-paper-plane text-primary mr-1" aria-hidden="true"
+                                                ></i></a>
 
-                            </tbody>
-                        </table>
-                    </div>
+                                        <a href="{{ url('invoices/'.$order->id) }}" class=""><i
+                                                class="fa fa-eye text-dark" aria-hidden="true"
+                                                ></i></a>
+                                        <a href="{{ url('invoicepdf/' . $order->id) }}" class=""><i
+                                                class="fa fa-ellipsis-v text-primary mr-1" aria-hidden="true"
+                                                ></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- Modal to add new record -->
-        </section>
-        <!--/ Basic table -->
-        <!--/ Row grouping -->
-    @endsection
+        </div>
+        <!-- Modal to add new record -->
+    </section>
+    <!--/ Basic table -->
+    <!--/ Row grouping -->
+@endsection
 
 
-    @section('vendor-script')
-        {{-- vendor files --}}
-        <script src="{{ asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.checkboxes.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
-        <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
-    @endsection
-    @section('page-script')
-        {{-- Page js files --}}
-        <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+@section('vendor-script')
+    {{-- vendor files --}}
+    <script src="{{ asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.checkboxes.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
+@endsection
+@section('page-script')
+    {{-- Page js files --}}
+    <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
-    @endsection
+@endsection

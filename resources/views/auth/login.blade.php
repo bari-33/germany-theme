@@ -68,7 +68,7 @@
           </form>
         <p class="text-center mt-2">
           <span>Are you not a customer yet?</span>
-          <a href="{{url('auth/register-v2')}}">
+          <a href="{{url('add_order')}}">
             <span>&nbsp;Become a customer now</span>
           </a>
         </p>

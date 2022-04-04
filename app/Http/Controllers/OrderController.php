@@ -134,8 +134,16 @@ class OrderController extends Controller
            'first_name'=>$request->get('name'),
             'last_name'=>$request->get('nickname'),
            'gender'=>$request->get('gender'),
-           'telephone'=>$request->get('telephone'),
+           'telephone'=>$request->get('phonenumber'),
        ]);
+       ClientDetail::create([
+        'order_id'=>$order->id,
+        'user_id'=>$user->id,
+        'first_name'=>$request->get('name'),
+         'last_name'=>$request->get('nickname'),
+        'gender'=>$request->get('gender'),
+        'mobile'=>$request->get('phonenumber'),
+    ]);
         // Mail::to($user->email)->send(new OrderMail($account_data));
         // Mail::to(Role::where('slug','admin')->first()->users()->first()->email)->send(new OrderAdmin($account_data));
         Auth::login($user);

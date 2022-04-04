@@ -37,9 +37,9 @@ class AdminOrderController extends Controller
         $dropdown = User::where("status", "1")->get();
         Session::put('all', $orders->count());
         Session::put('progress', Order::where('order_status', '2')->orderBy('created_at', 'Desc')->count());
-        Session::put('waiting', Order::where('order_status', '1')->orderBy('created_at', 'Desc')->count());
-        Session::put('completed', Order::where('order_status', '3')->orderBy('created_at', 'Desc')->count());
-        Session::put('cancelled', Order::where('order_status', '-1')->orderBy('created_at', 'Desc')->count());
+        Session::put('waiting', Order::where('order_status', '3')->orderBy('created_at', 'Desc')->count());
+        Session::put('completed', Order::where('order_status', '4')->orderBy('created_at', 'Desc')->count());
+        Session::put('cancelled', Order::where('order_status', '1')->orderBy('created_at', 'Desc')->count());
         Session::put('deleted', Order::onlyTrashed()->count());
         return view('orders.list_order', compact('orders', 'dropdown', 'employees'));
     }
@@ -63,13 +63,13 @@ class AdminOrderController extends Controller
                     $orders = Order::where('order_status', '2')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'waiting':
-                    $orders = Order::where('order_status', '1')->orderBy('created_at', 'ASC')->get();
+                    $orders = Order::where('order_status', '3')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'completed':
                     $orders = Order::where('order_status', '4')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'cancelled':
-                    $orders = Order::where('order_status', '-1')->orderBy('created_at', 'ASC')->get();
+                    $orders = Order::where('order_status', '1')->orderBy('created_at', 'ASC')->get();
                     break;
                 case 'deleted':
                     $orders = Order::onlyTrashed()->get();
