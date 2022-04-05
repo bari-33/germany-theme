@@ -15,6 +15,8 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\exprationController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\passwordController;
+use App\Http\Controllers\chatController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
@@ -121,13 +123,24 @@ Route::get('list_invoice', [invoiceController::class, 'list_invoice'])->name('li
 Route::get('invoices/{id}', [invoiceController::class, 'invoices'])->name('invoices');
 Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search');
  /* Route Settings*/
- Route::get('Setting', [SettingController::class, 'Setting'])->name('Setting');
+ Route::get('EditAccount', [SettingController::class, 'EditAccount'])->name('EditAccount');
+ Route::get('MyAccount', [SettingController::class, 'MyAccount'])->name('MyAccount');
  /* Route expration*/
  Route::get('Expration', [exprationController::class, 'Expration'])->name('Expration');
   /* Route FAQ*/
  Route::get('FAQ', [FAQController::class, 'FAQ'])->name('FAQ');
-  /* Route Chat*/
- Route::get('Message', [MessageController::class, 'Message'])->name('Message');
+  /* Route Message*/
+//  Route::get('Message', [MessageController::class, 'Message'])->name('Message');
+   /* Route Chat*/
+   Route::get('Message', [chatController::class, 'Message'])->name('Message');
+ Route::post('read', [chatController::class, 'read'])->name('read');
+ Route::get('getall/{id}', [chatController::class, 'getall'])->name('getall');
+ Route::post('send', [chatController::class, 'send'])->name('send');
+ Route::post('readreceipt', [chatController::class, 'readreceipt'])->name('readreceipt');
+ /* Change Password*/
+ Route::get('index', [passwordController::class, 'index'])->name('index');
+ Route::post('chngpassword/{id}', [passwordController::class, 'chngpassword'])->name('chngpassword');
+
   /* Route Logout*/
 Route::get('logout', [logoutController::class, 'logout'])->name('logout');
 // locale Route

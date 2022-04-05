@@ -16,6 +16,7 @@
     "laravel/tinker": "^2.5",
     "laravel/ui": "^3.3",
     "mpdf/mpdf": "^8.0",
+    "pusher/pusher-php-server": "6.1.0",
     "yajra/laravel-datatables-oracle": "~9.0"
   },
   "require-dev": {

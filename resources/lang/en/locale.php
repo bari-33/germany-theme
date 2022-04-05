@@ -159,6 +159,9 @@ return [
      "From the previous month"=>"From the previous month",
      "REVENUE"=>"REVENUE",
      "DAILY AVERAGE"=>"DAILY AVERAGE",
+     "Inbox"=>"Inbox",
+     "change-password"=>"change-password",
+     "Old Password"=>"Old Password",
     //  <  *//End  project //*>
     "Aktueller Auftrag" => "Aktueller Auftrag",
     "Meine Auftrag" => "Meine Auftrag",

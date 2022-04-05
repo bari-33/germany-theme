@@ -158,6 +158,7 @@ return [
     "From the previous month"=>"Do mês anterior",
     "REVENUE"=>"RECEITA",
     "DAILY AVERAGE"=>"MÉDIA DIÁRIA",
+    "Inbox"=>"Caixa de entrada",
         //  <  *//End  project //*>
 
     "Apps & Pages" => "Aplicativos e páginas",

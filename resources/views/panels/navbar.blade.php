@@ -203,6 +203,9 @@
             <a class="dropdown-item" href="{{url('edituser/'.Auth::user()->id)}}">
               <i class="mr-50" data-feather="user"></i> {{ __('locale.Edit Account') }}
             </a>
+            <a class="dropdown-item" href="{{url('index')}}">
+                <i class="mr-50" data-feather="key"></i> {{ __('locale.change-password') }}
+              </a>
             <div class="dropdown-divider"></div>
 
             <a class="dropdown-item" href="{{ url('logout') }}" >

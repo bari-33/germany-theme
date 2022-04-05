@@ -144,12 +144,32 @@
             "icon": "credit-card",
             "slug": "Expration"
         },
+
         {
-            "url": "Setting",
             "name": "Settings",
             "icon": "settings",
-            "slug": "settings"
+            "slug": "settings",
+            "submenu": [{
+                    "url": "EditAccount",
+                    "name": "Edit Account",
+                    "icon": "circle",
+                    "slug": "Edit Account"
+                },
+                {
+                    "url": "index",
+                    "name": "change-password",
+                    "icon": "circle",
+                    "slug": "change-password"
+                },
+                {
+                    "url": "MyAccount",
+                    "name": "My Account",
+                    "icon": "circle",
+                    "slug": "My Account"
+                }
+            ]
         },
+
         {
             "url": "logout",
             "name": "Logout",

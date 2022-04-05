@@ -155,13 +155,13 @@ Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw 
     <h4 class="chat-list-title">Chats</h4>
 
     <ul class="chat-users-list chat-list media-list">
-    @foreach ($users as $user)
-       @if ($user->email!= Auth::user()->email)
+    @foreach ($employees as $employe)
+
 
       <li>
         <span class="avatar"
           ><img
-            src="{{asset('images/profiles/'.$user->profile_picture)}}"
+            src="{{asset('images/profiles/'.$employe->profile_picture)}}"
             height="42"
             width="42"
             alt="Generic placeholder image"
@@ -169,14 +169,9 @@ Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw 
           <span class="avatar-status-offline"></span>
         </span>
         <div class="chat-info flex-grow-1">
-          <h5 class="mb-0">{{$user->name}}</h5>
+          <h5 class="mb-0">{{$employe->name}}</h5>
         </div>
-        {{-- <div class="chat-meta text-nowrap">
-          <small class="float-right mb-25 chat-time">4:14 PM</small>
-          <span class="badge badge-danger badge-pill float-right">3</span>
-        </div> --}}
       </li>
-      @endif
       @endforeach
 
     </ul>
