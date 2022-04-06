@@ -17,6 +17,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\passwordController;
 use App\Http\Controllers\chatController;
+use App\Http\Controllers\tasksController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
@@ -129,8 +130,8 @@ Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search
  Route::get('Expration', [exprationController::class, 'Expration'])->name('Expration');
   /* Route FAQ*/
  Route::get('FAQ', [FAQController::class, 'FAQ'])->name('FAQ');
-  /* Route Message*/
-//  Route::get('Message', [MessageController::class, 'Message'])->name('Message');
+  /* Route tasks*/
+ Route::get('tasks', [tasksController::class, 'tasks'])->name('tasks');
    /* Route Chat*/
    Route::get('Message', [chatController::class, 'Message'])->name('Message');
  Route::post('read', [chatController::class, 'read'])->name('read');
