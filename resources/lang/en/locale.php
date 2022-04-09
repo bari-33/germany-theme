@@ -162,6 +162,7 @@ return [
      "Inbox"=>"Inbox",
      "change-password"=>"change-password",
      "Old Password"=>"Old Password",
+     "Paid" => "paid",
     //  <  *//End  project //*>
     "Aktueller Auftrag" => "Aktueller Auftrag",
     "Meine Auftrag" => "Meine Auftrag",

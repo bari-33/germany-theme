@@ -41,12 +41,16 @@
           <ul class="nav navbar-nav d-xl-none">
             <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
           </ul>
+          @if (Auth::user()->roles()->first()->slug == 'admin')
+
+
           <ul class="nav navbar-nav bookmark-icons">
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('listuser')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Users') }}"><i class="ficon" data-feather="user"></i></a></li>
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_product')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Products') }}"><i class="ficon" data-feather="box"></i></a></li>
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_order')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Orders') }}"><i class="ficon" data-feather="shopping-cart"></i></a></li>
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_invoice')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Bills') }}"><i class="ficon" data-feather="file-text"></i></a></li>
           </ul>
+
           <ul class="nav navbar-nav">
             <li class="nav-item d-none d-lg-block">
               <a class="nav-link bookmark-star">
@@ -61,6 +65,7 @@
               </div>
             </li>
           </ul>
+          @endif
         </div>
         <ul class="nav navbar-nav align-items-center ml-auto">
           <li class="nav-item dropdown dropdown-language">

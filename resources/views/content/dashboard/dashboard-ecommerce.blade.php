@@ -39,6 +39,7 @@
     }
 
 </style>
+
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
@@ -132,7 +133,7 @@
             <div class="row match-height">
                 <!-- Company Table Card -->
                 <div class="col-lg-12 col-12">
-                    <div class="card card-company-table">
+                    <div class="card " style="overflow-x:auto;">
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table">
@@ -451,10 +452,13 @@
                                 alt="" style=" width:10%;">
                         </div>
                         <hr>
+
+
+
                         <div class="card-body">
                             <div style="overflow-y: scroll;" class="mh-100">
+                                @if (!empty($employees))
                                 @foreach ($employees as $employee)
-
                                         <div class="browser-states">
                                             <div class="inbox-item" onclick="inbox_item({{ $employee->id }})" style="border:0;cursor: pointer"
                                             data-id="">
@@ -474,8 +478,10 @@
                                         </div>
 
                                 @endforeach
+                                @endif
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -491,11 +497,13 @@
                                 <div class="chat-conversation">
                                     <ul class="conversation-list slimscroll" style="max-height: 315px;">
                                         <li class="row">
+                                            @if (!empty($employee))
                                             <div class="col-md-3" style="text-align: center;padding-right: 2px"><img
                                                     src="{{ url('images/profiles/' . $employee->profile_picture) }}"
                                                     style="width:80%" class="rounded-circle" alt="">
                                                 <span style="font-size: 10px">10:00</span>
                                             </div>
+                                            @endif
                                             <div class="col-md-9" style="padding-left:0px;">
                                                 <div style="display:inline-block;background-color: #F2F5F7;padding: 8px">
                                                     <span style="display: block;font-weight: bold">Izhar</span>
@@ -510,12 +518,13 @@
                                                     <span style="font-size: 10px">Hi this izhar ali</span>
                                                 </div>
                                             </div>
-
+                                            @if (!empty($employee))
                                             <div class="col-md-3" style="text-align: center;padding-left: 2px"><img
                                                     src="{{ url('images/profiles/' . $employee->profile_picture) }}"
                                                     style="width:80%" class="rounded-circle" alt="">
                                                 <span style="font-size: 10px">10:00</span>
                                             </div>
+                                            @endif
                                         </li>
                                     </ul>
                                     <div class="row">
@@ -523,10 +532,17 @@
                                             <input type="text" class="form-control chat-input"
                                                 placeholder="Enter your text">
                                         </div>
+                                        @if (!empty($employee))
                                         <div class="col-auto">
                                             <button type="submit" onclick="chat_send({{$employee->id}})" class="btn btn-danger chat-send btn-block waves-effect waves-light"
                                                 disabled>Send</button>
                                         </div>
+                                        @else
+                                        <div class="col-auto">
+                                            <button type="submit"  class="btn btn-danger chat-send btn-block waves-effect waves-light"
+                                                disabled>Send</button>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -543,7 +559,9 @@
                         </div>
                         <hr>
                         <div class="card-body">
+
                             <div style="overflow-y: scroll;" class="mh-100">
+                                @if (!empty($employees))
                                 @foreach ($employees as $employee)
 
                                         <div class="browser-states">
@@ -565,6 +583,7 @@
                                         </div>
 
                                 @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -44,7 +44,7 @@
                         Wir haben Ihnen die Zugangsdaten per E-Mail zugesandt:
                     </p>
                     <p style="margin-bottom: 10%;color: black;">{{$order->user->email}}</p>
-                    <a href="{{url('current/'.$order->id)}}" class="btn btn-primary waves-effect waves-light" style="padding-left: 4%;padding-right: 4%;border-radius: 20px;">Upload Dokumente jetzt</a>
+                    <a href="{{url('customer_dashboard')}}" class="btn btn-primary waves-effect waves-light" style="padding-left: 4%;padding-right: 4%;border-radius: 20px;">Upload Dokumente jetzt</a>
                     <p style="margin-top: 3%;">Laden Sie jetzt Ihre Dokumente hoch und fügen Sie die erforderlichen Daten hinzu.</p>
                 </div>
             </div>

@@ -32,6 +32,13 @@
                 </div>
             </div>
         @endif
+        @if (session('update'))
+        <div class="demo-spacing-0">
+          <div class="alert alert-success" role="alert">
+            <div class="alert-body"><strong>{{(session('update'))}}</strong></div>
+          </div>
+        </div>
+      @endif
         <section class="bs-validation">
             <div class="row">
                 <div class="col-md-12">

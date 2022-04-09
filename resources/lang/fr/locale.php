@@ -160,6 +160,7 @@ return [
     "REVENUE"=>"REVENU",
     "DAILY AVERAGE"=>"MOYENNE QUOTIDIENNE",
     "Inbox"=>"Boîte de réception",
+    "Paid" => "payé",
        //  <  *//End  project //*>
     "Apps & Pages" => "Applications et pages",
     "User Interface" => "Interface utilisateur",

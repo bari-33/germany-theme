@@ -66,16 +66,15 @@ class userscontroller extends Controller
             $userDetail->graphic_designer = $request->get('graphic_designer');
             $userDetail->media_designer = $request->get('media_designer');
             $userDetail->biographical_information = $request->get('biographical_information');
-            $profile_picture = "";
-            if (empty($profile_picture)) {
-                $profile_picture = "profile.png";
-            }
+
             if ($request->hasFile('profile_picture')) {
                 $image = $request->profile_picture;
                 $ext = $image->getClientOriginalExtension();
                 $filename = uniqid() . '.' . $ext;
                 $image->move('images/profiles', $filename);
                 $profile_picture = $filename;
+            }else{
+                $profile_picture = "profile.png";
             }
 
             $userdetail->profile_picture = $profile_picture;
@@ -282,7 +281,7 @@ class userscontroller extends Controller
                 }
             }
 
-            return redirect(url('listuser'))->with('message', 'Update Recorde succesfully');
+            return redirect()->back()->with('update', 'Update Recorde succesfully');
         }
     }
     public function show($id)

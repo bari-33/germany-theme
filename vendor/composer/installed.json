@@ -1448,17 +1448,17 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.83.6",
-            "version_normalized": "8.83.6.0",
+            "version": "v8.83.7",
+            "version_normalized": "8.83.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dffcec0cb686eafaa3b8f33db11da2cd9d69af1c"
+                "reference": "0706abf5c99d3b14149fcf79c95074dadd40b203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dffcec0cb686eafaa3b8f33db11da2cd9d69af1c",
-                "reference": "dffcec0cb686eafaa3b8f33db11da2cd9d69af1c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0706abf5c99d3b14149fcf79c95074dadd40b203",
+                "reference": "0706abf5c99d3b14149fcf79c95074dadd40b203",
                 "shasum": ""
             },
             "require": {
@@ -1577,7 +1577,7 @@
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^2.0).",
                 "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
             },
-            "time": "2022-03-29T14:41:02+00:00",
+            "time": "2022-04-05T15:08:10+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1624,17 +1624,17 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.13.8",
-            "version_normalized": "1.13.8.0",
+            "version": "v1.13.9",
+            "version_normalized": "1.13.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "b00f1b64afff9c16355d23bb1e0f83a7ea9bbb7e"
+                "reference": "7bb294fe99fc42c3b1bee83fb667cd7698b3c385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/b00f1b64afff9c16355d23bb1e0f83a7ea9bbb7e",
-                "reference": "b00f1b64afff9c16355d23bb1e0f83a7ea9bbb7e",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/7bb294fe99fc42c3b1bee83fb667cd7698b3c385",
+                "reference": "7bb294fe99fc42c3b1bee83fb667cd7698b3c385",
                 "shasum": ""
             },
             "require": {
@@ -1643,7 +1643,7 @@
                 "illuminate/support": "^8.0|^9.0",
                 "php": "^7.3|^8.0"
             },
-            "time": "2022-03-23T12:35:34+00:00",
+            "time": "2022-04-04T15:21:51+00:00",
             "bin": [
                 "bin/sail"
             ],
@@ -2908,6 +2908,63 @@
                 "source": "https://github.com/paragonie/sodium_compat/tree/v1.17.1"
             },
             "install-path": "../paragonie/sodium_compat"
+        },
+        {
+            "name": "paypal/rest-api-sdk-php",
+            "version": "1.14.0",
+            "version_normalized": "1.14.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paypal/PayPal-PHP-SDK.git",
+                "reference": "72e2f2466975bf128a31e02b15110180f059fc04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paypal/PayPal-PHP-SDK/zipball/72e2f2466975bf128a31e02b15110180f059fc04",
+                "reference": "72e2f2466975bf128a31e02b15110180f059fc04",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3.0",
+                "psr/log": "^1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "time": "2019-01-04T20:04:25+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "PayPal": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "PayPal",
+                    "homepage": "https://github.com/paypal/rest-api-sdk-php/contributors"
+                }
+            ],
+            "description": "PayPal's PHP SDK for REST APIs",
+            "homepage": "http://paypal.github.io/PayPal-PHP-SDK/",
+            "keywords": [
+                "payments",
+                "paypal",
+                "rest",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/paypal/PayPal-PHP-SDK/issues",
+                "source": "https://github.com/paypal/PayPal-PHP-SDK/tree/master"
+            },
+            "abandoned": true,
+            "install-path": "../paypal/rest-api-sdk-php"
         },
         {
             "name": "phar-io/manifest",
@@ -8311,17 +8368,17 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v9.19.1",
-            "version_normalized": "9.19.1.0",
+            "version": "v9.19.2",
+            "version_normalized": "9.19.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "c4baacc0a90d5f894cdeaedf19558d8794c09b08"
+                "reference": "c0d7b1ff493ae7391050e392262579aa700f9241"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/c4baacc0a90d5f894cdeaedf19558d8794c09b08",
-                "reference": "c4baacc0a90d5f894cdeaedf19558d8794c09b08",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/c0d7b1ff493ae7391050e392262579aa700f9241",
+                "reference": "c0d7b1ff493ae7391050e392262579aa700f9241",
                 "shasum": ""
             },
             "require": {
@@ -8341,7 +8398,7 @@
                 "yajra/laravel-datatables-fractal": "Plugin for server-side response using Fractal.",
                 "yajra/laravel-datatables-html": "Plugin for server-side HTML builder of dataTables."
             },
-            "time": "2022-03-05T03:41:30+00:00",
+            "time": "2022-04-07T00:59:50+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -8383,7 +8440,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v9.19.1"
+                "source": "https://github.com/yajra/laravel-datatables/tree/v9.19.2"
             },
             "funding": [
                 {

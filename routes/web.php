@@ -18,6 +18,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\passwordController;
 use App\Http\Controllers\chatController;
 use App\Http\Controllers\tasksController;
+use App\Http\Controllers\paymentController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
@@ -91,7 +92,14 @@ Route::get('editcategory/{id}/{flag}', [categorycontroller::class, 'edit'])->nam
 Route::post('categoryupdate/{id}/{flag}', [categorycontroller::class, 'update'])->name('update');
 Route::resource('category', categorycontroller::class);
 /* Route Orders*/
-Route::get('current/{order}', [OrderController::class, 'current'])->name('current');
+Route::get('current', [OrderController::class, 'current'])->name('current');
+Route::get('express/{id}', [OrderController::class, 'express'])->name('express');
+Route::post('documents/{id}', [OrderController::class, 'documents'])->name('documents');
+Route::get('deledocuments/{id}', [OrderController::class, 'deledocuments'])->name('deledocuments');
+Route::get('paypal/{id}', [paymentController::class, 'paypal'])->name('paypal');
+Route::get('payment/{id}', [OrderController::class, 'payment'])->name('payment');
+
+
 Route::resource('orders', OrderController::class);
 /* Route Adminorder*/
 Route::get('list_order', [AdminOrderController::class, 'list_order'])->name('list_order');
@@ -132,6 +140,10 @@ Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search
  Route::get('FAQ', [FAQController::class, 'FAQ'])->name('FAQ');
   /* Route tasks*/
  Route::get('tasks', [tasksController::class, 'tasks'])->name('tasks');
+ Route::get('checkedtask/{id}/{order}', [tasksController::class, 'checkedtask'])->name('checkedtask');
+ Route::get('uncheck/{id}/{order}', [tasksController::class, 'uncheck'])->name('uncheck');
+
+
    /* Route Chat*/
    Route::get('Message', [chatController::class, 'Message'])->name('Message');
  Route::post('read', [chatController::class, 'read'])->name('read');
@@ -141,6 +153,12 @@ Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search
  /* Change Password*/
  Route::get('index', [passwordController::class, 'index'])->name('index');
  Route::post('chngpassword/{id}', [passwordController::class, 'chngpassword'])->name('chngpassword');
+ /* customer Orders*/
+
+ Route::get('customerOrders', [OrderController::class, 'customerOrders'])->name('customerOrders');
+ Route::get('getTrialDocuments/{id}', [OrderController::class, 'getTrialDocuments'])->name('getTrialDocuments');
+ Route::get('getFinishedDocuments/{id}', [OrderController::class, 'getFinishedDocuments'])->name('getFinishedDocuments');
+
 
   /* Route Logout*/
 Route::get('logout', [logoutController::class, 'logout'])->name('logout');

@@ -57,13 +57,6 @@
 
         <div class="row">
             <div class="col-md-12">
-                @if (session('message'))
-                <div class="demo-spacing-0">
-                  <div class="alert alert-success" role="alert">
-                    <div class="alert-body"><strong>{{(session('message'))}}</strong></div>
-                  </div>
-                </div>
-              @endif
                 <div class="card">
                     <div class="px-3 pt-3 pb-3">
                         <div class="table-wrapper">

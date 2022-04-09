@@ -159,6 +159,7 @@ return [
     "REVENUE"=>"RECEITA",
     "DAILY AVERAGE"=>"MÉDIA DIÁRIA",
     "Inbox"=>"Caixa de entrada",
+    "Paid" => "paga",
         //  <  *//End  project //*>
 
     "Apps & Pages" => "Aplicativos e páginas",

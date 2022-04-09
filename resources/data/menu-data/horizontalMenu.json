@@ -5,7 +5,7 @@
         {
 
             "name": "Dashboards",
-            "url": "dashboard",
+            "url": "customer_dashboard",
             "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
             "icon": "home",
             "slug": ""
@@ -14,50 +14,70 @@
 
         {
             "name": "Current Orders",
-            "url": "current/Auth::user()->orders",
+            "url": "current",
             "icon": "shopping-cart",
             "slug": ""
         },
 
         {
-            "url": "app/chat",
+            "url": "customerOrders",
             "name": "Orders",
             "icon": "check-square",
-            "slug": "app-chat"
+            "slug": "customerOrders"
         },
         {
-            "url": "app/calendar",
+            "url": "add_order",
             "name": "Add Orders",
             "icon": "file-text",
-            "slug": "app-calendar"
+            "slug": "add_order"
         },
         {
             "navheader": "",
             "slug": ""
         },
         {
-            "url": "app/chat",
+            "url": "FAQ",
             "name": "FAQ",
             "icon": "help-circle",
-            "slug": "app-chat"
+            "slug": "FAQ"
         },
         {
-            "url": "app/chat",
+            "url": "Expration",
             "name": "Expration",
             "icon": "credit-card",
-            "slug": "app-chat"
+            "slug": "Expration"
         },
+
         {
-            "url": "app/chat",
             "name": "Settings",
             "icon": "settings",
-            "slug": "app-chat"
+            "slug": "settings",
+            "submenu": [{
+                    "url": "EditAccount",
+                    "name": "Edit Account",
+                    "icon": "circle",
+                    "slug": "Edit Account"
+                },
+                {
+                    "url": "index",
+                    "name": "change-password",
+                    "icon": "circle",
+                    "slug": "change-password"
+                },
+                {
+                    "url": "MyAccount",
+                    "name": "My Account",
+                    "icon": "circle",
+                    "slug": "My Account"
+                }
+            ]
         },
+
         {
-            "url": "app/chat",
+            "url": "logout",
             "name": "Logout",
             "icon": "power",
-            "slug": "app-chat"
+            "slug": "Ausloggen"
         }
     ]
 }

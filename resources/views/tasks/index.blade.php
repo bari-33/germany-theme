@@ -50,37 +50,40 @@
 
                         </div>
 
-                            @foreach ($orders as $order)
-
-
-
+                        @foreach ($orders as $order)
                             <div class="container mt-4" id="allsearch">
                                 <div>
                                     @if ($order->order_status == '3')
-                                    <?php
+                                        <?php
 
-                                    $product_description = explode('<li>' , $order->pdetail->product_description);
+                                        $product_description = explode('<li>', $order->pdetail->product_description);
+                                        $data = $words = preg_replace('/(?<!\ )[A-Z]/', ' $0', $product_description[0]);
+                                        if ($product_description[0] == $data) {
+                                            unset($product_description[0]);
+                                        }
+                                        $check = explode(',', $order->check_boxes);
+                                      
+                                        ?>
+                                        <h3>{{ $order->pdetail->product_title }}</h3>
+                                        <hr style="border: 0.3px solid lightgrey;width: 100%;">
+                                        @foreach ($product_description as $description)
+                                            <?php
 
-                                //    $data = ($product_description[0]);
+                                            $checked = $loop->iteration;
+                                            ?>
+                                            <div class="row">
+                                                <input class="check" id="checkbox1" type="checkbox"
+                                                    data-id="{{ $loop->iteration }}" data-name="{{ $order->id }}"
+                                                    @if (in_array($checked, $check)) checked @endif>&nbsp;&nbsp;
+                                                <h5>{!! $description !!}</h5>
+                                                <hr style="border: 0.3px solid lightgrey;width: 100%;">
+                                            </div>
+                                        @endforeach
 
-                                     echo '<pre>'; print_r($data); echo '</pre>'; die;
-                                    ?>
-                                    <h3>{{ $order->pdetail->product_title }}</h3>
-                                    <hr style="border: 0.3px solid lightgrey;width: 100%;">
-                                    @foreach ($product_description as $description)
-
-                                    <div class="row">
-                                      <input class="check" id="checkbox1" type="checkbox"
-                                       value="{{ $order->id }}" data-id="12" data-name ="2">&nbsp;&nbsp;
-                                      <h5>{!!$description!!}</h5>
-                                    <hr style="border: 0.3px solid lightgrey;width: 100%;">
-                                    </div>
-
-                                    @endforeach
                                     @endif
                                 </div>
                             </div>
-                            @endforeach
+                        @endforeach
 
                     </div>
                 </div>
@@ -112,6 +115,30 @@
             });
 
         });
+        $('.check').on('click', function() {
+            var id = $(this).attr('data-id');
+            var order = $(this).attr('data-name');
+            if (!$(this).is(':checked')) {
+                $.ajax({
+                    type: "get",
+                    url: 'uncheck/' + id + '/' + order,
+                    // dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
 
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: 'checkedtask/' + id + '/' + order,
+                    success: function(data) {
+                        // location.reload();
+
+                    }
+                });
+            }
+
+        });
     });
 </script>

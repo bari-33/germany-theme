@@ -166,8 +166,11 @@ class DashboardController extends Controller
   }
   public function customerdashboard()
   {
+    $user=User::find(Auth::user()->id);
+    $order=$user->orders()->count();
+    $orders=$user->orders()->orderBy('created_at','desc')->get();
     $pageConfigs = ['pageHeader' => false];
 
-    return view('/content/dashboard/dashboard-ecommerce', ['pageConfigs' => $pageConfigs]);
+    return view('/content/dashboard/customer', ['pageConfigs' => $pageConfigs],compact('order','orders'));
   }
 }
