@@ -1,7 +1,8 @@
-@if($configData["mainLayoutType"] === 'horizontal' && isset($configData["mainLayoutType"]))
-<nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center {{ $configData['navbarColor'] }}" data-nav="brand-center">
-  <div class="navbar-header d-xl-block d-none">
-    {{-- <ul class="nav navbar-nav">
+@if ($configData['mainLayoutType'] === 'horizontal' && isset($configData['mainLayoutType']))
+    <nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center {{ $configData['navbarColor'] }}"
+        data-nav="brand-center">
+        <div class="navbar-header d-xl-block d-none">
+            {{-- <ul class="nav navbar-nav">
       <li class="nav-item">
         <a class="navbar-brand" href="{{url('/')}}">
           <span class="brand-logo">
@@ -32,199 +33,205 @@
         </a>
       </li>
     </ul> --}}
-  </div>
-  @else
-  <nav class="header-navbar navbar navbar-expand-lg align-items-center {{ $configData['navbarClass'] }} navbar-light navbar-shadow {{ $configData['navbarColor'] }} {{ ($configData['layoutWidth'] === 'boxed' && $configData['verticalMenuNavbarType']  === 'navbar-floating') ? 'container-xxl p-0' : '' }}">
-    @endif
-    <div class="navbar-container d-flex content">
-        <div class="bookmark-wrapper d-flex align-items-center">
-          <ul class="nav navbar-nav d-xl-none">
-            <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
-          </ul>
-          @if (Auth::user()->roles()->first()->slug == 'admin')
-
-
-          <ul class="nav navbar-nav bookmark-icons">
-            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('listuser')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Users') }}"><i class="ficon" data-feather="user"></i></a></li>
-            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_product')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Products') }}"><i class="ficon" data-feather="box"></i></a></li>
-            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_order')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Orders') }}"><i class="ficon" data-feather="shopping-cart"></i></a></li>
-            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('list_invoice')}}" data-toggle="tooltip" data-placement="top" title="{{ __('locale.Bills') }}"><i class="ficon" data-feather="file-text"></i></a></li>
-          </ul>
-
-          <ul class="nav navbar-nav">
-            <li class="nav-item d-none d-lg-block">
-              <a class="nav-link bookmark-star">
-                <i class="ficon text-warning" data-feather="star"></i>
-              </a>
-              <div class="bookmark-input search-input">
-                <div class="bookmark-input-icon">
-                  <i data-feather="search"></i>
-                </div>
-                <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">
-                <ul class="search-list search-list-bookmark"></ul>
-              </div>
-            </li>
-          </ul>
-          @endif
         </div>
-        <ul class="nav navbar-nav align-items-center ml-auto">
-          <li class="nav-item dropdown dropdown-language">
-            <a class="nav-link dropdown-toggle" id="dropdown-flag" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="flag-icon flag-icon-us"></i>
-              <span class="selected-language">English</span>
+    @else
+        <nav
+            class="header-navbar navbar navbar-expand-lg align-items-center {{ $configData['navbarClass'] }} navbar-light navbar-shadow {{ $configData['navbarColor'] }} {{ $configData['layoutWidth'] === 'boxed' && $configData['verticalMenuNavbarType'] === 'navbar-floating'? 'container-xxl p-0': '' }}">
+@endif
+<div class="navbar-container d-flex content">
+    <div class="bookmark-wrapper d-flex align-items-center">
+        <ul class="nav navbar-nav d-xl-none">
+            <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon"
+                        data-feather="menu"></i></a></li>
+        </ul>
+        @if (Auth::user()->roles()->first()->slug == 'admin')
+            <ul class="nav navbar-nav bookmark-icons">
+                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('listuser') }}"
+                        data-toggle="tooltip" data-placement="top" title="{{ __('locale.Users') }}"><i
+                            class="ficon" data-feather="user"></i></a></li>
+                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('list_product') }}"
+                        data-toggle="tooltip" data-placement="top" title="{{ __('locale.Products') }}"><i
+                            class="ficon" data-feather="box"></i></a></li>
+                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('list_order') }}"
+                        data-toggle="tooltip" data-placement="top" title="{{ __('locale.Orders') }}"><i
+                            class="ficon" data-feather="shopping-cart"></i></a></li>
+                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('list_invoice') }}"
+                        data-toggle="tooltip" data-placement="top" title="{{ __('locale.Bills') }}"><i
+                            class="ficon" data-feather="file-text"></i></a></li>
+            </ul>
+
+            <ul class="nav navbar-nav">
+                <li class="nav-item d-none d-lg-block">
+                    <a class="nav-link bookmark-star">
+                        <i class="ficon text-warning" data-feather="star"></i>
+                    </a>
+                    <div class="bookmark-input search-input">
+                        <div class="bookmark-input-icon">
+                            <i data-feather="search"></i>
+                        </div>
+                        <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0"
+                            data-search="search">
+                        <ul class="search-list search-list-bookmark"></ul>
+                    </div>
+                </li>
+            </ul>
+        @endif
+    </div>
+    <ul class="nav navbar-nav align-items-center ml-auto">
+        <li class="nav-item dropdown dropdown-language">
+            <a class="nav-link dropdown-toggle" id="dropdown-flag" href="javascript:void(0);" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="flag-icon flag-icon-us"></i>
+                <span class="selected-language">English</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-flag">
-              <a class="dropdown-item" href="{{url('lang/en')}}" data-language="en">
-                <i class="flag-icon flag-icon-us"></i> English
-              </a>
-              <a class="dropdown-item" href="{{url('lang/fr')}}" data-language="fr">
-                <i class="flag-icon flag-icon-fr"></i> French
-              </a>
-              <a class="dropdown-item" href="{{url('lang/de')}}" data-language="de">
-                <i class="flag-icon flag-icon-de"></i> German
-              </a>
-              <a class="dropdown-item" href="{{url('lang/pt')}}" data-language="pt">
-                <i class="flag-icon flag-icon-pt"></i> Portuguese
-              </a>
+                <a class="dropdown-item" href="{{ url('lang/en') }}" data-language="en">
+                    <i class="flag-icon flag-icon-us"></i> English
+                </a>
+                <a class="dropdown-item" href="{{ url('lang/fr') }}" data-language="fr">
+                    <i class="flag-icon flag-icon-fr"></i> French
+                </a>
+                <a class="dropdown-item" href="{{ url('lang/de') }}" data-language="de">
+                    <i class="flag-icon flag-icon-de"></i> German
+                </a>
+                <a class="dropdown-item" href="{{ url('lang/pt') }}" data-language="pt">
+                    <i class="flag-icon flag-icon-pt"></i> Portuguese
+                </a>
             </div>
-          </li>
-          <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="{{($configData['theme'] === 'dark') ? 'sun' : 'moon' }}"></i></a></li>
-          <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span class="badge badge-pill badge-danger badge-up">5</span></a>
+        </li>
+        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
+                    data-feather="{{ $configData['theme'] === 'dark' ? 'sun' : 'moon' }}"></i></a></li>
+        @if (Auth::user()->roles()->first()->slug == 'admin')
+            <?php
+          $orders = App\Models\Order::orderBy('created_at', 'desc')->get();
+                 $count = [];
+                foreach ($orders as $order) {
+
+
+                  ?>
+            @if ($order->order_status == 3)
+                @if ($order->notification_status == 0)
+                    <?php
+                    $data = explode(',', $order->id);
+                    array_push($count, $data);
+                    $count1 = count($count);
+                    ?>
+                    <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link"
+                            href="javascript:void(0);" data-toggle="dropdown"><i class="ficon"
+                                data-feather="bell"></i><span
+                                class="badge badge-pill badge-danger badge-up">{{ $count1 }}</span></a>
+                    @else
+                    <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link"
+                            href="javascript:void(0);" data-toggle="dropdown"><i class="ficon"
+                                data-feather="bell"></i></a>
+                @endif
+            @endif
+            <?php
+                }
+            ?>
             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-              <li class="dropdown-menu-header">
-                <div class="dropdown-header d-flex">
-                  <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
-                  <div class="badge badge-pill badge-light-primary">6 New</div>
-                </div>
-              </li>
-              <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar"><img src="{{asset('images/portrait/small/avatar-s-15.jpg')}}" alt="avatar" width="32" height="32"></div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Congratulation Sam 🎉</span>winner!</p><small class="notification-text"> Won the monthly best seller badge.</small>
-                  </div>
-                </div></a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar"><img src="{{asset('images/portrait/small/avatar-s-3.jpg')}}" alt="avatar" width="32" height="32"></div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">New message</span>&nbsp;received</p><small class="notification-text"> You have 10 unread messages</small>
-                  </div>
-                </div></a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-danger">
-                      <div class="avatar-content">MD</div>
+                <li class="dropdown-menu-header">
+                    <div class="dropdown-header d-flex">
+                        <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
                     </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Revised Order 👋</span>&nbsp;checkout</p><small class="notification-text"> MD Inc. order updated</small>
-                  </div>
-                </div></a>
-              <div class="media d-flex align-items-center">
-                <h6 class="font-weight-bolder mr-auto mb-0">System Notifications</h6>
-                <div class="custom-control custom-control-primary custom-switch">
-                  <input class="custom-control-input" id="systemNotification" type="checkbox" checked="">
-                  <label class="custom-control-label" for="systemNotification"></label>
-                </div>
-              </div><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-danger">
-                      <div class="avatar-content"><i class="avatar-icon" data-feather="x"></i></div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Server down</span>&nbsp;registered</p><small class="notification-text"> USA Server is down due to hight CPU usage</small>
-                  </div>
-                </div></a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-success">
-                      <div class="avatar-content"><i class="avatar-icon" data-feather="check"></i></div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Sales report</span>&nbsp;generated</p><small class="notification-text"> Last month sales report generated</small>
-                  </div>
-                </div></a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-warning">
-                      <div class="avatar-content"><i class="avatar-icon" data-feather="alert-triangle"></i></div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">High memory</span>&nbsp;usage</p><small class="notification-text"> BLR Server using high memory</small>
-                  </div>
-                </div></a>
+                </li>
+                <?php
+                $orders = App\Models\Order::orderBy('created_at', 'desc')->get();
+                foreach ($orders as $order) {
+                ?>
+                @if ($order->order_status == 3)
+                    @if ($order->notification_status == 0)
+                        <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="media-body">
+                                            <a href="{{ url('tasks') }}" onclick="seen({{ $order->id }})">
+                                                <p class="media-heading"><span class="font-weight-bolder">Order #
+                                                    </span>{{ $order->id }}</p><small class="notification-text">Is
+                                                    Finished, Check IT!</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                            </a><a class="d-flex" href="javascript:void(0)">
+                        </li>
+                        <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block"
+                                href="javascript:void(0)">Read all
+                                notifications</a></li>
+                    @endif
+                @endif
+                <?php
+                }
+                        ?>
+            </ul>
             </li>
-            <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="javascript:void(0)">Read all notifications</a></li>
-          </ul>
-        </li>
+        @endif
         <li class="nav-item dropdown dropdown-user">
-          <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="user-nav d-sm-flex d-none">
-              <span class="user-name font-weight-bolder">{{ Auth::user()->name }}</span>
-              @if (Auth::user()->roles()->first()->slug == 'admin')
-              <span class="user-status">Admin</span>
-              @endif
-              @if (Auth::user()->roles()->first()->slug == 'employee')
-              <span class="user-status">Employe</span>
-              @endif
-              @if (Auth::user()->roles()->first()->slug == 'customer')
-              <span class="user-status">Customer</span>
-              @endif
+            <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="user-nav d-sm-flex d-none">
+                    <span class="user-name font-weight-bolder">{{ Auth::user()->name }}</span>
+                    @if (Auth::user()->roles()->first()->slug == 'admin')
+                        <span class="user-status">Admin</span>
+                    @endif
+                    @if (Auth::user()->roles()->first()->slug == 'employee')
+                        <span class="user-status">Employe</span>
+                    @endif
+                    @if (Auth::user()->roles()->first()->slug == 'customer')
+                        <span class="user-status">Customer</span>
+                    @endif
+                </div>
+                @if (Auth::user()->roles()->first()->slug == 'admin')
+                    <span class="avatar">
+                        <img class="round"
+                            src="{{ asset('images/profiles/' . auth()->user()->profile_picture) }}" alt="avatar"
+                            height="40" width="40">
+                        <span class="avatar-status-online"></span>
+                    </span>
+                @endif
+                @if (Auth::user()->roles()->first()->slug == 'employee')
+                    <span class="avatar">
+                        <img class="round"
+                            src="{{ asset('images/profiles/' . auth()->user()->profile_picture) }}" alt="avatar"
+                            height="40" width="40">
+                        <span class="avatar-status-online"></span>
+                    </span>
+                @endif
+                @if (Auth::user()->roles()->first()->slug == 'customer')
+                    <span class="avatar">
+                        <img class="round"
+                            src="{{ asset('images/profiles/' . auth()->user()->profile_picture) }}" alt="avatar"
+                            height="40" width="40">
+                        <span class="avatar-status-online"></span>
+                    </span>
+                @endif
+            </a>
+            <div class="dropdown-menu dropdown-menu-right"   style=" width: 200px !important;" aria-labelledby="dropdown-user">
+                <a class="dropdown-item">
+                    Welcome!
+                </a>
+                <a class="dropdown-item" href="{{ url('show/' . Auth::user()->id) }}">
+                    <i class="mr-50" data-feather="user"></i> {{ __('locale.My Account') }}
+                </a>
+                <a class="dropdown-item" href="{{ url('edituser/' . Auth::user()->id) }}">
+                    <i class="mr-50" data-feather="user"></i> {{ __('locale.Edit Account') }}
+                </a>
+                <a class="dropdown-item" href="{{ url('index') }}">
+                    <i class="mr-50" data-feather="key"></i> {{ __('locale.change-password') }}
+                </a>
+                <div class="dropdown-divider"></div>
+
+                <a class="dropdown-item" href="{{ url('logout') }}">
+                    <i class="mr-50" data-feather="power"></i>
+                    {{ __('locale.Logout') }}
+                </a>
             </div>
-            @if (Auth::user()->roles()->first()->slug == 'admin')
-            <span class="avatar">
-              <img class="round" src="{{asset('images/profiles/'.auth()->user()->profile_picture)}}" alt="avatar" height="40" width="40">
-              <span class="avatar-status-online"></span>
-            </span>
-            @endif
-            @if (Auth::user()->roles()->first()->slug == 'employee')
-            <span class="avatar">
-              <img class="round" src="{{asset('images/profiles/'.auth()->user()->profile_picture)}}" alt="avatar" height="40" width="40">
-              <span class="avatar-status-online"></span>
-            </span>
-            @endif
-            @if (Auth::user()->roles()->first()->slug == 'customer')
-            <span class="avatar">
-              <img class="round" src="{{asset('images/profiles/'.auth()->user()->profile_picture)}}" alt="avatar" height="40" width="40">
-              <span class="avatar-status-online"></span>
-            </span>
-            @endif
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-            <a class="dropdown-item" >
-              Welcome!
-            </a>
-            <a class="dropdown-item" href="{{url('show/'.Auth::user()->id)}}">
-              <i class="mr-50" data-feather="user"></i> {{ __('locale.My Account') }}
-            </a>
-            <a class="dropdown-item" href="{{url('edituser/'.Auth::user()->id)}}">
-              <i class="mr-50" data-feather="user"></i> {{ __('locale.Edit Account') }}
-            </a>
-            <a class="dropdown-item" href="{{url('index')}}">
-                <i class="mr-50" data-feather="key"></i> {{ __('locale.change-password') }}
-              </a>
-            <div class="dropdown-divider"></div>
-
-            <a class="dropdown-item" href="{{ url('logout') }}" >
-             <i class="mr-50" data-feather="power"></i>
-             {{ __('locale.Logout') }}
-             </a>
-          </div>
         </li>
-      </ul>
-    </div>
-  </nav>
+    </ul>
+</div>
+</nav>
 
-  {{-- Search Start Here --}}
-  {{-- <ul class="main-search-list-defaultlist d-none">
+{{-- Search Start Here --}}
+{{-- <ul class="main-search-list-defaultlist d-none">
     <li class="d-flex align-items-center">
       <a href="javascript:void(0);">
         <h6 class="section-label mt-75 mb-0">Files</h6>
@@ -344,8 +351,8 @@
     </li>
   </ul> --}}
 
-  {{-- if main search not found! --}}
-  {{-- <ul class="main-search-list-defaultlist-other-list d-none">
+{{-- if main search not found! --}}
+{{-- <ul class="main-search-list-defaultlist-other-list d-none">
     <li class="auto-suggestion justify-content-between">
       <a class="d-flex align-items-center justify-content-between w-100 py-50">
         <div class="d-flex justify-content-start">
@@ -355,5 +362,16 @@
       </a>
     </li>
   </ul> --}}
-  {{-- Search Ends --}}
-  <!-- END: Header-->
+{{-- Search Ends --}}
+<!-- END: Header-->
+<script>
+    function seen(id) {
+        $.ajax({
+            type: 'GET',
+            url: 'seen/' + id,
+            success: function(data) {
+
+            }
+        });
+    }
+</script>

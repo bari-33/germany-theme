@@ -140,8 +140,12 @@ Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search
  Route::get('FAQ', [FAQController::class, 'FAQ'])->name('FAQ');
   /* Route tasks*/
  Route::get('tasks', [tasksController::class, 'tasks'])->name('tasks');
- Route::get('checkedtask/{id}/{order}', [tasksController::class, 'checkedtask'])->name('checkedtask');
+ Route::get('checkedtask/{id}/{order}/{loop}', [tasksController::class, 'checkedtask'])->name('checkedtask');
  Route::get('uncheck/{id}/{order}', [tasksController::class, 'uncheck'])->name('uncheck');
+ Route::get('seen/{id}', [tasksController::class, 'seen'])->name('seen');
+
+//  Route::get('allchecked/{order}', [tasksController::class, 'allchecked'])->name('allchecked');
+
 
 
    /* Route Chat*/

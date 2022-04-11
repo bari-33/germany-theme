@@ -181,10 +181,10 @@ class OrderController extends Controller
 
         if ($count == 0) {
             $order_progress = new OrderProgress();
-            echo '<pre>';
-            print_r($order_progress);
-            echo '</pre>';
-            die;
+            // echo '<pre>';
+            // print_r($order_progress);
+            // echo '</pre>';
+            // die;
             $order_progress->name = 'documents';
             $order_progress->type = 'completed';
             $order_progress->order_id = $order->id;

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-flat-pickr.css')) }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 <style>
     .css {
@@ -61,11 +62,13 @@
                                         if ($product_description[0] == $data) {
                                             unset($product_description[0]);
                                         }
+
                                         $check = explode(',', $order->check_boxes);
-                                      
+                                        $check_val = count($check);
                                         ?>
                                         <h3>{{ $order->pdetail->product_title }}</h3>
                                         <hr style="border: 0.3px solid lightgrey;width: 100%;">
+                                        <?php $loop_size = sizeof($product_description); ?>
                                         @foreach ($product_description as $description)
                                             <?php
 
@@ -73,18 +76,19 @@
                                             ?>
                                             <div class="row">
                                                 <input class="check" id="checkbox1" type="checkbox"
-                                                    data-id="{{ $loop->iteration }}" data-name="{{ $order->id }}"
-                                                    @if (in_array($checked, $check)) checked @endif>&nbsp;&nbsp;
+                                                    data-id="{{ $loop->iteration }}" data-loop="{{ $loop_size }}"
+                                                    data-name="{{ $order->id }}" value="{{ $check_val }}"
+                                                    @if (in_array($checked, $check)) checked @endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <h5>{!! $description !!}</h5>
                                                 <hr style="border: 0.3px solid lightgrey;width: 100%;">
                                             </div>
                                         @endforeach
-
+                                        <?php
+                                        ?>
                                     @endif
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
 
@@ -106,6 +110,8 @@
     <script src="{{ asset(mix('js/scripts/forms/form-validation.js')) }}"></script>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $("#search").on("keyup", function() {
@@ -118,27 +124,36 @@
         $('.check').on('click', function() {
             var id = $(this).attr('data-id');
             var order = $(this).attr('data-name');
+            var loop = $(this).attr('data-loop');
             if (!$(this).is(':checked')) {
                 $.ajax({
                     type: "get",
                     url: 'uncheck/' + id + '/' + order,
-                    // dataType: 'json',
                     success: function(data) {
-                        console.log(data);
+
+
                     }
                 });
 
             } else {
                 $.ajax({
                     type: 'GET',
-                    url: 'checkedtask/' + id + '/' + order,
+                    url: 'checkedtask/' + id + '/' + order + '/' + loop,
                     success: function(data) {
-                        // location.reload();
 
                     }
                 });
+                if ($(this).is(':checked')) {
+                    toastr['info']('Task Completed', 'Congratulations!! 🎉', {
+                        closeButton: true,
+                        tapToDismiss: false,
+                    });
+                }
+                        // location.reload();
+
             }
 
         });
+
     });
 </script>

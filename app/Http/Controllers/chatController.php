@@ -80,6 +80,7 @@ class chatController extends Controller
         $employees=User::whereHas('roles', function($q) {
             $q->where('id', '2');
         })->get();
+        $chat = Messenger::orderBy('created_at', 'ASC')->get();
         $pageConfigs = [
             'pageHeader' => false,
             'contentLayout' => "content-left-sidebar",
@@ -88,6 +89,6 @@ class chatController extends Controller
 
         return view('/content/chat/app-chat', [
             'pageConfigs' => $pageConfigs
-        ],compact('employees'));
+        ],compact('employees','chat'));
     }
 }

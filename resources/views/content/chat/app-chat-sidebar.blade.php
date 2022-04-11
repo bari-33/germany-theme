@@ -157,7 +157,8 @@ Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw 
     <ul class="chat-users-list chat-list media-list">
     @foreach ($employees as $employe)
 
-
+    <div class="inbox-item" onclick="inbox_item({{ $employe->id }})" style="border:0;cursor: pointer"
+        data-id="">
       <li>
         <span class="avatar"
           ><img
@@ -169,9 +170,11 @@ Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw 
           <span class="avatar-status-offline"></span>
         </span>
         <div class="chat-info flex-grow-1">
+
           <h5 class="mb-0">{{$employe->name}}</h5>
         </div>
       </li>
+    </div>
       @endforeach
 
     </ul>
@@ -180,3 +183,6 @@ Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw 
 </div>
 <!--/ Chat Sidebar area -->
 @endsection
+<script>
+
+</script>

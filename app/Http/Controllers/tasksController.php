@@ -13,9 +13,8 @@ class tasksController extends Controller
         return view('tasks.index',compact("orders"));
     }
 
-    public function checkedtask($id,$order)
+    public function checkedtask($id,$order,$loop)
     {
-
         $data = order::where("id", $order)->get('check_boxes')->first();
         if (isset($data->check_boxes)) {
             $employ = explode(",", $data->check_boxes);
@@ -26,6 +25,16 @@ class tasksController extends Controller
 
             }
         }
+        $data1 = order::where("id", $order)->get('check_boxes')->first();
+        $employ = explode(",", $data1->check_boxes);
+        $employee = count($employ);
+        if ($loop == $employee) {
+           order::where('id', $order)->update([ "order_status" => "4"]);
+           $orders = Order::orderBy('created_at', 'desc')->get();
+           return view('tasks.index',compact("orders"));
+
+        }
+
     }
 
 
@@ -41,5 +50,10 @@ class tasksController extends Controller
         order::where('id', $order)->update(["check_boxes" => $orderss1
        , "order_status" => "3"]);
 
+    }
+
+    public function seen($id)
+    {
+        order::where('id', $id)->update([ "notification_status" => "1"]);
     }
 }
