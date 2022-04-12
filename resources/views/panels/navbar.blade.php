@@ -101,30 +101,26 @@
         </li>
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
                     data-feather="{{ $configData['theme'] === 'dark' ? 'sun' : 'moon' }}"></i></a></li>
-        @if (Auth::user()->roles()->first()->slug == 'admin')
-            <?php
+                    @if (Auth::user()->roles()->first()->slug == 'admin')
+        <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
+                data-toggle="dropdown"><i class="ficon" data-feather="bell"></i>
+                    <?php
           $orders = App\Models\Order::orderBy('created_at', 'desc')->get();
                  $count = [];
                 foreach ($orders as $order) {
 
 
                   ?>
-            @if ($order->order_status == 3)
-                @if ($order->notification_status == 0)
-                    <?php
-                    $data = explode(',', $order->id);
-                    array_push($count, $data);
-                    $count1 = count($count);
-                    ?>
-                    <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link"
-                            href="javascript:void(0);" data-toggle="dropdown"><i class="ficon"
-                                data-feather="bell"></i><span
-                                class="badge badge-pill badge-danger badge-up">{{ $count1 }}</span></a>
-                    @else
-                    <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link"
-                            href="javascript:void(0);" data-toggle="dropdown"><i class="ficon"
-                                data-feather="bell"></i></a>
-                @endif
+                    @if ($order->order_status == 3)
+                        @if ($order->notification_status == 0)
+                            <?php
+                            $data = explode(',', $order->id);
+                            array_push($count, $data);
+                            $count1 = count($count);
+                            ?>
+                            <span class="badge badge-pill badge-danger badge-up">{{ $count1 }}</span>
+            </a>
+            @endif
             @endif
             <?php
                 }
@@ -154,16 +150,17 @@
                                     </div>
                             </a><a class="d-flex" href="javascript:void(0)">
                         </li>
-                        <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block"
-                                href="javascript:void(0)">Read all
-                                notifications</a></li>
+
                     @endif
                 @endif
                 <?php
                 }
                         ?>
+                          <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block"
+                            href="javascript:void(0)">Read all
+                            notifications</a></li>
             </ul>
-            </li>
+        </li>
         @endif
         <li class="nav-item dropdown dropdown-user">
             <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);"
@@ -205,7 +202,8 @@
                     </span>
                 @endif
             </a>
-            <div class="dropdown-menu dropdown-menu-right"   style=" width: 200px !important;" aria-labelledby="dropdown-user">
+            <div class="dropdown-menu dropdown-menu-right" style=" width: 200px !important;"
+                aria-labelledby="dropdown-user">
                 <a class="dropdown-item">
                     Welcome!
                 </a>

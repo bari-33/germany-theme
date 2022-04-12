@@ -54,7 +54,7 @@
                         @foreach ($orders as $order)
                             <div class="container mt-4" id="allsearch">
                                 <div>
-                                    @if ($order->order_status == '3')
+                                    @if ($order->order_status == '2')
                                         <?php
 
                                         $product_description = explode('<li>', $order->pdetail->product_description);
@@ -63,7 +63,7 @@
                                             unset($product_description[0]);
                                         }
 
-                                        $check = explode(',', $order->check_boxes);
+                                        $check = explode(',', $order->check_box);
                                         $check_val = count($check);
                                         ?>
                                         <h3>{{ $order->pdetail->product_title }}</h3>
@@ -128,7 +128,7 @@
             if (!$(this).is(':checked')) {
                 $.ajax({
                     type: "get",
-                    url: 'uncheck/' + id + '/' + order,
+                    url: 'uncheckemtask/' + id + '/' + order,
                     success: function(data) {
 
 
@@ -144,12 +144,12 @@
             } else {
                 $.ajax({
                     type: 'GET',
-                    url: 'checkedtask/' + id + '/' + order + '/' + loop,
+                    url: 'checkedemtask/' + id + '/' + order + '/' + loop,
                     success: function(data) {
                         var data=JSON.parse(data);
+                        console.log(data);
                         if (data) {
-                        var time = data.order_status;
-                        if (data.order_status == "4") {
+                        if (data.order_status == "3") {
                         location.reload();
 
                     }

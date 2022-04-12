@@ -20,7 +20,7 @@
         },
 
         {
-            "url": "app/chat",
+            "url": "emloyeetask",
             "name": "Tasks",
             "icon": "check-square",
             "slug": "app-chat"
