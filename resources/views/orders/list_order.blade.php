@@ -245,7 +245,7 @@
                                 </div>
                                 </div>
                             </div>
-                        <table class="datatables table mb-0" style="color: #000;">
+                        <table class="datatables table mb-0"  id = "mytable" style="color: #000;">
                             <div class="container mt-3">
                             <thead>
                                 <tr>
@@ -771,6 +771,7 @@
                 type: 'GET',
                 url: 'dropupdate/' + id + '/' + order,
                 success: function(data) {
+
                     location.reload();
 
                 }
@@ -781,7 +782,7 @@
                 type: 'GET',
                 url: 'unassingemploy/' + id + '/' + order,
                 success: function(data) {
-                    console.log(data);
+
                     location.reload();
 
                 }

@@ -111,7 +111,9 @@ class AdminOrderController extends Controller
 
             }
         }
-
+      $suertable =   User::where("id", $id)->first();
+      $data = json_encode($suertable);
+      return response($data);
     }
     public function unassingemploy($id,$order_id)
     {

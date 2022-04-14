@@ -162,6 +162,67 @@
             </ul>
         </li>
         @endif
+        @if (Auth::user()->roles()->first()->slug == 'employee')
+        <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
+                data-toggle="dropdown"><i class="ficon" data-feather="bell"></i>
+                    <?php
+          $orders = App\Models\Order::orderBy('created_at', 'desc')->get();
+                 $count = [];
+                foreach ($orders as $order) {
+
+
+                  ?>
+                    @if ($order->order_status == 2)
+                        @if ($order->empnotification_status == 0)
+                            <?php
+                            $data = explode(',', $order->id);
+                            array_push($count, $data);
+                            $count1 = count($count);
+                            ?>
+                            <span class="badge badge-pill badge-danger badge-up">{{ $count1 }}</span>
+            </a>
+            @endif
+            @endif
+            <?php
+                }
+            ?>
+            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                <li class="dropdown-menu-header">
+                    <div class="dropdown-header d-flex">
+                        <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
+                    </div>
+                </li>
+                <?php
+                $orders = App\Models\Order::orderBy('created_at', 'desc')->get();
+                foreach ($orders as $order) {
+                ?>
+                @if ($order->order_status == 2)
+                    @if ($order->empnotification_status == 0)
+                        <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="media-body">
+                                            <a href="{{ url('emloyeetask') }}" onclick="seenemp({{ $order->id }})">
+                                                <p class="media-heading"><span class="font-weight-bolder">Order #
+                                                    </span>{{ $order->id }}</p><small class="notification-text">Is
+                                                    Running Please, Check IT!</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                            </a><a class="d-flex" href="javascript:void(0)">
+                        </li>
+
+                    @endif
+                @endif
+                <?php
+                }
+                        ?>
+                          <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block"
+                            href="javascript:void(0)">Read all
+                            notifications</a></li>
+            </ul>
+        </li>
+        @endif
         <li class="nav-item dropdown dropdown-user">
             <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -367,6 +428,15 @@
         $.ajax({
             type: 'GET',
             url: 'seen/' + id,
+            success: function(data) {
+
+            }
+        });
+    }
+    function seenemp(id) {
+        $.ajax({
+            type: 'GET',
+            url: 'seenemp/' + id,
             success: function(data) {
 
             }

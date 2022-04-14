@@ -14,7 +14,7 @@
 
         {
             "name": "Orders",
-            "url": "add_order",
+            "url": "emporders",
             "icon": "shopping-cart",
             "slug": ""
         },
@@ -26,7 +26,7 @@
             "slug": "app-chat"
         },
         {
-            "url": "app/calendar",
+            "url": "empbill",
             "name": "Bills",
             "icon": "file-text",
             "slug": "app-calendar"

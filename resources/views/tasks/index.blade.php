@@ -146,8 +146,8 @@
                     type: 'GET',
                     url: 'checkedtask/' + id + '/' + order + '/' + loop,
                     success: function(data) {
-                        var data=JSON.parse(data);
                         if (data) {
+                            var data=JSON.parse(data);
                         var time = data.order_status;
                         if (data.order_status == "4") {
                         location.reload();

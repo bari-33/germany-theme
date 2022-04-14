@@ -19,6 +19,7 @@ use App\Http\Controllers\passwordController;
 use App\Http\Controllers\chatController;
 use App\Http\Controllers\tasksController;
 use App\Http\Controllers\paymentController;
+use App\Http\Controllers\employeeController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
@@ -146,6 +147,8 @@ Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search
  Route::get('checkedemtask/{id}/{order}/{loop}', [tasksController::class, 'checkedemtask'])->name('checkedemtask');
  Route::get('uncheckemtask/{id}/{order}', [tasksController::class, 'uncheckemtask'])->name('uncheckemtask');
  Route::get('seen/{id}', [tasksController::class, 'seen'])->name('seen');
+ Route::get('seenemp/{id}', [tasksController::class, 'seenemp'])->name('seenemp');
+
 
 //  Route::get('allchecked/{order}', [tasksController::class, 'allchecked'])->name('allchecked');
 
@@ -165,6 +168,9 @@ Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search
  Route::get('customerOrders', [OrderController::class, 'customerOrders'])->name('customerOrders');
  Route::get('getTrialDocuments/{id}', [OrderController::class, 'getTrialDocuments'])->name('getTrialDocuments');
  Route::get('getFinishedDocuments/{id}', [OrderController::class, 'getFinishedDocuments'])->name('getFinishedDocuments');
+ /* Route Employeee*/
+ Route::get('emporders', [employeeController::class, 'emporders'])->name('emporders');
+ Route::get('empbill', [employeeController::class, 'empbill'])->name('empbill');
 
 
   /* Route Logout*/

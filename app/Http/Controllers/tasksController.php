@@ -56,6 +56,10 @@ class tasksController extends Controller
     {
         order::where('id', $id)->update([ "notification_status" => "1"]);
     }
+    public function seenemp($id)
+    {
+        order::where('id', $id)->update([ "empnotification_status" => "1"]);
+    }
 
     public function emloyeetask()
     {
