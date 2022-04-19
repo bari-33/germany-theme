@@ -523,6 +523,7 @@
                                                     src="{{ url('images/profiles/' . $employee->profile_picture) }}"
                                                     style="width:80%" class="rounded-circle" alt="">
                                                 <span style="font-size: 10px">10:00</span>
+                                                {{-- <input type="text" id="hidden_em" --}}
                                             </div>
                                             @endif
                                         </li>
@@ -531,10 +532,11 @@
                                         <div class="col">
                                             <input type="text" class="form-control chat-input"
                                                 placeholder="Enter your text">
+                                                <input type="hidden" id="hidden_em">
                                         </div>
                                         @if (!empty($employee))
                                         <div class="col-auto">
-                                            <button type="submit" onclick="chat_send({{$employee->id}})" class="btn btn-danger chat-send btn-block waves-effect waves-light"
+                                            <button type="submit" id="hidden_em" onclick="chat_send({{$employee->id}})" class="btn btn-danger chat-send btn-block waves-effect waves-light"
                                                 disabled>Send</button>
                                         </div>
                                         @else
@@ -629,6 +631,7 @@
 
 
     function inbox_item(id) {
+        $('#hidden_em').val(id);
     //   var id=$(this).attr('data-id');
       $('.chat-send').attr('disabled',false);
         // id=$(this).attr('data-id');
@@ -638,6 +641,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             }
+            
         });
         jQuery.ajax({
             url: "{{ url('/read') }}",
@@ -670,36 +674,10 @@
 
                     if (result[res].from =={{Auth::user()->id}}) {
 
-                        $('.conversation-list').append(' <li class="clearfix">\n' +
-                            '                        <div class="chat-avatar">\n' +
-                            '                            <img src="{{url('images/profiles/'.Auth::user()->profile_picture)}}" alt="male" style="width:10%;"><br>' +
-                            '                            <i>' + time + '</i>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="conversation-text">\n' +
-                            '                            <div class="ctext-wrap">\n' +
-                            '                                <i>{{Auth::user()->name}}</i>\n' +
-                            '                                <p>\n' +
-                            result[res].messages +
-                            '                                </p>\n' +
-                            '                            </div>\n' +
-                            '                        </div>\n' +
-                            '                    </li>');
+                        $('.conversation-list').append(' <li class="row" style="text-align: right"> <div class="col-md-9" style="padding-right:0px;"> <div style="display:inline-block;background-color: #F9DDD7;padding: 8px"> <span style="display: block;font-weight: bold">{{Auth::user()->name}}</span> <span style="font-size: 10px">'+result[res].messages +'</span> </div> </div> <div class="col-md-3" style="text-align: center;padding-left: 2px"><img src="{{ url('images/profiles/'.Auth::user()->profile_picture) }}" style="width:80%" class="rounded-circle" alt=""> <span style="font-size: 10px">'+ time +'</span> </div> </li>');
                     } else {
+                        $('.conversation-list').append('<li class="row"> <div class="col-md-3" style="text-align: center;padding-right: 2px"><img src="{{url('images/profiles/')}}' + '/' + result[res].from_contact.profile_picture + '"  style="width:80%" class="rounded-circle" alt=""> <span style="font-size: 10px">'+ time +'</span> </div> <div class="col-md-9" style="padding-left:0px;"> <div style="display:inline-block;background-color: #F2F5F7;padding: 8px"> <span style="display: block;font-weight: bold">'+result[res].from_contact.name+'</span> <span style="font-size: 10px">'+result[res].messages +'</span> </div> </div> </li>');
 
-                        $('.conversation-list').append(' <li class="clearfix odd">\n' +
-                            '                        <div class="chat-avatar">\n' +
-                            '                            <img src="{{url('images/profiles/')}}' + '/' + result[res].from_contact.profile_picture + '" alt="male">\n' +
-                            '                            <i>' + time + '</i>\n' +
-                            '                        </div>\n' +
-                            '                        <div class="conversation-text">\n' +
-                            '                            <div class="ctext-wrap">\n' +
-                            '                                <i>'+result[res].from_contact.name+'</i>\n' +
-                            '                                <p>\n' +
-                            result[res].messages +
-                            '                                </p>\n' +
-                            '                            </div>\n' +
-                            '                        </div>\n' +
-                            '                    </li>');
                     }
 
                 }
@@ -708,25 +686,17 @@
     }
 
     function chat_send(employee) {
-
+    //    var dt = $(this).val();
+    //    alert(dt)
         var date = new Date();
         var time = date.getHours() + ':' + date.getMinutes();
         var message = $('.chat-input').val();
+        var id = $('#hidden_em').val();
+
+
+
         $('.chat-input').val('');
-           $('.conversation-list').append(' <li class="clearfix">\n' +
-    '                        <div class="chat-avatar">\n' +
-    '                            <img src="{{ url('images/profiles/' . Auth::user()->profile_picture) }}" alt="male" style="width:10%;">\n' +
-    '                            <i>' + time + '</i>\n' +
-    '                        </div>\n' +
-    '                        <div class="conversation-text">\n' +
-    '                            <div class="ctext-wrap">\n' +
-    '                                <i>{{ Auth::user()->name }}</i>\n' +
-    '                                <p>\n' +
-    message +
-    '                                </p>\n' +
-    '                            </div>\n' +
-    '                        </div>\n' +
-    '                    </li>');
+           $('.conversation-list').append('<li class="row" style="text-align: right"> <div class="col-md-9" style="padding-right:0px;"> <div style="display:inline-block;background-color: #F9DDD7;padding: 8px"> <span style="display: block;font-weight: bold">{{Auth::user()->name}}</span> <span style="font-size: 10px">'+message +'</span> </div> </div> <div class="col-md-3" style="text-align: center;padding-left: 2px"><img src="{{ url('images/profiles/'.Auth::user()->profile_picture) }}" style="width:80%" class="rounded-circle" alt=""> <span style="font-size: 10px">'+ time +'</span> </div> </li>');
 $('.conversation-list').scrollTop($('.conversation-list')[0].scrollHeight);
 
 $.ajaxSetup({
@@ -739,7 +709,7 @@ jQuery.ajax({
     method: 'post',
     data: {
         message: message,
-        to: employee,
+        to: id,
         from: {{ \Illuminate\Support\Facades\Auth::user()->id }},
         profile_picture: '{{ \Illuminate\Support\Facades\Auth::user()->profile_picture }}',
         name: '{{ \Illuminate\Support\Facades\Auth::user()->name }}'

@@ -41,7 +41,7 @@ Route::post('store1', [OrderController::class, 'store1'])->name('store1');
 // Main Page Route
 Route::get('/dashboard', [DashboardController::class,'admindashboard'])->middleware('verified');
 Route::get('/customer_dashboard', [DashboardController::class,'customerdashboard'])->middleware('verified');
-Route::get('/employ_dashboard', [DashboardController::class,'customerdashboard'])->middleware('verified');
+Route::get('/employ_dashboard', [DashboardController::class,'employ_dashboard'])->middleware('verified');
 /* Route Login */
 Auth::routes(['verify' => true]);
 Route::get('/', function (){

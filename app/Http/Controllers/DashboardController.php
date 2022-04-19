@@ -19,6 +19,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\Website;
+use App\Models\ChatRequest;
 use App\Models\WebsiteCategory;
 use Carbon\Carbon;
 use Chumper\Zipper\Facades\Zipper;
@@ -30,11 +31,116 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
   // Dashboard - Analytics
-  public function dashboardAnalytics()
+  public function employ_dashboard()
   {
+    //   echo '<pre>'; print_r("here"); echo '</pre>'; die;
+    $products=Product::all()->count();
+    $designs=Design::all()->count();
+    $websites=Website::all()->count();
+    $orders1 = Order::orderBy('created_at', 'ASC')->get();
+    $orders=User::find(Auth::user()->id)->employee_orders()->orderBy('created_at','ASC')->get();
+    $employee=User::find(Auth::user()->id);
+        foreach ($orders1 as $key => $order) {
+            $data = explode(',', $order->user_id);
+        foreach ($data as $key => $value) {
+            if ($value==$employee->id) {
+                $order_count=$orders1->count();
+                $previous_month_orders=$orders1->where('order_user.created_at',Carbon::now()->subMonth()->month)->count();
+                $current_month_orders=$orders1->where('order_user.created_at',Carbon::now()->month)->count();
+            }
+        }
+        }
+    // $order_count=$orders->count();
+
+    $previous_month_orders=$employee->employee_orders()->whereMonth('order_user.created_at',Carbon::now()->subMonth()->month)->count();
+    $current_month_orders=$employee->employee_orders()->whereMonth('order_user.created_at',Carbon::now()->month)->count();
+
+ if($previous_month_orders==$current_month_orders){
+            $order_p = 0;
+        }else{
+        if($current_month_orders==0){
+            $order_p = -100;
+        }else{
+            if($previous_month_orders > $current_month_orders){
+            $order_p = -1 * (($current_month_orders * 100) / $previous_month_orders);
+            }else{
+                $order_p = ($previous_month_orders * 100) / $current_month_orders;
+            }
+
+        }
+    }
+
+
+    if($previous_month_orders==0)
+    {
+        $previous_month_orders=1;
+    }
+    $order_count_percentage=((int)$current_month_orders-(int)$previous_month_orders)/$previous_month_orders;
+
+
+    $revenue=$orders1->where('order_user.created_at',Carbon::now()->month)->sum('amount');
+
+    $previous_revenue=$orders1->where('order_user.created_at',Carbon::now()->subMonth()->month)->sum('amount');
+
+    if($revenue==$previous_revenue){
+        $order_r = 0;
+    }else{
+    if($revenue==0){
+        $order_r = -100;
+    }else{
+        if($previous_revenue > $revenue){
+        $order_r = -1 * (($revenue * 100) / $previous_revenue);
+        }else{
+            $order_r = ($previous_revenue * 100) / $revenue;
+        }
+
+    }
+    }
+
+
+
+    if($previous_revenue==0)
+    {
+        $previous_revenue=1;
+    }
+   $percentage=((int)$revenue-(int)$previous_revenue)/$previous_revenue;
+
+
+    $unreadIds = Messenger::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
+        ->where('to', auth()->id())
+        ->where('read', false)
+        ->groupBy('from')
+        ->get();
+    $contacts = $orders->map(function($contact) use ($unreadIds) {
+        $contactUnread = $unreadIds->where('sender_id', $contact->user->id)->first();
+        $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
+        return $contact;
+    });
+
+    $contacts=collect();
+    $orders=Order::where('employee_chat',Auth::user()->id)->get();
+
+    // foreach ($orders as $order)
+    // dd( $order);
+
+    // {
+    //     $user=$order->user;
+
+    //     $count=Messenger::where('from',$user->id)->where('to',Auth::user()->id)->where('read','0')->count();
+    //     $user->setAttribute('count',$count);
+    //     $contacts->add($user);
+
+    // }
+
+
+    $admin=Role::where('slug','admin')->first()->users()->first();
+    $count=Messenger::where('from',$admin->id)->where('to',Auth::user()->id)->where('read','0')->count();
+
+    $chat_requests=ChatRequest::where('accepted','0')->get();
+
     $pageConfigs = ['pageHeader' => false];
 
-    return view('/content/dashboard/dashboard-analytics', ['pageConfigs' => $pageConfigs]);
+    return view('/content/dashboard/dashboard-analytics', ['pageConfigs' => $pageConfigs],compact('orders1','products','designs','websites','orders','order_count','employee','percentage','revenue','contacts','admin','count','chat_requests','order_count_percentage','order_p','order_r'));
   }
 
   // Dashboard - Ecommerce
@@ -152,7 +258,6 @@ class DashboardController extends Controller
     }
 
     $orders_count=Order::all()->count();
-
     $employees=collect();
     $emp=Role::where('slug','employee')->first()->users()->get();
     foreach ($emp as $employee)

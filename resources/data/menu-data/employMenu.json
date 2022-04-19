@@ -5,7 +5,7 @@
         {
 
             "name": "Dashboards",
-            "url": "dashboard",
+            "url": "employ_dashboard",
             "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
             "icon": "home",
             "slug": ""
