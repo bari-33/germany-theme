@@ -795,6 +795,7 @@
                 url: 'todo/'+ order,
                 success: function(data) {
                       var data=JSON.parse(data);
+                      console.log(data);
                       if(data)
                       {
                          var time = data.completion_date;

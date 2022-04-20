@@ -44,7 +44,8 @@ class DashboardController extends Controller
             $data = explode(',', $order->user_id);
         foreach ($data as $key => $value) {
             if ($value==$employee->id) {
-                $order_count=$orders1->count();
+                $order_count=$order->count();
+                // echo '<pre>'; print_r($order_count); echo '</pre>'; die;
                 $previous_month_orders=$orders1->where('order_user.created_at',Carbon::now()->subMonth()->month)->count();
                 $current_month_orders=$orders1->where('order_user.created_at',Carbon::now()->month)->count();
             }
@@ -119,7 +120,6 @@ class DashboardController extends Controller
 
     $contacts=collect();
     $orders=Order::where('employee_chat',Auth::user()->id)->get();
-
     // foreach ($orders as $order)
     // dd( $order);
 
@@ -135,7 +135,7 @@ class DashboardController extends Controller
 
     $admin=Role::where('slug','admin')->first()->users()->first();
     $count=Messenger::where('from',$admin->id)->where('to',Auth::user()->id)->where('read','0')->count();
-
+          
     $chat_requests=ChatRequest::where('accepted','0')->get();
 
     $pageConfigs = ['pageHeader' => false];

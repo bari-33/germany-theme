@@ -217,7 +217,7 @@
                     var tsr='';
                     for(i=0;i<res.length;i++) {
                       tsr+= '<tr>'+
-                            '<td><a href='+'"'+window.location.origin+'/bewwebung3/public/files/trialdocuments/'+res[i].name+'" download="'+res[i].name+'">'+res[i].name+'</a></td>'
+                            '<td><a href='+'"'+window.location.origin+'/bewwebung3/public/files/trialdocuments/'+res[i].name+'" download="'+res[i]+ name+'">'+res[i].name+'</a></td>'
                             +'</tr>';
                     }
                    console.log(tsr);

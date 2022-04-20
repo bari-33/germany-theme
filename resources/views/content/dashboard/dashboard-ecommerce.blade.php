@@ -454,9 +454,9 @@
                         <hr>
 
 
-
+                        <div style="max-height: 250px;overflow-y: auto" >
                         <div class="card-body">
-                            <div style="overflow-y: scroll;" class="mh-100">
+
                                 @if (!empty($employees))
                                 @foreach ($employees as $employee)
                                         <div class="browser-states">
@@ -492,8 +492,9 @@
                             {{-- <img  class="font-medium-3 cursor-pointer" src="{{url('images/profiles/'.Auth::user()->profile_picture)}}" class="rounded-circle" alt="" style=" width:10%;"> --}}
                         </div>
                         <hr style="color: black;">
+                        <div style="max-height: 250px;overflow-y: auto" >
                         <div class="card-body">
-                            <div style="overflow-y: scroll;" class="mh-100">
+
                                 <div class="chat-conversation">
                                     <ul class="conversation-list slimscroll" style="max-height: 315px;">
                                         <li class="row">
@@ -560,9 +561,10 @@
                                 alt="" style=" width:10%;">
                         </div>
                         <hr>
+                        <div style="max-height: 250px;overflow-y: auto" >
                         <div class="card-body">
 
-                            <div style="overflow-y: scroll;" class="mh-100">
+
                                 @if (!empty($employees))
                                 @foreach ($employees as $employee)
 
@@ -641,7 +643,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             }
-            
+
         });
         jQuery.ajax({
             url: "{{ url('/read') }}",
