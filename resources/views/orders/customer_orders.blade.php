@@ -213,11 +213,12 @@
                 type : 'get',
                 url  : 'getTrialDocuments/'+id,
                 success: function(res){
-                    console.log(res);
+                    var APP_URL =  '{{ env("APP_URL") }}';
+                    console.log(APP_URL);
                     var tsr='';
                     for(i=0;i<res.length;i++) {
                       tsr+= '<tr>'+
-                            '<td><a href='+'"'+window.location.origin+'/bewwebung3/public/files/trialdocuments/'+res[i].name+'" download="'+res[i]+ name+'">'+res[i].name+'</a></td>'
+                            '<td><a href="'+APP_URL+'public/files/trialdocuments/'+res[i].name+'" download="'+res[i].name+'">'+res[i].name+'</a></td>'
                             +'</tr>';
                     }
                    console.log(tsr);
@@ -243,7 +244,8 @@
                     for(i=0;i<res.length;i++) {
 
                         tsr+= '<tr>'+
-                            '<td><a href='+'"'+window.location.origin+'/bewwebung3/public/files/finisheddocuments/'+res[i].name+'" download="'+res[i].name+'">'+res[i].name+'</a></td>'
+                            '<td><a href="'+APP_URL+'public/files/finisheddocuments/'+res[i].name+'" download="'+res[i].name+'">'+res[i].name+'</a></td>'
+                            // '<td><a href='+'"'+window.location.origin+'/bewwebung3/public/files/finished documents/'+res[i].name+'" download="'+res[i].name+'">'+res[i].name+'</a></td>'
                             +'</tr>';
 
                     }
