@@ -313,14 +313,12 @@
                                     <td>
 
                                         <a href="{{ url('invoices/'.$order->id) }}" class=""><i
-                                                class="fa fa-paper-plane text-primary mr-1" aria-hidden="true"
-                                                ></i></a>
+                                                class="fa fa-paper-plane text-primary" aria-hidden="true"
+                                                ></i></a>&nbsp;
 
-                                        <a href="{{ url('invoices/'.$order->id) }}" class=""><i
-                                                class="fa fa-eye text-dark" aria-hidden="true"
-                                                ></i></a>
+                                        <a href="{{ url('invoices/'.$order->id) }}" class=""><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;
                                         <a href="{{ url('invoicepdf/' . $order->id) }}" class=""><i
-                                                class="fa fa-ellipsis-v text-primary mr-1" aria-hidden="true"
+                                                class="fa fa-ellipsis-v text-primary" aria-hidden="true"
                                                 ></i></a>
                                     </td>
                                 </tr>

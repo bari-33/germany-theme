@@ -136,7 +136,7 @@
                     <div class="card " style="overflow-x:auto;">
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="mytable">
                                     <thead>
                                         <tr>
                                             <th>{{ __('locale.ID') }}</th>
@@ -258,8 +258,8 @@
                                                                                         onclick="unassing({{ $employe->id }},{{ $order->id }})">
                                                                                         <div class="avatar bg-light-danger">
                                                                                             <div class="avatar-content"><i
-                                                                                                    class="fa fa-times"
-                                                                                                    data-feather="x"></i>
+                                                                                                class="fa fa-times"
+                                                                                                ></i>
                                                                                             </div>
                                                                                         </div>
                                                                                     </span>
@@ -317,8 +317,8 @@
                                                                                         onclick="unassing({{ $employe->id }},{{ $order->id }})">
                                                                                         <div class="avatar bg-light-danger">
                                                                                             <div class="avatar-content"><i
-                                                                                                    class="avatar-icon"
-                                                                                                    data-feather="x"></i>
+                                                                                                class="fa fa-times"
+                                                                                                ></i>
                                                                                             </div>
                                                                                         </div>
                                                                                     </span>
@@ -614,7 +614,8 @@
             type: 'GET',
             url: 'dropupdate/' + id + '/' + order,
             success: function(data) {
-                location.reload();
+                $( "#mytable" ).load( "/dashboard #mytable" );
+                // location.reload();
 
             }
         });
@@ -625,7 +626,7 @@
             type: 'GET',
             url: 'unassingemploy/' + id + '/' + order,
             success: function(data) {
-                location.reload();
+                $( "#mytable" ).load( "/dashboard #mytable" );
 
             }
         });

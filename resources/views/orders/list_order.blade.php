@@ -367,8 +367,8 @@
                                                                         onclick="unassing({{ $employe->id }},{{ $order->id }})">
                                                                         <div class="avatar bg-light-danger">
                                                                             <div class="avatar-content"><i
-                                                                                    class="fa fa-times"
-                                                                                    data-feather="x"></i></div>
+                                                                                class="fa fa-times"
+                                                                                ></i></div>
                                                                         </div></span>
                                                                         <hr>
                                                                     </div>
@@ -422,8 +422,8 @@
                                                                         onclick="unassing({{ $employe->id }},{{ $order->id }})">
                                                                         <div class="avatar bg-light-danger">
                                                                             <div class="avatar-content"><i
-                                                                                    class="avatar-icon"
-                                                                                    data-feather="x"></i></div>
+                                                                                class="fa fa-times"
+                                                                                ></i></div>
                                                                         </div></span>
                                                                         <hr>
                                                                     </div>
@@ -615,8 +615,6 @@
                                             </div>
                                             @endif
                                             @if ($order->order_status == 4)
-
-
                                             <div class="dropdown">
                                                 <div>
                                                     <a class="dropbtn"><img src="{!! asset('images/status/todo.png') !!}"
@@ -765,25 +763,26 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
     @endsection
+
     <script>
-        function down(id, order,elem) {
+        function down(id, order,elem,e) {
             $.ajax({
                 type: 'GET',
                 url: 'dropupdate/' + id + '/' + order,
                 success: function(data) {
-
-                    location.reload();
-
+                    $( "#mytable" ).load( "list_order #mytable" );
                 }
             });
+
         }
+
+
         function unassing(id, order) {
             $.ajax({
                 type: 'GET',
                 url: 'unassingemploy/' + id + '/' + order,
                 success: function(data) {
-
-                    location.reload();
+                    $( "#mytable" ).load( "list_order #mytable" );
 
                 }
             });
@@ -796,19 +795,8 @@
                 success: function(data) {
                       var data=JSON.parse(data);
                       console.log(data);
-                      if(data)
-                      {
-                         var time = data.completion_date;
-                         var price = data.total_price;
-                         var date = moment(time).format('dddd, DD, MMMM  YYYY');
-                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/simpel.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
-                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div>  </div>');
-                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-danger"><div class="avatar-content"><i class="fa fa-times"></i></div> </div></p>');
-                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
-                         console.log(final_price);
+                      $( "#mytable" ).load( "list_order #mytable" );
 
-
-                      }
                 }
             });
 
@@ -823,16 +811,8 @@
                 success: function(data) {
                       var data=JSON.parse(data);
                         //   console.log(data);
-                      if(data)
-                      {
-                         var time = data.completion_date;
-                         var price = data.total_price;
-                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
-                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/check.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
-                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-warning" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
-                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
-                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
-                      }
+                        $( "#mytable" ).load( "list_order #mytable" );
+
                 }
             });
 
@@ -843,17 +823,8 @@
                 url: 'finished/'+ order,
                 success: function(data) {
                       var data=JSON.parse(data);
-                        //   console.log(data);
-                      if(data)
-                      {
-                         var time = data.completion_date;
-                         var price = data.total_price;
-                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
-                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/todo.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
-                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-success" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
-                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
-                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
-                      }
+                      $( "#mytable" ).load( "list_order #mytable" );
+
                 }
             });
 
@@ -864,17 +835,8 @@
                 url: 'activated/'+ order,
                 success: function(data) {
                       var data=JSON.parse(data);
-                        //   console.log(data);
-                      if(data)
-                      {
-                         var time = data.completion_date;
-                         var price = data.total_price;
-                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
-                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/active.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
-                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-primary" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
-                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
-                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
-                      }
+                      $( "#mytable" ).load( "list_order #mytable" );
+
                 }
             });
 
@@ -885,17 +847,8 @@
                 url: 'cancelled/'+ order,
                 success: function(data) {
                       var data=JSON.parse(data);
-                        //   console.log(data);
-                      if(data)
-                      {
-                         var time = data.completion_date;
-                         var price = data.total_price;
-                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
-                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/cancled.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
-                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-danger" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
-                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
-                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-danger">€' +price+ '</span>');
-                      }
+                      $( "#mytable" ).load( "list_order #mytable" );
+
                 }
             });
 
@@ -906,39 +859,32 @@
                 url: 'running/'+ order,
                 success: function(data) {
                       var data=JSON.parse(data);
-                        //   console.log(data);
-                      if(data)
-                      {
-                         var time = data.completion_date;
-                         var price = data.total_price;
-                      var date = moment(time).format('dddd, DD, MMMM  YYYY');
-                      let final_img = $(elem).parent('div').parent('div').parent('td').children().find('.dropbtn').html('<img src="images/status/running.png" alt="user-image" class="rounded-circle image" width="30px" height="30px;" style="display: flex;">');
-                         let final_data=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.completion_date').html('<div class="alert alert-info" role="alert"  style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%"> '+ date +' </div>');
-                         let final_date=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.date').html('<p><div class="avatar bg-light-success"><div class="avatar-content"><i class="fa fa-check"></i></div> </div></p>');
-                         let final_price=$(elem).parent('div').parent('div').parent('td').parent('tr').find('.paid').html('<span class="badge badge-dark">€' +price+ '</span>');
-                      }
+                      $( "#mytable" ).load( "list_order #mytable" );
+
                 }
             });
 
                 }
 
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script>
-        $( document ).ready(function() {
-            $('.multiSelector').click(function(e) {
-    $('#order').val($('.checkbox:checked').map(function() {
-        return this.value;
-    }).get().join(','));
-    if ($('#order').val() == '') {
-        alert('No row selected!');
-        return false;
-    }
+        <script>
 
-});
-$("#allSelector").click(function() {
-    $('input:checkbox').not(this).prop('checked', this.checked);
-});
-});
-    </script>
+            $( document ).ready(function() {
+
+                $('.multiSelector').click(function(e) {
+        $('#order').val($('.checkbox:checked').map(function() {
+            return this.value;
+        }).get().join(','));
+        if ($('#order').val() == '') {
+            alert('No row selected!');
+            return false;
+        }
+
+    });
+    $("#allSelector").click(function() {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    });
+        </script>
