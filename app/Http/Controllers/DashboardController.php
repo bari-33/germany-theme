@@ -51,7 +51,7 @@ class DashboardController extends Controller
             }
         }
         }
-    // $order_count=$orders->count();
+    $order_count=$orders->count();
 
     $previous_month_orders=$employee->employee_orders()->whereMonth('order_user.created_at',Carbon::now()->subMonth()->month)->count();
     $current_month_orders=$employee->employee_orders()->whereMonth('order_user.created_at',Carbon::now()->month)->count();
@@ -135,7 +135,7 @@ class DashboardController extends Controller
 
     $admin=Role::where('slug','admin')->first()->users()->first();
     $count=Messenger::where('from',$admin->id)->where('to',Auth::user()->id)->where('read','0')->count();
-          
+
     $chat_requests=ChatRequest::where('accepted','0')->get();
 
     $pageConfigs = ['pageHeader' => false];

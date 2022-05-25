@@ -67,7 +67,13 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+            .icon{
+                width: 34px;
+  height: 24px;
+  /* stroke: currentColor;
+  stroke-width: 2; */
 
+            }
         /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 
     </style>
@@ -81,13 +87,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
-                    <h4 class="ml-2 mt-1"><i class="fa fa-filter" aria-hidden="true"></i>{{ __('locale.Filters') }}
-                    </h4>
-                    <div class="col-md-12">
-                        <a href="{{ 'add_order' }}" type="button" class="float-right btn btn-success"><i
-                                class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Order') }}</a>
-                        <div class="mt-5">
-                            <br><br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="ml-2 mt-1"><i class="fa fa-filter"
+                                    aria-hidden="true"></i>{{ __('locale.Filters') }}
+                            </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ 'add_order' }}" type="button" class="float-right btn btn-success mr-2 mt-1"><i
+                                    class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Order') }}</a>
+                        </div>
+                        <div class="col-md-12 mt-2">
                             <center>
                                 <form action="{{ url('searchinvoice') }}" method="POST">
                                     @csrf
@@ -154,9 +164,6 @@
                                             style="background-color: transparent;color: black;text-align: left;"
                                             class="btn btn-block"> {{ __('locale.Last 90 Days') }}</button>
                                     </form>
-
-
-
                                     <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         @php $year = date('Y')-2; @endphp
@@ -207,9 +214,8 @@
                                     </form>
 
                                 </div>
-
+                            </center>
                         </div>
-                        </center>
                     </div>
                     <br><br>
                 </div>
@@ -241,7 +247,7 @@
                                     <td> <input class="form-check-input" type="checkbox" id="checkbox1">
                                         <label class="form-check-label" for="checkbox1" class="label-table"></label>
                                     </td>
-                                    <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a></td>
+                                    <td><a href="" class="text-body font-weight-bold">#{{ $order->id }}</a></td>
                                     <td>
                                         @foreach ($ClientDetail as $client)
                                             <?php
@@ -253,27 +259,34 @@
                                     </td>
                                     <td>
                                         @if ($order->order_status == 0)
-                                            <img src="{!! asset('images/status/simpel.png') !!}" alt="user-image" class="rounded-circle image"
-                                                width="30px" height="30px;" style="display: flex;">
+                                        <div class="text-center" >
+                                        <i  class =' icon text-secondary'  data-feather='circle'></i>
+                                        </div>
                                         @elseif($order->order_status == 2)
-                                            <img src="{!! asset('images/status/running.png') !!}" alt="user-image" class="rounded-circle image"
-                                                width="30px" height="30px;" style="display: flex;">
+                                        <div class="text-center">
+                                            <i class =' icon text-info' data-feather='arrow-right-circle'></i>
+                                            </div>
                                         @elseif($order->order_status == 3)
-                                            <img src="{!! asset('images/status/check.png') !!}" alt="user-image" class="rounded-circle image"
-                                                width="30px" height="30px;" style="display: flex;">
+                                        <div class="text-center">
+                                            <i class =' icon text-warning' data-feather='rotate-ccw'></i>
+                                            </div>
                                         @elseif($order->order_status == 4)
-                                            <img src="{!! asset('images/status/todo.png') !!}" alt="user-image" class="rounded-circle image"
-                                                width="30px" height="30px;" style="display: flex;">
+                                        <div class="text-center">
+                                            <i class =' icon text-success' data-feather='stop-circle'></i>
+                                            </div>
+
                                         @elseif($order->order_status == -1)
-                                            <img src="{!! asset('images/status/active.png') !!}" alt="user-image" class="rounded-circle image"
-                                                width="30px" height="30px;" style="display: flex;">
+                                        <div class="text-center">
+                                            <i class ='icon text-primary' data-feather='check-circle'></i>
+                                            </div>
                                         @elseif($order->order_status == 1)
-                                            <img src="{!! asset('images/status/cancled.png') !!}" alt="user-image" class="rounded-circle image"
-                                                width="30px" height="30px;" style="display: flex;">
+                                        <div class="text-center">
+                                            <i class ='icon text-danger' data-feather='alert-circle'></i>
+                                            </div>
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="alert alert-danger" role="alert"
+                                        <div class="alert alert-danger text-center" role="alert"
                                             style="border-radius: 20px;padding-top: 2%;padding-bottom: 2%">
                                             {{ \Carbon\Carbon::parse($order->created_at)->format('l, d, F Y') }}
                                         </div>
@@ -299,27 +312,22 @@
                                     </td>
                                     <td>
                                         @if ($order->payment_status == 1)
-                                            <span class="badge badge-success"> {{ $order->total_price }} €</span>
+                                            <span class="badge bg-light-success"> {{ $order->total_price }} €</span>
                                         @endif
                                         @if ($order->payment_status == 0)
-                                            <span class="badge badge-dark"> {{ $order->total_price }} €</span>
+                                            <span > {{ $order->total_price }} €</span>
                                         @endif
                                         @if ($order->payment_status == -1)
-                                            <span class="badge badge-danger"> {{ $order->total_price }} €</span>
+                                            <span class="badge bg-light-danger"> {{ $order->total_price }} €</span>
                                         @endif
                                     </td>
 
 
                                     <td>
 
-                                        <a href="{{ url('invoices/'.$order->id) }}" class=""><i
-                                                class="fa fa-paper-plane text-primary" aria-hidden="true"
-                                                ></i></a>&nbsp;
-
-                                        <a href="{{ url('invoices/'.$order->id) }}" class=""><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;
-                                        <a href="{{ url('invoicepdf/' . $order->id) }}" class=""><i
-                                                class="fa fa-ellipsis-v text-primary" aria-hidden="true"
-                                                ></i></a>
+                                        <a href="{{ url('invoices/' . $order->id) }}" class=""><i  class ='text-dark' data-feather='send'></i></a>&nbsp;
+                                        <a href="{{ url('invoices/' . $order->id) }}" class=""><i  class ='text-dark' data-feather='eye'></i></a>&nbsp;
+                                        <a href="{{ url('invoicepdf/' . $order->id) }}" class=""><i class ='text-dark' data-feather='more-vertical'></i></a>
                                     </td>
                                 </tr>
                             @endforeach

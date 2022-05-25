@@ -215,7 +215,7 @@
                                         <label class="form-check-label" for="check1">
                                             <input type="checkbox" name="french" value="1" class="form-check-input"
                                                 id="language">
-                                            {{ __('locale.French') }}
+                                           <h3> {{ __('locale.French') }}<h3>
                                         </label>
                                     </div>
                                 </div>

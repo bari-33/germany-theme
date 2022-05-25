@@ -150,7 +150,6 @@ class OrderController extends Controller
     public function current()
     {
         $data = Auth::user()->orders;
-
         foreach ($data as $key => $value) {
             $order = Order::find($value->id);
             $messages = Messenger::where('to', Auth::user()->id)->orWhere('from', Auth::user()->id)->orderBy('created_at', 'asc')->get();
@@ -178,7 +177,6 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $count = $order->where('id', $id)->count();
-
         if ($count == 0) {
             $order_progress = new OrderProgress();
             // echo '<pre>';
