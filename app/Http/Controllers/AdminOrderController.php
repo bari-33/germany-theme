@@ -24,7 +24,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use PDF;
+// use PDF;
+use Dompdf\Adapter\CPDF;
+use Dompdf\Dompdf;
+use Dompdf\Exception;
+use Knp\Snappy\Pdf;
 
 class AdminOrderController extends Controller
 {
@@ -284,16 +288,38 @@ class AdminOrderController extends Controller
 
         ];
 
+
+
+
+
+
+        //  - - - - i tried 3  - - - -
+        // PDF::setOptions(['isRemoteEnabled' => TRUE, 'enable_javascript' => TRUE]);
+        // $dompdf = new Dompdf();
+        // $html = view('orders.dowenlode', compact('items'))->render();
+        // $dompdf->loadHtml($html);
+        // $dompdf->render();
+        // $filename = $order->id . '.pdf';
+        // return $dompdf->download($filename);
+
+        // mpdf try boostrap
+
+
+        // ------- original code -----
         $mpdf = new \Mpdf\Mpdf();
         // $stylesheet = file_get_contents('css/style.css');
-        $html = view('orders.dowenlode', compact('items'));
+        $html = view('orders.downloadfortest', compact('items'));
         // $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
         $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $filename = $order->id . '.pdf';
         $destination =  $filename;
+        echo $html;
+        die;
         $mpdf->Output($destination, 'D');
 
     }
+
+
     public function deleteall(request $request)
     {
         $selector = $request->selector;

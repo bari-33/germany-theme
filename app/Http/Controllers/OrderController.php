@@ -160,6 +160,7 @@ class OrderController extends Controller
             $sig = hash_hmac('sha256', Auth::user()->email, $secret);
             $tax = str_replace(".", ",", number_format(((float)str_replace(",", ".", $value->total_price) * 0.19), 2));
         }
+
         return view('orders.current_order', compact('order', 'product', 'design', 'website', 'sig', 'tax', 'messages'));
     }
     public function express($id)

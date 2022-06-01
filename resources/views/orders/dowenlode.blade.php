@@ -18,13 +18,10 @@
 
 <body>
     {{-- <h1 class="ibrar">fahad hassan</h1> --}}
-    <div class="col-12">
-        <div class="card-box" id="invoice">
             <!-- Logo & title -->
-            <div class="clearfix">
                 <div class="row pb-3">
                     <div class="col-md-5 mr-5">
-                        <div class="row ml-2 pb-3" style="border-bottom: 0.5px solid lightgrey;width: 50%">
+                        <div class="row ml-2 pb-3" style="border-bottom: 0.5px solid lightgrey;width: 50%;margin-left:10em;">
                             <div class="col-md-7">
                                 {{-- <img src="{!! asset('public/img/logo/logo.png') !!}" alt="" style="width: 50%"> --}}
                             </div>
@@ -33,36 +30,66 @@
                                     20097 Hamburg</p>
                             </div>
                         </div>
+                        <div style="
+                         display: flex;
+                        justify-content: space-between;
+                        margin-top: 1em;
+                        margin-left:7em;
 
-                        <div class="row ml-2 mt-2">
+                        ">
+                        <div style="margin-top: 2.5em;">
+                            <span style="
+                                font-size: 3.5em;
+                                font-weight: 100;
+                                color:rgb(74, 0, 247)
+
+                            ">
+                            BEWERBUNG
+                            </span>
+                            <span>
+                                <p style="color: rgb(190, 190, 190)">Bewerbung.one | Nordkanalstr. 52, 20097 Hamburg</p>
+                                <ul style="list-style-type: none;">
+                                    <li style="color:rgb(190, 190, 190) ">Nikkie Johnsen</li>
+                                    <li style="color:rgb(190, 190, 190) ">Hauptstraße 123</li>
+                                    <li style="color:rgb(190, 190, 190) ">65432 Berlin</li>
+                                </ul>
+                            </span>
+                        </div>
+                        <div style="margin-right:8em;" >
+                            <div class="offset-md-8 col-md-4" style="margin-left: 40%">
+                                <p style="font-size: 1.5em;margin-bottom: 0">#{{ $items['order_id'] }}</p>
+                                <span>{{ \Carbon\Carbon::parse($items['order_created_at'])->format('d.m.Y h:m') }}</span>
+                            </div>
                             <div class="col-md-12">
                                 <p style="font-size: 3.5em;font-weight: 100;color:black">RECHNUNG</p>
                             </div>
-                        </div>
-                        <div class="row mt-2 mb-2" style="margin-left: -35px">
-                            <div class="col-md-12">
-                                <p class="p-1" style="background-color: darkblue;width: 50%"><b
-                                        style="color: lightgrey">STATUS:</b>
-                                    @if ($items['order_status'] == 1 || $items['order_status'] == 2 || $items['order_status'] == 3)
-                                        <span style="color:#ecd399;">Zahlung ausstehend </span>
-                                    @elseif($items['order_status'] == 4) <span style="color:lightblue;">Rechnung
-                                        wurde bezahlt </span> @elseif($items['order_status'] == -1) <span
-                                            style="color:pink;">Storniert/Abgebrochen </span>
-                                    @elseif($items['order_status'] == -2) <span style="color:lightgreen;">
-                                        zurückerstatten </span> @else <span style="color:red;"> noch nicht
-                                            veröffentlicht </span>
-                                    @endif
-                                </p>
+                            <div class="row mt-2 mb-2"  style="width: 100%">
+                                <div class="col-md-12">
+                                    <span class="p-1" style="background-color: darkblue;width: 50%"><b
+                                            style="color: lightgrey">STATUS:</b>
+                                        @if ($items['order_status'] == 1 || $items['order_status'] == 2 || $items['order_status'] == 3)
+                                            <span style="color:#ecd399;">Zahlung ausstehend </span>
+                                        @elseif($items['order_status'] == 4) <span style="color:lightblue;">Rechnung
+                                            wurde bezahlt </span> @elseif($items['order_status'] == -1) <span
+                                                style="color:pink;">Storniert/Abgebrochen </span>
+                                        @elseif($items['order_status'] == -2) <span style="color:lightgreen;">
+                                            zurückerstatten </span> @else <span style="color:red;"> noch nicht
+                                                veröffentlicht </span>
+                                        @endif
+                                    </p>
 
+                                </div>
                             </div>
                         </div>
-
                     </div>
-                    <div class="row ml-1">
+                    </div>
+                    <hr>
+
+                    <div class="row ml-1" style="margin-left:7em; ">
                         <div class="col-md-4">
                             <div class="row" style="border-right: 0.5px solid lightgrey">
                                 <div class="col-md-12">
-                                    <h5>Bestellnummer</h5>
+                                    <h5 >Bestellnummer</h5>
                                 </div>
                                 <div class="col-md-12">
                                     <p>{{ $items['order_id'] }}</p>
@@ -97,13 +124,7 @@
                 <?php
                 //   echo '<pre>'; print_r("here"); echo '</pre>'; die;
                 ?>
-                <div class="col-md-5" style="border-left:1px solid lightgrey ">
-                    <div class="row">
-                        <div class="offset-md-8 col-md-4" style="margin-left: 100%">
-                            <p style="font-size: 1.5em;margin-bottom: 0">#{{ $items['order_id'] }}</p>
-                            <span>{{ \Carbon\Carbon::parse($items['order_created_at'])->format('d.m.Y h:m') }}</span>
-                        </div>
-                    </div>
+                <div class="col-md-5" style="border-left:1px solid lightgrey; margin-left:7em;">
                     <div class="row mt-5">
                         <div class="offset-md-2 col-md-7">
                             <p class="h4"><u>RECHNUNG AN</u></p>
@@ -121,7 +142,7 @@
 
             </div>
 
-            <div class="row" style="min-height:610px">
+            <div class="row" style="min-height:610px; margin-left:7em;">
                 <div class="col-md-12">
 
 
@@ -218,10 +239,10 @@
                                 <h3>Vielen Dank!</h3>
                             </div>
                         </div>
-                        <div class="offset-sm-2 col-sm-4" style="background-color: darkblue">
+                        {{-- <div class="offset-sm-2 col-sm-4" style="background-color: darkblue">
                             <h3 style="color:white;text-align:center">Gesamt: {{ $items['total_price'] }} €
                             </h3>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- end row -->
 
@@ -276,11 +297,11 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <p class="h4" style="color: blueviolet;margin-top: 0"><i
+                    <p class="h4" style="color: blueviolet;margin-top: 0; margin-left:7em;" ><i
                             class="fas fa-university"></i> Bank</p>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-5" style="margin-left:7em;">
                     <p style="color:blueviolet;font-size: 1.2em"><i class="fab fa-paypal"></i><b>PayPal</b></p>
                     <p style="color:black">Rufen Sie folgende Seite auf :</p>
                     <p><a href="https://die.bewerbung.one/paypal/35468">https://die.bewerbung.one/paypal/35468</a>
@@ -291,7 +312,7 @@
 
         </div>
 
-        <div class="row mt-5">
+        <div class="row mt-5" style="margin-left: 7em;">
             <div class="col-md-3">
                 <p style="margin-bottom: 0;font-weight: bold">Addresse</p>
                 <address>
@@ -326,11 +347,6 @@
             </div>
 
         </div>
-
-
-    </div> <!-- end card-box -->
-    <!-- end col -->
-</div>
 
 </body>
 
