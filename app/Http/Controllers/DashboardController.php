@@ -51,7 +51,7 @@ class DashboardController extends Controller
             }
         }
         }
-    // $order_count=$orders->count();
+    $order_count=$orders->count();
 
     $previous_month_orders=$employee->employee_orders()->whereMonth('order_user.created_at',Carbon::now()->subMonth()->month)->count();
     $current_month_orders=$employee->employee_orders()->whereMonth('order_user.created_at',Carbon::now()->month)->count();
@@ -112,7 +112,7 @@ class DashboardController extends Controller
         ->where('read', false)
         ->groupBy('from')
         ->get();
-    $contacts = $orders->map(function($contact) use ($unreadIds) {
+       $contacts = $orders->map(function($contact) use ($unreadIds) {
         $contactUnread = $unreadIds->where('sender_id', $contact->user->id)->first();
         $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
         return $contact;
@@ -135,7 +135,7 @@ class DashboardController extends Controller
 
     $admin=Role::where('slug','admin')->first()->users()->first();
     $count=Messenger::where('from',$admin->id)->where('to',Auth::user()->id)->where('read','0')->count();
-          
+
     $chat_requests=ChatRequest::where('accepted','0')->get();
 
     $pageConfigs = ['pageHeader' => false];
@@ -153,6 +153,9 @@ class DashboardController extends Controller
     $employees=User::whereHas('roles', function($q) {
         $q->where('id', '2');
     })->get();
+    $customers=User::whereHas('roles', function($q) {
+        $q->where('id', '3');
+    })->count();
     $dropdown=User::where("status","1")->get();
 
     $cm = date('Y-m');
@@ -267,7 +270,7 @@ class DashboardController extends Controller
         $employees->add($employee);
     }
     $pageConfigs = ['pageHeader' => false];
-    return view('/content/dashboard/dashboard-ecommerce', ['pageConfigs' => $pageConfigs],compact('products','dropdown','employees','designs','websites','orders','orders_count','revenue','employees','order_p','order_r','prod_p','cdaily_avg','pdaily_avg','avg_p'));
+    return view('/content/dashboard/dashboard-ecommerce', ['pageConfigs' => $pageConfigs],compact('products','dropdown','employees','designs','websites','orders','orders_count','revenue','employees','customers','order_p','order_r','prod_p','cdaily_avg','pdaily_avg','avg_p'));
   }
   public function customerdashboard()
   {

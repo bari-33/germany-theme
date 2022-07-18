@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class OrderController extends Controller
 {
@@ -51,13 +52,16 @@ class OrderController extends Controller
         $password = rand(1000, 9999);
 
         $request->validate([
-            'email' => 'required|unique:users',
+            'email' => 'required',
             'name' => 'required',
             'nickname' => 'required',
             'phonenumber' => 'required',
             'gender' => 'required',
         ]);
 
+if (UserDetail::where('username', '=', Input::get('username'))->exists() || User::where('email', '=', Input::get('email'))->exists()) {
+            return redirect()->back()->with('message', 'Username and email alreday exist');
+        }
 
         $user = User::create([
             'name' => $request->get('name'),

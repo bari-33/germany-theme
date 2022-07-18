@@ -290,4 +290,13 @@ class userscontroller extends Controller
         return view('user.show',compact('userdetail'));
 
     }
+	 public function readall($ids)
+    {
+        $order_id = explode(',', $ids);
+        foreach ($order_id as $key => $value) {
+            order::where('id', $value)->update([ "notification_status" => "1"]);
+        }
+        return redirect()->back();
+
+    }
 }

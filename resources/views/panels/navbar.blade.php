@@ -133,10 +133,15 @@
                 </li>
                 <?php
                 $orders = App\Models\Order::orderBy('created_at', 'desc')->get();
+				 $orders_ids = '';
                 foreach ($orders as $order) {
                 ?>
                 @if ($order->order_status == 3)
                     @if ($order->notification_status == 0)
+				 <?php
+                     $orders_ids .= $order->id . ',';
+
+                    ?>
                         <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
                                 <div class="media d-flex align-items-start">
                                     <div class="media-left">
@@ -157,7 +162,7 @@
                 }
                         ?>
                           <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block"
-                            href="javascript:void(0)">Read all
+                            href="{{ url('readall',$orders_ids) }}">Read all
                             notifications</a></li>
             </ul>
         </li>

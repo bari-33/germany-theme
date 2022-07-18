@@ -1,0 +1,83 @@
+{
+
+    "menu": [
+
+        {
+
+            "name": "Dashboards",
+            "url": "customer_dashboard",
+            "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
+            "icon": "home",
+            "slug": ""
+
+        },
+
+        {
+            "name": "Current Orders",
+            "url": "current",
+            "icon": "shopping-cart",
+            "slug": ""
+        },
+
+        {
+            "url": "customerOrders",
+            "name": "Orders",
+            "icon": "check-square",
+            "slug": "customerOrders"
+        },
+        {
+            "url": "add_order",
+            "name": "Add Orders",
+            "icon": "file-text",
+            "slug": "add_order"
+        },
+        {
+            "navheader": "",
+            "slug": ""
+        },
+        {
+            "url": "FAQ",
+            "name": "FAQ",
+            "icon": "help-circle",
+            "slug": "FAQ"
+        },
+        {
+            "url": "Expration",
+            "name": "Expration",
+            "icon": "credit-card",
+            "slug": "Expration"
+        },
+
+        {
+            "name": "Settings",
+            "icon": "settings",
+            "slug": "settings",
+            "submenu": [{
+                    "url": "EditAccount",
+                    "name": "Edit Account",
+                    "icon": "circle",
+                    "slug": "Edit Account"
+                },
+                {
+                    "url": "index",
+                    "name": "change-password",
+                    "icon": "circle",
+                    "slug": "change-password"
+                },
+                {
+                    "url": "MyAccount",
+                    "name": "My Account",
+                    "icon": "circle",
+                    "slug": "My Account"
+                }
+            ]
+        },
+
+        {
+            "url": "logout",
+            "name": "Logout",
+            "icon": "power",
+            "slug": "Ausloggen"
+        }
+    ]
+}

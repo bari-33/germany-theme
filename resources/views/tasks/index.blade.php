@@ -33,6 +33,10 @@
         </div>
     @endif
     <section class="bs-validation">
+	  <?php
+		
+		
+		?>
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
@@ -94,8 +98,9 @@
 
             </div>
         </div>
-
+           
     </section>
+
     <!-- /Validation -->
 @endsection
 

@@ -12,7 +12,7 @@
     @include('panels/styles')
     <style>
         .btn-group button {
-            background-color: #fff;
+           background-color: #fff;
             /* Green background */
             border: 1px solid #fff;
             /* border-radius: 15px 0px 15px 0px; */
@@ -39,10 +39,11 @@
 
         /* Add a background color on hover */
         .btn-group button:hover {
-            box-shadow: 0 0px 36px 0 black, 0 0px black;
-            /* box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5); */
-            /* background-color: rgb(153, 45, 45); */
-            /* border-radius: 0px,15px,0px,15px; */
+            top: -7px;
+            border-radius: 12px;
+		box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.3);
+
+		cursor: pointer;
         }
 
         .h6 {
@@ -999,6 +1000,13 @@
         <!--/Logo_Bar-->
 
     </div>
+	 @if (session('message'))
+    <div class="demo-spacing-0">
+      <div class="alert alert-danger" role="alert">
+        <div class="alert-body"><strong>{{(session('message'))}}</strong></div>
+      </div>
+    </div>
+  @endif
     <!-- Start Content-->
     <div class="container">
         <div class="row mt-3">
@@ -1155,7 +1163,7 @@
                                                 <label for="all-resume-template-0" class="label-hover-cursor">
                                                     <img src="{{ url('images/designs/primary/' . $design->primary_image) }}"
                                                         data-src="{{ url('images/designs/secondary/' . $design->secondary_image) }}"
-                                                        class="thumbnail-design" style="width: 150px;height: 100px;">
+                                                        class="" style="width: 150px;height: 100px;">
                                                     <span class="priceProduct">
                                                         <font style="vertical-align: inherit;">
                                                             <font style="vertical-align: inherit;"
@@ -1241,7 +1249,7 @@
                                                         <label for="all-resume-template-0" class="label-hover-cursor">
                                                             <img src="{{ url('images/websites//primary/' . $website->primary_image) }}"
                                                                 data-src="{{ url('images/websites/secondary/' . $website->secondary_image) }}"
-                                                                class="thumbnail-website"
+                                                                class=""
                                                                 style="width: 150px;height: 100px;">
                                                             <span class="priceProduct">
                                                                 <font style="vertical-align: inherit;">
@@ -1286,10 +1294,10 @@
             </div>
         </div>
          {{-- <div class="mt-5"> --}}
-        <div class="btn-group d-flex justify-content-center align-items-center">
+        <div class="btn-group d-flex justify-content-center">
             <button onclick="valueChanged3()" class="text-dark"><strong>0€</strong><br>week</button>
             <button onclick="valueChanged1()" id="bdl" class="text-dark"><strong
-                    class="text-success">19€</strong><br>1-3 Days</button>
+                    class="text-success">19€</strong><br>3 Days</button>
             <button onclick="valueChanged2()" class="text-dark"><strong
                     class="text-danger">59€</strong><br>24h-Express</button>
         </div>
@@ -1308,6 +1316,9 @@
             </strong>
 
         </div>
+        <button onclick="show()" id="addorder"  class="hide btn btn-primary float-right">
+            Bestellung hinzufügen
+        </button>
         <div class="mt-5 d-flex justify-content-center align-items-center">
             <p>
                 <font style="vertical-align: inherit;">
@@ -1319,24 +1330,24 @@
 
         {{-- ------------------------------------ PROCESSING STARTS HERE -------------------- --}}
 
-        <div class="row mt-3">
-            <div class="col-md-12 col-sm-12">
-                <div class="separator text-center">
+            {{-- <div class="row mt-3">
+                <div class="col-md-12 col-sm-12">
+                    <div class="separator text-center">
 
-                    <hr class="hr" style="margin-left: 0px;">
-                    <a href="javascript:void(0)">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">Bearbeitungszeit</font>
-                        </font>
-                    </a>
-                    <hr class="hr" style="position: relative;top: -17px;margin-right: 0px;">
+                        <hr class="hr" style="margin-left: 0px;">
+                        <a href="javascript:void(0)">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">Bearbeitungszeit</font>
+                            </font>
+                        </a>
+                        <hr class="hr" style="position: relative;top: -17px;margin-right: 0px;">
 
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div> --}}
 
 
-        <div class="express_block">
+        {{-- <div class="express_block">
             <div class="text-center">
                 <input type="checkbox" name="express" id="express" onchange="valueChanged()">
                 <label for="express">
@@ -1393,7 +1404,7 @@
                     </font>
                 </p>
             </div>
-        </div>
+        </div> --}}
         {{-- ------------------------------------ PROCESSING PORTION ENDS HERE -------------------- --}}
 
         {{-- ------------------------------------ CONTACT STARTS HERE -------------------- --}}
@@ -1667,9 +1678,7 @@
             </div>
         </form>
         </div>
-        <button onclick="show()"  class="hide btn btn-primary float-right">
-                Bestellung hinzufügen
-        </button>
+
     </div>
 </body>
 <script src="{{ asset(mix('vendors/js/vendors.min.js')) }}"></script>
@@ -1758,30 +1767,30 @@
 
 
     function valueChanged3() {
-        var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var month = ['Janaury', 'Feb', 'March', 'April', 'May', 'june', 'july','August','september','october','November','December'];
         var date = new Date();
         if ("1" == "1") {
             $(".express-pricing-container").show();
             $("#express-price-total").text("0€");
             document.getElementById('express_input').value = 0;
-            date.setDate(date.getDate());
-            $('#completionDate2').text(days[date.getDay()-1] + ' ' + date.getDate() + '.' + month[(date.getMonth())] + '.' +
+            date.setDate(date.getDate() +8);
+            $('#completionDate2').text(days[date.getDay()] + ' ' + date.getDate() + '.' + month[(date.getMonth())] + '.' +
                 date.getFullYear());
 
         }
     }
 
     function valueChanged1() {
-        var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var month = ['Janaury', 'Feb', 'March', 'April', 'May', 'june', 'july','August','september','october','November','December'];
         var date = new Date();
         if ("1" == "1") {
             $(".express-pricing-container").show();
             $("#express-price-total").text("19€");
             document.getElementById('express_input').value = 0;
-            date.setDate(date.getDate());
-            $('#completionDate2').text(days[date.getDay()-1] + ' ' + date.getDate() + '.' + month[(date.getMonth())] + '.' +
+            date.setDate(date.getDate() +3);
+            $('#completionDate2').text(days[date.getDay()] + ' ' + [date.getDate()] + '.' + month[(date.getMonth())] + '.' +
                 date.getFullYear());
 
         }
@@ -1789,15 +1798,15 @@
     }
 
     function valueChanged2() {
-        var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var month = ['Janaury', 'Feb', 'March', 'April', 'May', 'june', 'july','August','september','october','November','December'];
         var date = new Date();
         if ("1" == "1") {
             $(".express-pricing-container").show();
             $("#express-price-total").text("59€");
             document.getElementById('express_input').value = 0;
-            date.setDate(date.getDate());
-            $('#completionDate2').text(days[date.getDay()-1] + ' ' + date.getDate() + '.' + month[(date.getMonth())] + '.' +
+            date.setDate(date.getDate()+1);
+            $('#completionDate2').text(days[date.getDay()] + ' ' + [date.getDate()] + '.' + month[(date.getMonth())] + '.' +
                 date.getFullYear());
 
         }
@@ -1898,4 +1907,7 @@
         $(".showform").show();
         $(".hide").hide();
     }
+    $('#addorder').on('click',function(){
+        $('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
+    });
 </script>

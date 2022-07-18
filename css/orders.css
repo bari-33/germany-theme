@@ -1,0 +1,183 @@
+.numbers-section {
+    display: block;
+    margin-bottom: 50px;
+    text-align: center;
+    padding: 0;
+}
+
+.numbers-section .numbers {
+    display: inline-block;
+    padding: 0 30px;
+}
+
+.numbers-section .numbers .steps {
+    border: 16px solid #f6f6f8;
+    margin: 0 auto;
+    border-radius: 50%;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+}
+
+.numbers-section .numbers h3 {
+    margin: 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #D9D9E1;
+    border-radius: 50%;
+    color: #8883B7;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.numbers-section .numbers .steps:after {
+    display: inline-block;
+    content: '';
+    position: absolute;
+    height: 5px;
+    width: 150px;
+    top: 50%;
+    z-index: -1;
+    background: #f2f2f4;
+}
+
+.numbers-section .numbers:last-child .steps:after {
+    display: none;
+}
+
+.flags-container {
+    text-align: center;
+    padding: 15px 0 40px;
+}
+
+.flags-container .flags {
+    cursor: pointer;
+    display: inline-block !important;
+    position: relative;
+}
+
+.flags-container .flags .outer-border {
+    border: 1px solid #9a9a9c;
+    border-radius: 30px;
+}
+
+.flags-container .flags .outer-border img {
+    width: 42px;
+    border: 6px solid #fff;
+    border-radius: 50px;
+    height: 42px;
+    margin-right: 10px;
+}
+
+.flags-container .flags .outer-border img:last-child {
+    margin-right: unset;
+}
+
+.flags-container .flags .flag-hover {
+    display: none;
+    position: absolute;
+    font-size: 13px;
+    color: white;
+    border-radius: 3px;
+    background-color: #323759;
+    padding: 3px 5px;
+    left: -8px;
+    top: 55px;
+}
+
+.flags-container .flags .flag-hover:before {
+    content: "";
+    display: block;
+    width: 7px;
+    position: absolute;
+    top: -14px;
+    left: 23px;
+    border-bottom: 7px solid #323759;
+    border-top: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+}
+
+.flags-container .flags:hover .flag-hover {
+    display: block;
+}
+
+.block-shaded {
+    border-radius: 12px;
+    padding: 15px 30px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .05);
+    margin: 30px 0;
+    color: #000;
+}
+
+.block-shaded:before,
+.block-shaded:after {
+    content: ' ';
+    width: 100%;
+    display: table;
+    clear: both;
+}
+
+.block-shaded {
+    padding: 15px 20px;
+}
+
+.block-shaded:hover {
+    box-shadow: 0 0 15px rgba(0, 145, 200, 0.5);
+    cursor: pointer;
+}
+
+.book_block .book_info {
+    margin-left: 75px;
+}
+
+.book_block .book_info h4 {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.book_block .book_info .h3 {
+    display: inline-block;
+    margin-top: 10px;
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+.book_block .book_info .btn {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.topDark {
+    border-top: 5px solid #8883b7;
+}
+
+.btn-blue {
+    color: #fff;
+    background-color: #0091c8;
+}
+
+.btn-blue:hover {
+    color: #fff;
+    background-color: #008eba;
+}
+
+
+/* ORDER INDEX PRODUCT SLIDER IMAGE STYLING */
+
+.or-in-pr-kr {
+    width: 200px;
+    height: 200px;
+}
+
+.or-in-pr-kr img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* style for active languages */
+
+.logoc-in-pr-kr {}

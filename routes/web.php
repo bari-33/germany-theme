@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 /* Route users */
 Route::get('adduser', [userscontroller::class, 'index'])->name('add_user');
+Route::get('readall/{ids}', [userscontroller::class, 'readall'])->name('readall');
 Route::post('store', [userscontroller::class, 'store'])->name('store');
 Route::get('listuser', [userscontroller::class, 'create'])->name('list_user');
 Route::post('search', [userscontroller::class, 'search'])->name('search');

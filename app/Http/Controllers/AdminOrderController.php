@@ -24,7 +24,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use PDF;
+// use PDF;
+use Dompdf\Adapter\CPDF;
+use Dompdf\Dompdf;
+use Dompdf\Exception;
+use Knp\Snappy\Pdf;
 
 class AdminOrderController extends Controller
 {
@@ -284,16 +288,26 @@ class AdminOrderController extends Controller
 
         ];
 
-        $mpdf = new \Mpdf\Mpdf();
+
+
+
+
+
+        // ------- original code -----
+        // $mpdf = new \Mpdf\Mpdf();
         // $stylesheet = file_get_contents('css/style.css');
-        $html = view('orders.dowenlode', compact('items'));
+        return view('orders.dowenlode', compact('items'));
         // $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
-        $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
-        $filename = $order->id . '.pdf';
-        $destination =  $filename;
-        $mpdf->Output($destination, 'D');
+        // $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        // $filename = $order->id . '.pdf';
+        // $destination =  $filename;
+        // echo $html;
+        // die;
+        // $mpdf->Output($destination, 'D');
 
     }
+
+
     public function deleteall(request $request)
     {
         $selector = $request->selector;
