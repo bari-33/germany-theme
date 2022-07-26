@@ -30,7 +30,6 @@
         #myDropdown {
             width: 250px !important;
         }
-
     </style>
     <style>
         .dropbtn {
@@ -67,15 +66,16 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-            .icon{
-                width: 34px;
-  height: 24px;
-  /* stroke: currentColor;
-  stroke-width: 2; */
 
-            }
+        .icon {
+            width: 34px;
+            height: 24px;
+            /* stroke: currentColor;
+          stroke-width: 2; */
+
+        }
+
         /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
-
     </style>
 @endsection
 
@@ -89,8 +89,7 @@
                 <div class="card ">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="ml-2 mt-1"><i class="fa fa-filter"
-                                    aria-hidden="true"></i>{{ __('locale.Filters') }}
+                            <h4 class="ml-2 mt-1"><i class="fa fa-filter" aria-hidden="true"></i>{{ __('locale.Filters') }}
                             </h4>
                         </div>
                         <div class="col-md-6">
@@ -157,23 +156,24 @@
                                         <input type="hidden" id="date_from" required name="date_from" class="form-control"
                                             placeholder="Van" style="margin-bottom: 10px" value="{{ $date }}">
 
-                                        <input type="hidden" id="date_to" required name="date_to" class="form-control"
-                                            style="margin-bottom: 10px" placeholder="Bis" value="{{ date('Y-m-d') }}">
+                                        <input type="hidden" id="date_to" required name="date_to"
+                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis"
+                                            value="{{ date('Y-m-d') }}">
 
                                         <button type="submit"
                                             style="background-color: transparent;color: black;text-align: left;"
                                             class="btn btn-block"> {{ __('locale.Last 90 Days') }}</button>
-                                    </form> 
+                                    </form>
                                     <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         @php $year = date('Y')-2; @endphp
                                         <input type="hidden" name="action" value="custom_date">
-                                        <input type="hidden" id="date_from" required name="date_from" class="form-control"
-                                            placeholder="Van" style="margin-bottom: 10px"
+                                        <input type="hidden" id="date_from" required name="date_from"
+                                            class="form-control" placeholder="Van" style="margin-bottom: 10px"
                                             value="{{ $year }}-01-01">
 
-                                        <input type="hidden" id="date_to" required name="date_to" class="form-control"
-                                            style="margin-bottom: 10px" placeholder="Bis"
+                                        <input type="hidden" id="date_to" required name="date_to"
+                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis"
                                             value="{{ $year }}-12-31">
 
                                         <button type="submit"
@@ -185,12 +185,12 @@
                                         @csrf
                                         @php $year = date('Y')-1; @endphp
                                         <input type="hidden" name="action" value="custom_date">
-                                        <input type="hidden" id="date_from" required name="date_from" class="form-control"
-                                            placeholder="Van" style="margin-bottom: 10px"
+                                        <input type="hidden" id="date_from" required name="date_from"
+                                            class="form-control" placeholder="Van" style="margin-bottom: 10px"
                                             value="{{ $year }}-01-01">
 
-                                        <input type="hidden" id="date_to" required name="date_to" class="form-control"
-                                            style="margin-bottom: 10px" placeholder="Bis"
+                                        <input type="hidden" id="date_to" required name="date_to"
+                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis"
                                             value="{{ $year }}-12-31">
 
                                         <button type="submit"
@@ -203,11 +203,11 @@
                                     <form method="post" action="{{ url('searchinvoice') }}">
                                         @csrf
                                         <input type="hidden" name="action" value="custom_date">
-                                        <input type="date" id="date_from" required name="date_from" class="form-control"
-                                            placeholder="Van" style="margin-bottom: 10px">
+                                        <input type="date" id="date_from" required name="date_from"
+                                            class="form-control" placeholder="Van" style="margin-bottom: 10px">
 
-                                        <input type="date" id="date_to" required name="date_to" class="form-control"
-                                            style="margin-bottom: 10px" placeholder="Bis">
+                                        <input type="date" id="date_to" required name="date_to"
+                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis">
 
                                         <button type="submit" style="background-color: silver"
                                             class="btn btn-block">{{ __('locale.Send') }}</button>
@@ -247,41 +247,54 @@
                                     <td> <input class="form-check-input" type="checkbox" id="checkbox1">
                                         <label class="form-check-label" for="checkbox1" class="label-table"></label>
                                     </td>
-                                    <td><a href="" class="text-body font-weight-bold">#{{ $order->id }}</a></td>
+                                    <td><a href="" class="text-body font-weight-bold">#{{ $order->id }}</a>
+                                    </td>
                                     <td>
                                         @foreach ($ClientDetail as $client)
                                             <?php
                                             if ($client->order_id == $order->id) {
-                                                echo $client->first_name . ' ' . $client->last_name;
+                                            ?>
+                                            <div class="d-flex justify-content-left align-items-center">
+                                                <div class="avatar-wrapper">
+                                                    <div class="avatar  me-1"><img
+                                                            src="{{ asset('images/profiles/' . $client->profile_picture) }}"
+                                                            alt="Avatar" height="32" width="32"></div>
+                                                </div>
+                                                <div class="d-flex flex-column"><a href="app-user-view-account.html"
+                                                        class="user_name text-truncate text-body"><span class="fw-bolder">
+                                                            {{ $client->first_name }}</span></a><small
+                                                        class="emp_post text-muted">{{ $client->last_name }}</small></div>
+                                            </div>
+
+                                            <?php
                                             }
                                             ?>
                                         @endforeach
                                     </td>
                                     <td>
                                         @if ($order->order_status == 0)
-                                        <div class="text-center" >
-                                        <i  class =' icon text-secondary'  data-feather='circle'></i>
-                                        </div>
+                                            <div class="text-center">
+                                                <i class=' icon text-secondary' data-feather='circle'></i>
+                                            </div>
                                         @elseif($order->order_status == 2)
-                                        <div class="text-center">
-                                            <i class =' icon text-info' data-feather='arrow-right-circle'></i>
+                                            <div class="text-center">
+                                                <i class=' icon text-info' data-feather='arrow-right-circle'></i>
                                             </div>
                                         @elseif($order->order_status == 3)
-                                        <div class="text-center">
-                                            <i class =' icon text-warning' data-feather='rotate-ccw'></i>
+                                            <div class="text-center">
+                                                <i class=' icon text-warning' data-feather='rotate-ccw'></i>
                                             </div>
                                         @elseif($order->order_status == 4)
-                                        <div class="text-center">
-                                            <i class =' icon text-success' data-feather='stop-circle'></i>
+                                            <div class="text-center">
+                                                <i class=' icon text-success' data-feather='stop-circle'></i>
                                             </div>
-
                                         @elseif($order->order_status == -1)
-                                        <div class="text-center">
-                                            <i class ='icon text-primary' data-feather='check-circle'></i>
+                                            <div class="text-center">
+                                                <i class='icon text-primary' data-feather='check-circle'></i>
                                             </div>
                                         @elseif($order->order_status == 1)
-                                        <div class="text-center">
-                                            <i class ='icon text-danger' data-feather='alert-circle'></i>
+                                            <div class="text-center">
+                                                <i class='icon text-danger' data-feather='alert-circle'></i>
                                             </div>
                                         @endif
                                     </td>
@@ -315,7 +328,7 @@
                                             <span class="badge bg-light-success"> {{ $order->total_price }} €</span>
                                         @endif
                                         @if ($order->payment_status == 0)
-                                            <span > {{ $order->total_price }} €</span>
+                                            <span> {{ $order->total_price }} €</span>
                                         @endif
                                         @if ($order->payment_status == -1)
                                             <span class="badge bg-light-danger"> {{ $order->total_price }} €</span>
@@ -323,12 +336,24 @@
                                     </td>
 
 
-                                    <td>
+                                    <td style="display:flex;align-items:center; margin-top:24px ">
 
-                                        <a href="{{ url('invoices/' . $order->id) }}" class=""><i  class ='text-dark' data-feather='send'></i></a>&nbsp;
+                                        <a href="{{ url('invoices/' . $order->id) }}" class=""><i
+                                                class='text-dark' data-feather='send'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="{{ url('invoices/' . $order->id) }}" class=""><i
+                                                class='text-dark' data-feather='eye'></i></a>
+                                        <div class="dropdown">
+                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i data-feather='more-vertical'></i> </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a href={{ url('invoicepdf/' . $order->id) }} class="dropdown-item">Download</a>
+                                                <a href="javascript:void(0)" class="dropdown-item">Edit</a>
+                                                <a href="javascript:void(0)" class="delete-confirm dropdown-item">Delete</a>
+                                                <a href="javascript:void(0)" class="dropdown-item">Duplicate</a>
 
-                                        <a href="{{ url('invoices/' . $order->id) }}" class=""><i  class ='text-dark' data-feather='eye'></i></a>&nbsp;
-                                        <a href="{{ url('invoicepdf/' . $order->id) }}" class=""><i class ='text-dark' data-feather='more-vertical'></i></a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -363,7 +388,7 @@
 @endsection
 @section('page-script')
     {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script>
+    <script src="{{ asset('js/scripts/tables/table-datatables-basic.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 

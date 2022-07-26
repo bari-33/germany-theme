@@ -45,6 +45,7 @@ class AdminOrderController extends Controller
         Session::put('completed', Order::where('order_status', '4')->orderBy('created_at', 'Desc')->count());
         Session::put('cancelled', Order::where('order_status', '1')->orderBy('created_at', 'Desc')->count());
         Session::put('deleted', Order::onlyTrashed()->count());
+
         return view('orders.list_order', compact('orders', 'dropdown', 'employees'));
     }
     public function search(request $request)

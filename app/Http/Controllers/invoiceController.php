@@ -17,9 +17,8 @@ class invoiceController extends Controller
     public function list_invoice()
     {
         $orders=Order::orderBy('created_at','ASC')->get();
-
         $ClientDetail=ClientDetail::orderBy('created_at','ASC')->get();
-
+        // dd($ClientDetail);
         $employees=User::whereHas('roles', function($q) {
             $q->where('id', '2');
         })->get();
@@ -77,7 +76,7 @@ class invoiceController extends Controller
             'zip_code'=>$order->user->clientdetail->zip_code,
             'city'=>$order->user->clientdetail->city,
         ];
-        return view('invoices.show',compact('items'));
+        return view('invoices.newshow',compact('items'));
      }
 
 

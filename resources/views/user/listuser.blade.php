@@ -68,7 +68,6 @@
                                             <label class="form-check-label" for="checkbox" class=" label-table"></label>
                                         </th>
                                         <th>{{ __('locale.Name') }}</th>
-                                        <th>{{ __('locale.Email') }}</th>
                                         <th>{{ __('locale.Telephone') }}</th>
                                         <th>{{ __('locale.Created on') }}</th>
                                         <th class="bg-danger text-light">{{ __('locale.Action') }}</th>
@@ -82,21 +81,36 @@
                                                 <label class="form-check-label" for="checkbox1"
                                                     class="label-table"></label>
                                             </td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-left align-items-center"><div class="avatar-wrapper">
+                                                <div class="avatar  me-1"><img src="{!! asset ('images/profiles')!!}/{{$user->profile_picture}} " alt="Avatar" height="32" width="32"></div></div>
+                                                <div class="d-flex flex-column"><a href="app-user-view-account.html" class="user_name text-truncate text-body"><span class="fw-bolder">
+                                                {{ $user->name }}</span></a><small class="emp_post text-muted">{{ $user->email }}</small></div></div>
+                                            </td>
                                             <td>@if(!empty($user->userdetail->telephone))
                                                 {{$user->userdetail->telephone}}
                                             @endif</td>
                                             <td>{{ $user->created_at }}</td>
-                                            <td>
-                                                <a href="{{ url('edituser/'.$user->id) }}"
-                                                    class=""><i
-                                                        class="fa fa-pencil-square-o text-primary mr-1" aria-hidden="true"
-                                                        style="font-size: 1.5em;"></i></a>
-                                                <a href="{{ url('delete/' . $user->id) }}" class="delete-confirm "><i
-                                                        class="fa fa-trash-o text-danger" aria-hidden="true"
-                                                        style="font-size: 1.5em;"></i></a>
-                                            </td>
+                                            <td >
+                                                <div class="dropdown">
+                             <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather='more-vertical'></i>  </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                         <a href="{{ url('edituser/'.$user->id) }}"
+                                                        class="dropdown-item"><i
+                                                            class="fa fa-pencil-square-o text-primary mr-1" aria-hidden="true"
+                                                            style="font-size: 1.5em;"></i>Edit</a>
+                                                    <a href="{{ url('delete/' . $user->id) }}" class="delete-confirm dropdown-item"><i
+                                                            class="fa fa-trash-o text-danger" aria-hidden="true"
+                                                            style="font-size: 1.5em;"></i> Delete</a>
+
+      </div>
+    </div>
+
+
+
+                                                </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

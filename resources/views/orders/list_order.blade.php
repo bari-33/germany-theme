@@ -30,6 +30,23 @@
         #myDropdown {
             width: 250px !important;
         }
+        /* style="display: block;right:-200%;position:absolute;top:-86%" */
+        #table_image {
+            /* display: inline-block;
+            right: -186%;
+            position: absolute;
+            top: -86%; */
+            margin-right: -10px;
+        }
+        .default-avatar,
+        .member-overlap-item {
+        height: 30px;
+        width: 30px;
+                }
+                .member-overlap-item {
+                 margin-right: -10px;
+                 border: 2px solid #fff;
+                    }
 
     </style>
     <style>
@@ -62,9 +79,53 @@
             display: block;
         }
 
+        /* notify */
+
+    #notificationBarBottom {
+    position: fixed;
+    z-index: 101;
+    bottom: 10;
+    left: 30%;
+    right:10% ;
+    transform: translateY(calc(100% + 10px));
+    background: #dbe7db;
+    color: #000000;
+    text-align: center;
+    line-height: 2.5;
+    box-shadow: 0 0 5px black;
+}
+@keyframes slideUp {
+    0% { transform: translateY(100% + 10px); }
+    100% { transform: translateY(0); }
+}
+#notificationBarBottom {
+    animation: slideUp 1s ease forwards;
+}
+#close {
+  display: none;
+}
+
+/* added to show how to hide with a click */
+@keyframes slideDown {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100% + 10px); }
+}
+#notificationBarBottom.hideMe {
+    animation: slideDown 2.5s ease forwards;
+}
+
         /* .dropdown-content a:hover {background-color: #ddd;} */
 
         .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        #allSelector{
+            display: none;
+        }
+        .checkbox{
+            display: none;
+        }
+         td.checkboxdisplay:hover input{
             display: block;
         }
 
@@ -249,7 +310,7 @@
                                     </div>
                                 </div>
                             </div>
-					
+
                             <table class="datatables table mb-0" id="mytable" style="color: #000;">
                                 <div class="container mt-3">
                                     <thead>
@@ -271,7 +332,7 @@
                                     <tbody>
                                         @foreach ($orders as $order)
                                             <tr>
-                                                <td><input name="selector[]" class="checkbox" type="checkbox"
+                                                <td class="checkboxdisplay"><input name="selector[]" id="checkboxdisplay" class="checkbox" type="checkbox"
                                                         value="{{ $order->id }}" /></td>
                                                 <td><a href="" class="text-body font-weight-bold">{{ $order->id }}</a>
                                                 </td>
@@ -308,13 +369,17 @@
                                                     <div class="hov">
                                                         <div class="dropdown">
                                                             <button id="orignalimg" class="dropdown-toggle"
-                                                                style="background-color: transparent;border: none;margin-left: 50%;margin-right: 50%;"
+                                                                style="background-color: transparent;border: none; display:flex"
                                                                 type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                                                 aria-haspopup="true" aria-expanded="false">
-                                                                <img src="{!! asset('images/profiles/' . $drop1->profile_picture) !!}" id="" alt="user-image"
+                                                                {{-- <img src="{!! asset('images/profiles/' . $drop1->profile_picture) !!}" id="table_image" alt="user-image"
                                                                     class="rounded-circle image" width="30px" height="30px;"
-                                                                    style="display: flex;">
+                                                                    > --}}
+                                                                    <div class="rounded-circle image default-avatar member-overlap-item" style="background: url('{{asset('images/profiles/' . $drop1->profile_picture)}}') 0 0 no-repeat; background-size: cover;">
+                                                                    </div>
+
                                                             </button>
+
                                                             <?php
 
                                                 unset($dropdown->$key);
@@ -971,6 +1036,43 @@
                     </div>
                 </div>
             </div>
+            <div id="notificationBarBottom" class="hideMe">
+                <div class="row">
+                    <div class="col-md-6" style="padding: 5px;">
+                        <span>Total Selected : </span><span class="totalselected">0</span>
+                    </div>
+                    <div class="col-md-6" style="padding: 5px;">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="dropdown">
+                                    <div class="container">
+                                        <button class="dropdown-toggle btn btn-dark" type="button" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">Order Buttons
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                            <button class="col-md-12 multiSelector"
+                                                style="border: none;background-color: rgb(255, 255, 255);"
+                                                type="submit">Delete</button><br>
+                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                type="submit" formaction="{{ url('paid') }}">Mark as paid</button><br>
+                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                type="submit" formaction="{{ url('allinvoice') }}">Download all</button>
+                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                type="submit" formaction="{{ url('restore') }}">Restoring</button>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: 7.5px">
+                                 <button class="btn btn-sm btn-danger" id="hideorderbutton"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal to add new record -->
         </section>
         <!--/ Basic table -->
@@ -1143,5 +1245,21 @@
             // $("#allSelector").click(function() {
             //     $('input:checkbox').not(this).prop('checked', this.checked);
             // });
+        });
+        $(document).on('click','#hideorderbutton',function(){
+            $('#notificationBarBottom').addClass('hideMe');
+        })
+        $(document).on('click','.checkbox',function(){
+            var $boxes = $('input[id=checkboxdisplay]:checked');
+            console.log($boxes.length)
+            if (this.checked) {
+                $('.checkbox').css('display','block');
+                $('#notificationBarBottom').removeClass('hideMe');
+                $('#totalselected').text($boxes);
+                console.log($(this).parent('#checkboxdisplay').html())
+            }
+            else{
+                alert('not');
+            }
         });
     </script>

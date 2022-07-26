@@ -22,6 +22,8 @@
             cursor: pointer;
             /* Pointer/hand icon */
             float: left;
+            transition: 1.5s;
+            transition-timing-function: ease-in-out;
             /* Float the buttons side by side */
         }
 
@@ -41,8 +43,13 @@
         .btn-group button:hover {
             top: -7px;
             border-radius: 12px;
+		box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+        }
+        .text-dark:focus{
+            top: -7px;
+            border-radius: 12px;
 		box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.3);
-
 		cursor: pointer;
         }
 
