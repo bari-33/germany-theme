@@ -143,6 +143,7 @@ if (UserDetail::where('username', '=', Input::get('username'))->exists() || User
             'user_id' => $user->id,
             'first_name' => $request->get('name'),
             'last_name' => $request->get('nickname'),
+            'email' => $user->email,
             'gender' => $request->get('gender'),
             'mobile' => $request->get('phonenumber'),
         ]);

@@ -263,7 +263,7 @@
                                                 <div class="d-flex flex-column"><a href="app-user-view-account.html"
                                                         class="user_name text-truncate text-body"><span class="fw-bolder">
                                                             {{ $client->first_name }}</span></a><small
-                                                        class="emp_post text-muted">{{ $client->last_name }}</small></div>
+                                                        class="emp_post text-muted">{{ $client->email }}</small></div>
                                             </div>
 
                                             <?php
