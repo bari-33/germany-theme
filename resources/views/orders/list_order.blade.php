@@ -122,6 +122,9 @@
         #allSelector{
             display: none;
         }
+        th.allcheckboxex:hover #allSelector{
+            display:block;
+        }
         .checkbox{
             display: none;
         }
@@ -282,6 +285,7 @@
         </div>
         <!-- Basic table -->
         <section id="basic-datatable">
+
             <div class="row">
                 <div class="col-12">
 
@@ -289,7 +293,7 @@
                         <input type="hidden" id="order" name="check">
                         <form action="{{ url('deleteall') }}" method="POST">
                             @csrf
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <div class="container mt-3">
                                     <button class="dropdown-toggle btn btn-dark" type="button" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">Orders button
@@ -309,14 +313,53 @@
 
                                     </div>
                                 </div>
+                            </div> --}}
+
+                            <div id="notificationBarBottom" class="hideMe">
+                                <div class="row">
+                                    <div class="col-md-6" style="padding: 5px;">
+                                        <span>Total Selected : </span><span class="totalselected">0</span>
+                                    </div>
+                                    <div class="col-md-6" style="padding: 5px;">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="dropdown">
+                                                    <div class="container">
+                                                        <button class="dropdown-toggle btn btn-dark" type="button" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">Order Buttons
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                                            <button class="col-md-12 multiSelector"
+                                                                style="border: none;background-color: rgb(255, 255, 255);"
+                                                                type="submit">Delete</button><br>
+                                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                                type="submit" formaction="{{ url('paid') }}">Mark as paid</button><br>
+                                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                                type="submit" formaction="{{ url('allinvoice') }}">Download all</button>
+                                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                                type="submit" formaction="{{ url('restore') }}">Restoring</button>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" style="margin-top: 7.5px">
+                                                 <button class="btn btn-sm btn-danger" id="hideorderbutton"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <table class="datatables table mb-0" id="mytable" style="color: #000;">
                                 <div class="container mt-3">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" name="" onclick="checkboxs()"
-                                                    id="allSelector">{{ __('locale.Select All') }}
+                                            <th class="allcheckboxex">{{ __('locale.Select All') }}
+                                                <input type="checkbox" name="" onclick="checkboxs()"
+                                                    id="allSelector">
                                             </th>
                                             <th>{{ __('locale.ID') }}</th>
                                             <th>{{ __('locale.Employee') }}</th>
@@ -1036,43 +1079,7 @@
                     </div>
                 </div>
             </div>
-            <div id="notificationBarBottom" class="hideMe">
-                <div class="row">
-                    <div class="col-md-6" style="padding: 5px;">
-                        <span>Total Selected : </span><span class="totalselected">0</span>
-                    </div>
-                    <div class="col-md-6" style="padding: 5px;">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="dropdown">
-                                    <div class="container">
-                                        <button class="dropdown-toggle btn btn-dark" type="button" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">Order Buttons
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                            <button class="col-md-12 multiSelector"
-                                                style="border: none;background-color: rgb(255, 255, 255);"
-                                                type="submit">Delete</button><br>
-                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
-                                                type="submit" formaction="{{ url('paid') }}">Mark as paid</button><br>
-                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
-                                                type="submit" formaction="{{ url('allinvoice') }}">Download all</button>
-                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
-                                                type="submit" formaction="{{ url('restore') }}">Restoring</button>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: 7.5px">
-                                 <button class="btn btn-sm btn-danger" id="hideorderbutton"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Modal to add new record -->
         </section>
         <!--/ Basic table -->
@@ -1217,11 +1224,28 @@
                 $('input:checkbox').each(function() {
                     $(this).attr("checked", status);
                 });
+                $('#allSelector').css('display','block');
+                var $boxes = $('input[id=checkboxdisplay]:checked');
+                $('.checkbox').css('display','block');
+                $('#notificationBarBottom').removeClass('hideMe');
+                $('.totalselected').text($boxes.length);
             }
             if (!$("#allSelector").is(':checked')) {
                 $('input:checkbox').each(function() {
                     $(this).removeAttr("checked", status);
                 });
+                var $boxes = $('input[id=checkboxdisplay]:checked');
+                $('#notificationBarBottom').addClass('hideMe');
+                $('.totalselected').text($boxes.length);
+                $('.checkbox').css('display','none');
+                $('td.checkboxdisplay').hover(
+                    function(){
+                        $('.checkbox').css('display','block');
+                    },
+                    function(){
+                        $('.checkbox').css('display','none');
+                    }
+                );
             }
 
 
@@ -1246,20 +1270,63 @@
             //     $('input:checkbox').not(this).prop('checked', this.checked);
             // });
         });
-        $(document).on('click','#hideorderbutton',function(){
+        $(document).on('click','#hideorderbutton',function(e){
+            e.preventDefault();
             $('#notificationBarBottom').addClass('hideMe');
+            $('.checkbox').css('display','none');
+                $('td.checkboxdisplay').hover(
+                    function(){
+                        $('.checkbox').css('display','block');
+                    },
+                    function(){
+                        $('.checkbox').css('display','none');
+                    }
+                );
+
+                $('#allSelector').css('display','none');
+                $('th.allcheckboxex').hover(
+                    function(){
+                        $('#allSelector').css('display','block');
+                    },
+                    function(){
+                        $('#allSelector').css('display','none');
+                    }
+                );
+                $('.totalselected').text(0);
+                $('input:checkbox').each(function() {
+                    $(this).removeAttr("checked", status);
+                });
+                $("#allSelector").prop("checked", false);
+                // $("#allSelector").removeAttr("checked", status);
         })
         $(document).on('click','.checkbox',function(){
             var $boxes = $('input[id=checkboxdisplay]:checked');
-            console.log($boxes.length)
             if (this.checked) {
                 $('.checkbox').css('display','block');
                 $('#notificationBarBottom').removeClass('hideMe');
-                $('#totalselected').text($boxes);
-                console.log($(this).parent('#checkboxdisplay').html())
+                $('.totalselected').text($boxes.length);
+
             }
             else{
-                alert('not');
+                if($boxes.length == 0)
+                {
+                $('.checkbox').css('display','none');
+                $('td.checkboxdisplay').hover(
+                    function(){
+                        $('.checkbox').css('display','block');
+                    },
+                    function(){
+                        $('.checkbox').css('display','none');
+                    }
+                );
+                $('#notificationBarBottom').addClass('hideMe');
+                $('.totalselected').text($boxes.length);
+                }
+                else{
+                $('.checkbox').css('display','block');
+                $('#notificationBarBottom').removeClass('hideMe');
+                $('.totalselected').text($boxes.length);
+                }
             }
         });
     </script>
