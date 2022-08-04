@@ -120,4 +120,17 @@ class invoiceController extends Controller
 
 
      }
+
+    //  public function deleteallInvoices(request $request)
+    //  {
+    //      $selector = $request->selector;
+    //      dd($request->all());
+    //      if ($selector != 0) {
+    //          foreach ($selector as  $value) {
+    //              Order::where('id', $value)->delete();
+    //          }
+    //      }
+
+    //      return redirect('list_order');
+    //  }
 }

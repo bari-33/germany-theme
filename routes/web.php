@@ -133,6 +133,7 @@ Route::post('saveNotes/{id}', [AdminOrderController::class, 'saveNotes'])->name(
 Route::get('list_invoice', [invoiceController::class, 'list_invoice'])->name('list_invoice');
 Route::get('invoices/{id}', [invoiceController::class, 'invoices'])->name('invoices');
 Route::post('searchinvoice', [invoiceController::class, 'search'])->name('search');
+// Route::post('deleteallInvoices', [invoiceController::class, 'deleteallInvoices'])->name('deleteallInvoices');
  /* Route Settings*/
  Route::get('EditAccount', [SettingController::class, 'EditAccount'])->name('EditAccount');
  Route::get('MyAccount', [SettingController::class, 'MyAccount'])->name('MyAccount');

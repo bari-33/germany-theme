@@ -112,44 +112,49 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="py-1">Nr</th>
-                      <th>Produkt</th>
+                      {{-- <th class="py-1">Nr</th> --}}
+                      <th>Bezeichnung</th>
+                      <th>Menge</th>
                       <th class="text-right">Preis</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                        <td>1</td>
+                        {{-- <td>1</td> --}}
                         <td>
                             <p style="margin-bottom: 1px;color:black;font-size: 1.2em">{{$items['product_name']}}</p>
                             <p style="font-size: 0.8em" class="text-muted">{{$items['product_language']}}</p>
                         </td>
+                        <td >{{number_format((float)$items['product_price'], 2, '.', '')}} €</td>
                         <td class="text-right">{{number_format((float)$items['product_price'], 2, '.', '')}} €</td>
                     </tr>
                     @if($items['express']!=0)
                         <tr>
-                            <td>2</td>
+                            {{-- <td>2</td> --}}
                             <td>
                                 <p style="margin-bottom: 1px;color:black;font-size: 1.2em">Express 24</p>
                                 <p style="font-size: 0.8em" class="text-muted">Express 24h service</p>
                             </td>
+                            <td>{{number_format((float)$items['express'], 2, '.', '')}} €</td>
                             <td class="text-right">{{number_format((float)$items['express'], 2, '.', '')}} €</td>
                         </tr>
                     @endif
                     <tr>
-                        <td> @if($items['express']!=0)3 @else 2 @endif</td>
+                        {{-- <td> @if($items['express']!=0)3 @else 2 @endif</td> --}}
                         <td>
                             <p style="margin-bottom: 1px;color:black;font-size: 1.2em">{{$items['design_name']}}</p>
                             <p style="font-size: 0.8em" class="text-muted">{{$items['design_category']}}</p>
                         </td>
+                        <td>{{number_format((float)$items['design_price'], 2, '.', '')}} €</td>
                         <td class="text-right">{{number_format((float)$items['design_price'], 2, '.', '')}} €</td>
                     </tr>
                     <tr>
-                        <td>3</td>
+                        {{-- <td>3</td> --}}
                         <td>
                             <p style="margin-bottom: 1px;color:black;font-size: 1.2em">{{$items['website_name']}}</p>
                             <p style="font-size: 0.8em" class="text-muted">{{$items['website_category']}}</p>
                         </td>
+                        <td>{{number_format((float)$items['website_price'], 2, '.', '')}} €</td>
                         <td class="text-right">{{number_format((float)$items['website_price'], 2, '.', '')}} €</td>
                     </tr>
                     </tbody>
@@ -162,26 +167,37 @@
                   </div>
                   <div class="col-md-6 d-flex justify-content-end order-md-2 order-1">
                     <div class="invoice-total-wrapper">
-                      <div class="invoice-total-item">
-                        <p class="invoice-total-title">Zwischensumme:</p>
-                        <p class="invoice-total-amount">{{number_format((float)$items['total_price'], 2, '.', '')}} €</p>
-                      </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <p class="invoice-total-title">Zwischensumme:</p>
+                            </div>
+                            <div class="col-md-5">
+                                <p class="invoice-total-amount" style="font-weight:bolder">{{number_format((float)$items['total_price'], 2, '.', '')}} €</p>
+                            </div>
+                        </div>
                       {{-- <div class="invoice-total-item">
                         <p class="invoice-total-title">Discount:</p>
                         <p class="invoice-total-amount">$28</p>
                       </div> --}}
-                      <div class="invoice-total-item">
-                        <p class="invoice-total-title">19% Umsatzsteuer:</p>
-                        <p class="invoice-total-amount">{{number_format((float)$items['tax'], 2, '.', '')}} €</p>
-                      </div>
-                      <hr class="my-50" />
-                      <div class="invoice-total-item">
-                        <p class="invoice-total-title">Gesamt:</p>
-                        <p class="invoice-total-amount">
-                            <?php $total = (int)$items['total_price'] + (int)$items['tax']; ?>
-                            {{number_format((float)$total, 2, '.', '')}} €
-                        </p>
-                      </div>
+                      <div class="row">
+                        <div class="col-md-7">
+                            <p class="invoice-total-title">19% Umsatzsteuer:</p>
+                        </div>
+                        <div class="col-md-5">
+                            <p class="invoice-total-amount" style="font-weight:bolder">{{number_format((float)$items['tax'], 2, '.', '')}} €</p>
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class="col-md-7">
+                            <p class="invoice-total-title">Gesamt:</p>
+                        </div>
+                        <div class="col-md-5">
+                            <p class="invoice-total-amount" style="font-weight:bolder">
+                                <?php $total = (int)$items['total_price'] + (int)$items['tax']; ?>
+                                {{number_format((float)$total, 2, '.', '')}} €
+                            </p>
+                        </div>
+                    </div>
                     </div>
                   </div>
                 </div>

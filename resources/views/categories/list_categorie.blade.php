@@ -23,13 +23,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
-                    <div class="col-md-12 mt-5">
-                        <a href="{{ 'add_category' }}" type="button" class="float-right btn btn-success"><i
-                                class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New category') }}</a>
-                        <div class="mt-5">
+                    <center>
+                        <div class="col-md-12">
+                            <a href="{{ 'add_category' }}" type="button" class="float-left btn btn-success"><i
+                                    class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New category') }}</a>
                         </div>
-                        <br><br>
-                    </div>
+                    </center>
                 </div>
             </div>
         </div>

@@ -44,7 +44,7 @@
 
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
-		
+
         <div class="row match-height">
             <!-- Medal Card -->
             <div class="col-xl-3 col-md-6 col-12">
@@ -275,7 +275,7 @@
                                         <tbody>
                                             @foreach ($orders as $order)
                                                 <tr>
-                                                    <td><a href=""
+                                                    <td><a href="{{ url('invoices/' . $order->id) }}"
                                                             class="text-body font-weight-bold">{{ $order->id }}</a>
                                                     </td>
                                                     <td class="dropimg">

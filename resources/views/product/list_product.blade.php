@@ -23,13 +23,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
-                    <h4 class="ml-2 mt-1"><i class="fa fa-filter" aria-hidden="true"></i>{{ __('locale.Filters') }}
-                    </h4>
                     <div class="col-md-12">
-                        <a href="{{ 'add_product' }}" type="button" class="float-right btn btn-success"><i
-                                class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Product') }}</a>
-                        <div class="mt-5">
-                            <center>
+                        <center>
+                        <div class="row">
+                            <div class="col-md-9" style="text-align: left">
                                 <form action="{{ url('searchproduct') }}" method="POST">
                                     @csrf
                                     <button style="background-color: #3b3f77;border-color: white;" type="submit"
@@ -66,13 +63,16 @@
                                         <input type="submit" style="display: none;" name="submit_category"
                                             id="submit_category">
                                     </form>
-
                                 </div>
-
+                            </div>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="{{ 'add_product' }}" type="button" class="float-right btn btn-success"><i
+                                    class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Product') }}</a>
+                            </div>
                         </div>
                         </center>
                     </div>
-                    <br><br>
                 </div>
             </div>
         </div>

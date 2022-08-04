@@ -30,6 +30,18 @@
         #myDropdown {
             width: 250px !important;
         }
+        .checkbox{
+            display: none;
+        }
+         td.checkboxdisplay:hover input{
+            display: block;
+        }
+        #allSelector{
+            display: none;
+        }
+        th.allcheckboxex:hover #allSelector{
+            display:block;
+        }
     </style>
     <style>
         .dropbtn {
@@ -61,6 +73,41 @@
             display: block;
         }
 
+            /* notify */
+
+    #notificationBarBottom {
+    position: fixed;
+    z-index: 101;
+    bottom: 10;
+    left: 30%;
+    right:10% ;
+    transform: translateY(calc(100% + 10px));
+    background: #dbe7db;
+    color: #000000;
+    text-align: center;
+    line-height: 2.5;
+    box-shadow: 0 0 5px black;
+}
+@keyframes slideUp {
+    0% { transform: translateY(100% + 10px); }
+    100% { transform: translateY(0); }
+}
+#notificationBarBottom {
+    animation: slideUp 1s ease forwards;
+}
+#close {
+  display: none;
+}
+
+/* added to show how to hide with a click */
+@keyframes slideDown {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100% + 10px); }
+}
+#notificationBarBottom.hideMe {
+    animation: slideDown 2.5s ease forwards;
+}
+
         /* .dropdown-content a:hover {background-color: #ddd;} */
 
         .dropdown:hover .dropdown-content {
@@ -88,151 +135,180 @@
             <div class="col-md-12">
                 <div class="card ">
                     <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="ml-2 mt-1"><i class="fa fa-filter" aria-hidden="true"></i>{{ __('locale.Filters') }}
-                            </h4>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="{{ 'add_order' }}" type="button" class="float-right btn btn-success mr-2 mt-1"><i
-                                    class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Order') }}</a>
-                        </div>
-                        <div class="col-md-12 mt-2">
+                        <div class="col-md-12">
                             <center>
-                                <form action="{{ url('searchinvoice') }}" method="POST">
-                                    @csrf
-                                    <button style="background-color: #3b3f77;border-color: white;" type="submit"
-                                        name="action" value="all" class="btn btn-primary">{{ __('locale.All') }} |
-                                        {{ session('all') }} </button>
-                                    <button style="background-color: #3b3f77;border-color: white;" type="submit"
-                                        name="action" value="progress"
-                                        class="btn btn-primary">{{ __('locale.In Progress') }} |
-                                        {{ session('progress') }} </button>
-                                    <button style="background-color: #3b3f77;border-color: white;" type="submit"
-                                        name="action" value="waiting" class="btn btn-primary">{{ __('locale.On hold') }}
-                                        |
-                                        {{ session('waiting') }} </button>
-                                    <button style="background-color: #3b3f77;border-color: white;" type="submit"
-                                        name="action" value="completed" class="btn btn-primary">{{ __('locale.Done') }}
-                                        |
-                                        {{ session('completed') }} </button>
-                                    <button style="background-color: #3b3f77;border-color: white;" type="submit"
-                                        name="action" value="cancelled"
-                                        class="btn btn-primary">{{ __('locale.Canceled') }}
-                                        |
-                                        {{ session('cancelled') }} </button>
-                                    <button style="background-color: #3b3f77;border-color: white;" type="submit"
-                                        name="action" value="deleted" class="btn btn-primary">{{ __('locale.Deleted') }}
-                                        |
-                                        {{ session('deleted') }} </button>
-                                    <div class="dropdown"
-                                        style="display: inline;background-color: #3b3f77;border-radius: 25px;border-color: white;">
-                                        <button style="background-color: #3b3f77;border-color: white;" type="button"
-                                            class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            {{ __('locale.Last 30 Days') }}
-                                        </button>
-                                </form>
-                                <div class="dropdown-menu">
+                                <div class="row">
+                                    <div class="col-md-9" style="margin-top: 10px">
+                                        <form action="{{ url('searchinvoice') }}" method="POST">
+                                            @csrf
+                                            <button style="background-color: #3b3f77;border-color: white;" type="submit"
+                                                name="action" value="all" class="btn btn-primary">{{ __('locale.All') }} |
+                                                {{ session('all') }} </button>
+                                            <button style="background-color: #3b3f77;border-color: white;" type="submit"
+                                                name="action" value="progress"
+                                                class="btn btn-primary">{{ __('locale.In Progress') }} |
+                                                {{ session('progress') }} </button>
+                                            <button style="background-color: #3b3f77;border-color: white;" type="submit"
+                                                name="action" value="waiting" class="btn btn-primary">{{ __('locale.On hold') }}
+                                                |
+                                                {{ session('waiting') }} </button>
+                                            <button style="background-color: #3b3f77;border-color: white;" type="submit"
+                                                name="action" value="completed" class="btn btn-primary">{{ __('locale.Done') }}
+                                                |
+                                                {{ session('completed') }} </button>
+                                            <button style="background-color: #3b3f77;border-color: white;" type="submit"
+                                                name="action" value="cancelled"
+                                                class="btn btn-primary">{{ __('locale.Canceled') }}
+                                                |
+                                                {{ session('cancelled') }} </button>
+                                            <button style="background-color: #3b3f77;border-color: white;" type="submit"
+                                                name="action" value="deleted" class="btn btn-primary">{{ __('locale.Deleted') }}
+                                                |
+                                                {{ session('deleted') }} </button>
+                                            <div class="dropdown"
+                                                style="display: inline;background-color: #3b3f77;border-radius: 25px;border-color: white;">
+                                                <button style="background-color: #3b3f77;border-color: white;" type="button"
+                                                    class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    {{ __('locale.Last 30 Days') }}
+                                                </button>
+                                        </form>
+                                        <div class="dropdown-menu">
+                                            <form method="post" action="{{ url('searchinvoice') }}">
+                                                @csrf
+                                                @php $date = date('Y-m-d',strtotime('-30 days')); @endphp
+                                                <input type="hidden" name="action" value="custom_date">
+                                                <input type="hidden" id="date_from" required name="date_from" class="form-control"
+                                                    placeholder="Van" style="margin-bottom: 10px" value="{{ $date }}">
 
-                                    <form method="post" action="{{ url('searchinvoice') }}">
-                                        @csrf
-                                        @php $date = date('Y-m-d',strtotime('-30 days')); @endphp
-                                        <input type="hidden" name="action" value="custom_date">
-                                        <input type="hidden" id="date_from" required name="date_from" class="form-control"
-                                            placeholder="Van" style="margin-bottom: 10px" value="{{ $date }}">
+                                                <input type="hidden" id="date_to" required name="date_to" class="form-control"
+                                                    style="margin-bottom: 10px" placeholder="Bis" value="{{ date('Y-m-d') }}">
 
-                                        <input type="hidden" id="date_to" required name="date_to" class="form-control"
-                                            style="margin-bottom: 10px" placeholder="Bis" value="{{ date('Y-m-d') }}">
+                                                <button type="submit"
+                                                    style="background-color: transparent;color: black;text-align: left;"
+                                                    class="btn btn-block"> {{ __('locale.Last 30 Days') }}</button>
+                                            </form>
+                                            <form method="post" action="{{ url('searchinvoice') }}">
+                                                @csrf
+                                                @php $date = date('Y-m-d',strtotime('-90 days')); @endphp
+                                                <input type="hidden" name="action" value="custom_date">
+                                                <input type="hidden" id="date_from" required name="date_from" class="form-control"
+                                                    placeholder="Van" style="margin-bottom: 10px" value="{{ $date }}">
 
-                                        <button type="submit"
-                                            style="background-color: transparent;color: black;text-align: left;"
-                                            class="btn btn-block"> {{ __('locale.Last 30 Days') }}</button>
-                                    </form>
+                                                <input type="hidden" id="date_to" required name="date_to"
+                                                    class="form-control" style="margin-bottom: 10px" placeholder="Bis"
+                                                    value="{{ date('Y-m-d') }}">
 
+                                                <button type="submit"
+                                                    style="background-color: transparent;color: black;text-align: left;"
+                                                    class="btn btn-block"> {{ __('locale.Last 90 Days') }}</button>
+                                            </form>
+                                            <form method="post" action="{{ url('searchinvoice') }}">
+                                                @csrf
+                                                @php $year = date('Y')-2; @endphp
+                                                <input type="hidden" name="action" value="custom_date">
+                                                <input type="hidden" id="date_from" required name="date_from"
+                                                    class="form-control" placeholder="Van" style="margin-bottom: 10px"
+                                                    value="{{ $year }}-01-01">
 
-                                    <form method="post" action="{{ url('searchinvoice') }}">
-                                        @csrf
-                                        @php $date = date('Y-m-d',strtotime('-90 days')); @endphp
-                                        <input type="hidden" name="action" value="custom_date">
-                                        <input type="hidden" id="date_from" required name="date_from" class="form-control"
-                                            placeholder="Van" style="margin-bottom: 10px" value="{{ $date }}">
+                                                <input type="hidden" id="date_to" required name="date_to"
+                                                    class="form-control" style="margin-bottom: 10px" placeholder="Bis"
+                                                    value="{{ $year }}-12-31">
 
-                                        <input type="hidden" id="date_to" required name="date_to"
-                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis"
-                                            value="{{ date('Y-m-d') }}">
+                                                <button type="submit"
+                                                    style="background-color: transparent;color: black;text-align: left;"
+                                                    class="btn btn-block">{{ date('Y') - 2 }}</button>
+                                            </form>
 
-                                        <button type="submit"
-                                            style="background-color: transparent;color: black;text-align: left;"
-                                            class="btn btn-block"> {{ __('locale.Last 90 Days') }}</button>
-                                    </form>
-                                    <form method="post" action="{{ url('searchinvoice') }}">
-                                        @csrf
-                                        @php $year = date('Y')-2; @endphp
-                                        <input type="hidden" name="action" value="custom_date">
-                                        <input type="hidden" id="date_from" required name="date_from"
-                                            class="form-control" placeholder="Van" style="margin-bottom: 10px"
-                                            value="{{ $year }}-01-01">
+                                            <form method="post" action="{{ url('searchinvoice') }}">
+                                                @csrf
+                                                @php $year = date('Y')-1; @endphp
+                                                <input type="hidden" name="action" value="custom_date">
+                                                <input type="hidden" id="date_from" required name="date_from"
+                                                    class="form-control" placeholder="Van" style="margin-bottom: 10px"
+                                                    value="{{ $year }}-01-01">
 
-                                        <input type="hidden" id="date_to" required name="date_to"
-                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis"
-                                            value="{{ $year }}-12-31">
+                                                <input type="hidden" id="date_to" required name="date_to"
+                                                    class="form-control" style="margin-bottom: 10px" placeholder="Bis"
+                                                    value="{{ $year }}-12-31">
 
-                                        <button type="submit"
-                                            style="background-color: transparent;color: black;text-align: left;"
-                                            class="btn btn-block">{{ date('Y') - 2 }}</button>
-                                    </form>
+                                                <button type="submit"
+                                                    style="background-color: transparent;color: black;text-align: left;"
+                                                    class="btn btn-block">{{ date('Y') - 1 }}</button>
+                                            </form>
+                                            <form method="post" action="{{ url('searchinvoice') }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="custom_date">
+                                                <input type="date" id="date_from" required name="date_from"
+                                                    class="form-control" placeholder="Van" style="margin-bottom: 10px">
 
-                                    <form method="post" action="{{ url('searchinvoice') }}">
-                                        @csrf
-                                        @php $year = date('Y')-1; @endphp
-                                        <input type="hidden" name="action" value="custom_date">
-                                        <input type="hidden" id="date_from" required name="date_from"
-                                            class="form-control" placeholder="Van" style="margin-bottom: 10px"
-                                            value="{{ $year }}-01-01">
+                                                <input type="date" id="date_to" required name="date_to"
+                                                    class="form-control" style="margin-bottom: 10px" placeholder="Bis">
 
-                                        <input type="hidden" id="date_to" required name="date_to"
-                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis"
-                                            value="{{ $year }}-12-31">
-
-                                        <button type="submit"
-                                            style="background-color: transparent;color: black;text-align: left;"
-                                            class="btn btn-block">{{ date('Y') - 1 }}</button>
-                                    </form>
-
-                                    <hr>
-
-                                    <form method="post" action="{{ url('searchinvoice') }}">
-                                        @csrf
-                                        <input type="hidden" name="action" value="custom_date">
-                                        <input type="date" id="date_from" required name="date_from"
-                                            class="form-control" placeholder="Van" style="margin-bottom: 10px">
-
-                                        <input type="date" id="date_to" required name="date_to"
-                                            class="form-control" style="margin-bottom: 10px" placeholder="Bis">
-
-                                        <button type="submit" style="background-color: silver"
-                                            class="btn btn-block">{{ __('locale.Send') }}</button>
-                                    </form>
-
+                                                <button type="submit" style="background-color: silver"
+                                                    class="btn btn-block">{{ __('locale.Send') }}</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-md-3">
+                                        <a href="{{ 'add_order' }}" type="button" class="float-right btn btn-success mr-2 mt-1"><i
+                                            class="fa fa-plus" aria-hidden="true"></i>{{ __('locale.Add New Order') }}</a>
+                                    </div>
                                 </div>
                             </center>
                         </div>
                     </div>
-                    <br><br>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
         <!-- Basic table -->
         <div class="card">
+            <input type="hidden" id="order" name="check">
+            <form action="{{ url('allinvoice') }}" method="POST">
+                @csrf
+            <div id="notificationBarBottom" class="hideMe">
+                <div class="row">
+                    <div class="col-md-6" style="padding: 5px;">
+                        <span>Total Selected : </span><span class="totalselected">0</span>
+                    </div>
+                    <div class="col-md-6" style="padding: 5px;">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="dropdown">
+                                    <div class="container">
+                                        <button class="dropdown-toggle btn btn-dark" type="button" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">Order Buttons
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                            <button class="col-md-12 multiSelector"
+                                                style="border: none;background-color: rgb(255, 255, 255);"
+                                                type="submit">Delete</button><br>
+                                            <button class="col-md-12 multiSelector" style="border: none;background-color: #fff;"
+                                                type="submit">Download all</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: 7.5px">
+                                 <button class="btn btn-sm btn-danger" id="hideorderbutton"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="px-3 pt-3 pb-3">
                 <div class="table-wrapper">
-                    <table class="datatables table mb-0" style="color: #000;">
+                    <table class="table-responsive datatables table mb-0" style="color: #000;">
                         <thead>
                             <tr>
-                                <th class="ml-5"><input class="form-check-input" id="checkAll" type="checkbox">
-                                    <label class="form-check-label" for="checkbox" class=" label-table"></label>
+                                <th class="ml-5 allcheckboxex">
+                                    <input class="form-check-input" id="allSelector" type="checkbox" onclick="checkboxs()">
+                                    {{-- <label class="form-check-label" for="checkbox" class=" label-table"></label> --}}
                                 </th>
                                 <th>{{ __('locale.ID') }}</th>
+                                <th><i data-feather="trending-up"></i></th>
                                 <th>{{ __('locale.Name') }}</th>
                                 <th>{{ __('locale.Order Status') }}</th>
                                 <th>{{ __('locale.Date') }}</th>
@@ -244,10 +320,31 @@
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
-                                    <td> <input class="form-check-input" type="checkbox" id="checkbox1">
+                                    <td class="checkboxdisplay">
+                                         <input name="selector[]" id="checkboxdisplay" class=" checkbox form-check-input" type="checkbox" value="{{ $order->id }}">
                                         <label class="form-check-label" for="checkbox1" class="label-table"></label>
                                     </td>
-                                    <td><a href="" class="text-body font-weight-bold">#{{ $order->id }}</a>
+                                    <td><a href="{{ url('invoices/' . $order->id) }}" class="text-body font-weight-bold">#{{ $order->id }}</a>
+                                    </td>
+                                    <?php
+                                    if($order->payment_status == 1)
+                                    {
+                                        $divclass = "bg-light-success";
+                                        $iconclass = "fa fa-check";
+                                    }
+                                    elseif ($order->payment_status == 0) {
+                                        $divclass = "bg-light-warning";
+                                        $iconclass = "fas fa-save";
+                                    }
+                                    elseif ($order->payment_status == -1) {
+                                        $divclass = "bg-light-danger";
+                                        $iconclass = "fa fa-pie-chart";
+                                    }
+                                    ?>
+                                    <td>
+                                        <div class="avatar <?php echo $divclass?>">
+                                            <div class="avatar-content"><i class="<?php echo $iconclass?>"></i></div>
+                                        </div>
                                     </td>
                                     <td>
                                         @foreach ($ClientDetail as $client)
@@ -271,6 +368,7 @@
                                             ?>
                                         @endforeach
                                     </td>
+
                                     <td>
                                         @if ($order->order_status == 0)
                                             <div class="text-center">
@@ -337,7 +435,6 @@
 
 
                                     <td style="display:flex;align-items:center; margin-top:24px ">
-
                                         <a href="{{ url('invoices/' . $order->id) }}" class=""><i
                                                 class='text-dark' data-feather='send'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="{{ url('invoices/' . $order->id) }}" class=""><i
@@ -360,6 +457,7 @@
 
                         </tbody>
                     </table>
+                </form>
                 </div>
             </div>
         </div>
@@ -388,8 +486,125 @@
 @endsection
 @section('page-script')
     {{-- Page js files --}}
+    {{-- <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script> --}}
     <script src="{{ asset('js/scripts/tables/table-datatables-basic.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 @endsection
+<script>
+     function checkboxs() {
+
+if ($("#allSelector").is(':checked')) {
+    $('input:checkbox').each(function() {
+        $(this).attr("checked", status);
+    });
+    $('#allSelector').css('display','block');
+    var $boxes = $('input[id=checkboxdisplay]:checked');
+    $('.checkbox').css('display','block');
+    $('#notificationBarBottom').removeClass('hideMe');
+    $('.totalselected').text($boxes.length);
+}
+if (!$("#allSelector").is(':checked')) {
+    $('input:checkbox').each(function() {
+        $(this).removeAttr("checked", status);
+    });
+    var $boxes = $('input[id=checkboxdisplay]:checked');
+    $('#notificationBarBottom').addClass('hideMe');
+    $('.totalselected').text($boxes.length);
+    $('.checkbox').css('display','none');
+    $('td.checkboxdisplay').hover(
+        function(){
+            $('.checkbox').css('display','block');
+        },
+        function(){
+            $('.checkbox').css('display','none');
+        }
+    );
+}
+
+
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.multiSelector').click(function(e) {
+
+                $('#order').val($('.checkbox:checked').map(function() {
+                    return this.value;
+                }).get().join(','));
+                if ($('#order').val() == '') {
+                    alert('No row selected!');
+                    return false;
+                }
+            });
+    });
+     $(document).on('click','#hideorderbutton',function(e){
+            e.preventDefault();
+            $('#notificationBarBottom').addClass('hideMe');
+            $('.checkbox').css('display','none');
+                $('td.checkboxdisplay').hover(
+                    function(){
+                        $('.checkbox').css('display','block');
+                    },
+                    function(){
+                        $('.checkbox').css('display','none');
+                    }
+                );
+
+                $('#allSelector').css('display','none');
+                $('th.allcheckboxex').hover(
+                    function(){
+                        $('#allSelector').css('display','block');
+                    },
+                    function(){
+                        $('#allSelector').css('display','none');
+                    }
+                );
+                $('.totalselected').text(0);
+                $('input:checkbox').each(function() {
+                    $(this).removeAttr("checked", status);
+                });
+                $("#allSelector").prop("checked", false);
+                // $("#allSelector").removeAttr("checked", status);
+        })
+      $(document).on('click','.checkbox',function(){
+            var $boxes = $('input[id=checkboxdisplay]:checked');
+            if (this.checked) {
+                $('.checkbox').css('display','block');
+                $('#notificationBarBottom').removeClass('hideMe');
+                $('.totalselected').text($boxes.length);
+                $('td.checkboxdisplay').hover(
+                        function() {
+                            $('.checkbox').css('display', 'block');
+                        },
+                        function() {
+                            $('.checkbox').css('display', 'block');
+                        }
+                    );
+
+            }
+            else{
+                if($boxes.length == 0)
+                {
+                $('.checkbox').css('display','none');
+                $('td.checkboxdisplay').hover(
+                    function(){
+                        $('.checkbox').css('display','block');
+                    },
+                    function(){
+                        $('.checkbox').css('display','none');
+                    }
+                );
+                $('#notificationBarBottom').addClass('hideMe');
+                $('.totalselected').text($boxes.length);
+                }
+                else{
+                $('.checkbox').css('display','block');
+                $('#notificationBarBottom').removeClass('hideMe');
+                $('.totalselected').text($boxes.length);
+                }
+            }
+        });
+</script>

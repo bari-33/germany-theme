@@ -1,0 +1,221 @@
+
+body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:#323759;
+}
+.row{
+    width:100%;
+    border-bottom: 1px solid rgb(165, 164, 164);
+    padding-bottom: 20px;
+
+
+}
+.div_left{
+    margin-top: 20px;
+    float: left;
+    width: 49%;
+    /* padding-top: 20px; */
+
+}
+.img_bom{
+    padding-bottom: 20px;
+}
+.div_right{
+    float: right;
+    width:50%;
+
+    border-left: 1px solid rgb(165, 164, 164);
+    padding-left: 5px;
+
+
+
+}
+.invoice_no{
+    text-align: right;
+    font-size: 10px;
+    padding-right: 20px;
+
+}
+.rech_h2{
+    font-size: 30px;
+    padding-left: 50px;
+
+}
+.pag_status{
+    margin-bottom: 60px;
+}
+.tbl_div{
+    text-align: center;
+    margin-left: 50px;
+    font-size: 12px;
+    margin-right: 10px;
+}
+.tbl_div_tr{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.main_tbl{
+    margin-top: 20px;
+}
+.header_da{
+    background-color:  #f6f6f8;
+
+
+}
+.tbl_data{
+    width:100%;
+    border-collapse: collapse;
+    padding-left: 25px;
+    /* background-color: aqua; */
+}
+.tbl_data td{
+    border-bottom:  1px solid rgb(165, 164, 164);
+}
+.da_tr{
+    text-align: left;
+
+}
+.th_pad{
+    padding: 10px;
+    text-align: center;
+}
+.th_price{
+    text-align: center;
+}
+.tbody_bo{
+    padding: 10px;
+}
+.total_pr{
+    margin-left: 450px;
+    padding-top: 20px;
+}
+.total_prp{
+    margin-left: 450px;
+
+}
+.row1{
+    width:100%;
+    padding-top: 10px;
+
+
+}
+.div_left2{
+    float: left;
+    width: 50%;
+    padding-left: 25px;
+    padding-top: -15px;
+}
+.div_right2{
+    float: right;
+    width:40%;
+    background-color: #323759;
+    color: #f6f6f8;
+    text-align: center;
+
+
+}
+.vieln{
+    font-size: 30px;
+}
+
+.div_left3{
+    float: left;
+    width: 50%;
+    background-color: #f6f6f8;
+    margin-top: 10px;
+    padding: 5px;
+    /* margin-right: 15px; */
+    /* font-size: 5px; */
+
+
+}
+.bnk_tbl{
+    font-size: 10px;
+    padding-left: 30px;
+    /* text-align: center; */
+}
+.bnk_tbl2{
+    font-size: 10px;
+    padding-left: 20px;
+    padding-top: -20px;
+
+
+
+}
+.bnk_tbl3{
+    font-size: 10px;
+    padding-left: 20px;
+    padding-top: -10px;
+}
+.paypal{
+    /* padding-top: -10px; */
+    padding-left: 10px;
+    padding-top: -10px;
+}
+.div_right3{
+    float: right;
+    width:45%;
+    background-color: #f6f6f8;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+
+}
+.row3{
+    width: 100%;
+    margin-top: 10px;
+    padding: 0%;
+
+}
+.row5{
+    width: 100%;
+    height:9%;
+    margin-top: 10px;
+    background-color: #f6f6f8;
+    font-size: 10px;
+    padding-bottom: 10px;
+
+
+}
+.div5_1{
+width: 20%;
+float: left;
+padding-left: 15px;
+padding-top: 5px;
+
+}
+.div5_2{
+    width: 20%;
+
+    float: left;
+    padding-top: 5px;
+}
+.div5_3{
+    width: 25%;
+
+    float:left;
+   padding-top: 15px;
+}
+.div5_4{
+    float: left;
+    width: 25%;
+    padding-top: 15px;
+    padding-left: 20px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* .blue-line{
+    margin:-30% -10% -10% -10% !important;
+}
+@page {
+    margin: 0px 0px 0px 0px;
+} */

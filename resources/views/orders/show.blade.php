@@ -1792,12 +1792,13 @@
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var month = ['Janaury', 'Feb', 'March', 'April', 'May', 'june', 'july','August','september','october','November','December'];
         var date = new Date();
+
         if ("1" == "1") {
             $(".express-pricing-container").show();
             $("#express-price-total").text("19€");
             document.getElementById('express_input').value = 0;
             date.setDate(date.getDate() +3);
-            $('#completionDate2').text(days[date.getDay()] + ' ' + [date.getDate()] + '.' + month[(date.getMonth())] + '.' +
+            $('#completionDate2').text(days[date.getDay()] +','+' ' + [date.getDate()] + ','+' '+ month[(date.getMonth())] + ' ' +
                 date.getFullYear());
 
         }
@@ -1813,7 +1814,7 @@
             $("#express-price-total").text("59€");
             document.getElementById('express_input').value = 0;
             date.setDate(date.getDate()+1);
-            $('#completionDate2').text(days[date.getDay()] + ' ' + [date.getDate()] + '.' + month[(date.getMonth())] + '.' +
+            $('#completionDate2').text(days[date.getDay()] +','+' ' + [date.getDate()] + '.' + month[(date.getMonth())] + '.' +
                 date.getFullYear());
 
         }

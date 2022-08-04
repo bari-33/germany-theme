@@ -19,6 +19,7 @@ use App\Models\TrialDocument;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\Website;
+use App\Models\ReferenceCount;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -34,7 +35,11 @@ class AdminOrderController extends Controller
 {
     public function list_order()
     {
-        $orders = Order::orderBy('created_at', 'ASC')->get();
+        $orders = Order::orderBy('orders.created_at', 'ASC')
+        ->join('users','users.id','=','orders.customer_id')
+        ->select('orders.*','users.name as name')
+        ->get();
+        // dd($orders);
         $employees = User::whereHas('roles', function ($q) {
             $q->where('id', '2');
         })->get();
@@ -97,6 +102,7 @@ class AdminOrderController extends Controller
         if (isset($order_id_in_db->order_id)) {
             $ind_order_id = explode(",", $order_id_in_db->order_id);
             if (!in_array($order, $ind_order_id)) {
+
                  User::where("id", $id)->update([
                     "status" => $status,
                     "order_id" => empty($order_id_in_db->order_id) ? '' . $order : $order_id_in_db->order_id . ',' . $order
@@ -110,12 +116,13 @@ class AdminOrderController extends Controller
             $employ = explode(",", $data->user_id);
             if (!in_array($id, $employ)) {
                 order::where("id", $order)->update([
-                    "order_status"=>$order_status,
+                    "order_status"=>  $order_status,
                     "user_id" => empty($data->user_id) ? '' . $id : $data->user_id . ',' . $id
                 ]);
 
             }
         }
+
       $suertable =   User::where("id", $id)->first();
       $data = json_encode($suertable);
       return response($data);
@@ -138,11 +145,19 @@ class AdminOrderController extends Controller
             unset($order_db[$key]);
         }
         $orderss1 = implode(',', $order_db);
-        $order_status = "0";
         order::where('id', $order_id)->update(["user_id" => $orderss1,
-         "order_status"=>$order_status,
+        //  "order_status"=>$order_status,
          ]);
-
+       $check_order_id_for_Status =  order::where('id', $order_id)->select('user_id')->first();
+         if($check_order_id_for_Status->user_id != "")
+         {
+            $order_status = "2";
+         }
+         else
+         {
+            $order_status = "0";
+         }
+         order::where('id', $order_id)->update(["order_status"=>$order_status]);
          $userss = User::where("id", $id)->first();
          $data = json_encode($userss);
          return response($data);
@@ -288,27 +303,49 @@ class AdminOrderController extends Controller
             'city'=>$order->user->userdetail->city,
 
         ];
+        $timestemp = date("Y-m-d H:i:s");
+        $year = Carbon::createFromFormat('Y-m-d H:i:s', $timestemp)->year;
+        $month = Carbon::createFromFormat('Y-m-d H:i:s', $timestemp)->month;
+        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+        $year = substr($year, -2);
+        $date = $year. "-" .$month;
+        // $checker = ReferenceCount::exists();
+        // if (!$checker){
+        //     $refercen_no = "RE-".$year.$month."-1000";
+        //     $InsertRefernceCount = new ReferenceCount();
+        //     $InsertRefernceCount->refer_type = 'Invoice';
+        //     $InsertRefernceCount->date = $date;
+        //     $InsertRefernceCount->reference_num = $refercen_no;
+        //     $InsertRefernceCount->save();
+        // } else {
+        //     $saveDate =  ReferenceCount::latest()->first();
+        //     if($date == $saveDate->date)
+        //     {
+        //         // $refercen_no = "RE-".$year.$month."-1000";
+        //         $refercen_no = $saveDate->reference_num;
+        //         $numArr = explode('-', $refercen_no);
+        //         $newnum = 1 + intval($numArr[2]);
+        //         $refercen_no = "RE-".$year.$month.'-'.$newnum;
+        //         $affectedRows = ReferenceCount::where("date", $date)->update([
+        //         "reference_num" => $refercen_no
+        //         ]);
+        //     }
+        //     else{
+        //         $refercen_no = "RE-".$year.$month."-1000";
+        //         $InsertRefernceCount = new ReferenceCount();
+        //         $InsertRefernceCount->refer_type = 'Invoice';
+        //         $InsertRefernceCount->date = $date;
+        //         $InsertRefernceCount->reference_num = $refercen_no;
+        //         $InsertRefernceCount->save();
+        //     }
 
+        // }
 
-
-
-
-
-        // ------- original code -----
-        // $mpdf = new \Mpdf\Mpdf();
-        // $stylesheet = file_get_contents('css/style.css');
-        return view('orders.dowenlode', compact('items'));
-        // $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
-        // $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
-        // $filename = $order->id . '.pdf';
-        // $destination =  $filename;
-        // echo $html;
-        // die;
-        // $mpdf->Output($destination, 'D');
+        $refercen_num =  ReferenceCount::latest()->first();
+        // dd($refercen_num->reference_num);
+        return view('orders.dowenlode', compact('items','refercen_num'));
 
     }
-
-
     public function deleteall(request $request)
     {
         $selector = $request->selector;
@@ -344,14 +381,17 @@ class AdminOrderController extends Controller
         $selector = $request->selector;
         $invoice = [];
         $path = public_path('myfiles/');
+
         if (is_dir($path)) {
             File::deleteDirectory($path);
         }
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
+
         foreach ($selector as  $value) {
             $order = Order::find($value);
+
             $user = User::find($order->customer_id);
             $product = Product::find($order->product_id);
             $design = Design::find($order->design_id);
@@ -394,22 +434,58 @@ class AdminOrderController extends Controller
 
             array_push($invoice, $items);
 
-            foreach ($invoice as  $items) {
-                $mpdf = new  \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
-                $html = view('orders.dowenlode', compact('items'))->render();
-                $mpdf->WriteHTML($html,2);
-                $filename = $order->id . '.pdf';
-                $destination = $path . $filename;
-                $mpdf->Output($destination, 'F');
+        }
+
+        foreach ($invoice as  $items) {
+
+            $timestemp = date("Y-m-d H:i:s");
+            $year = Carbon::createFromFormat('Y-m-d H:i:s', $timestemp)->year;
+            $month = Carbon::createFromFormat('Y-m-d H:i:s', $timestemp)->month;
+            $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+            $year = substr($year, -2);
+            $date = $year. "-" .$month;
+            $checker = ReferenceCount::exists();
+            if (!$checker){
+                $refercen_no = "RE-".$year.$month."-1000";
+                $InsertRefernceCount = new ReferenceCount();
+                $InsertRefernceCount->refer_type = 'Invoice';
+                $InsertRefernceCount->date = $date;
+                $InsertRefernceCount->reference_num = $refercen_no;
+                $InsertRefernceCount->save();
+            } else {
+                $saveDate =  ReferenceCount::latest()->first();
+                if($date == $saveDate->date)
+                {
+
+                    $refercen_no = $saveDate->reference_num;
+                    $numArr = explode('-', $refercen_no);
+                    $newnum = 1 + intval($numArr[2]);
+                    $refercen_no = "RE-".$year.$month.'-'.$newnum;
+                    $affectedRows = ReferenceCount::where("date", $date)->update([
+                    "reference_num" => $refercen_no
+                    ]);
+                }
+                else{
+                    $refercen_no = "RE-".$year.$month."-1000";
+                    $InsertRefernceCount = new ReferenceCount();
+                    $InsertRefernceCount->refer_type = 'Invoice';
+                    $InsertRefernceCount->date = $date;
+                    $InsertRefernceCount->reference_num = $refercen_no;
+                    $InsertRefernceCount->save();
+                }
             }
 
+                $refercen_num =  ReferenceCount::latest()->first();
+                $html = view('orders.alldownload', compact('items','path','refercen_num'))->render();
 
-        }
+            }
+// dd($invoice);
         $zip = new ZipArchive;
         $zipfile = public_path('invoice.zip');
-        if (is_dir($zipfile)) {
+        if (File::exists(public_path('invoice.zip'))) {
             unlink(public_path('invoice.zip'));
         }
+
         $fileName = 'invoice.zip';
         if ($zip->open(public_path($fileName), ZipArchive::CREATE) === TRUE) {
             $files = File::files(public_path('myfiles'));
@@ -422,7 +498,7 @@ class AdminOrderController extends Controller
         }
 
 
-        return response()->download(public_path($fileName));
+         return response()->download(public_path($fileName));
     }
 
     public function updateorder(Request $request, $id)

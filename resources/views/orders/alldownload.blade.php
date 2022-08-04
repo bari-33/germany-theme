@@ -253,14 +253,9 @@ $mpdf->SetDisplayMode('fullpage');
 // LOAD a stylesheet
 $stylesheet = file_get_contents('C:\xampp\htdocs\germanythememaster\germany-theme\public\tbl_style.css');
 $mpdf->WriteHTML($stylesheet,1);
-// print_r('hellpo');
-// die;
 $mpdf->WriteHTML($html);
-// print_r($refercen_num->reference_num);
-// die;
-$mpdf->Output(''.$refercen_num->reference_num.'.pdf','D');
-// print_r($html);
-// die;
-// exit;
+$filename = $refercen_num->reference_num.'.pdf';
+$destination = $path;
+// $mpdf->Output(''.$items['order_id'].'.pdf','D');
+ $mpdf->Output($destination.$filename,'F');
 ?>
-
